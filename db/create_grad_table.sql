@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS Grad_Students
+    (
+     ID INTEGER,
+     NAME VARCHAR(255),
+     ACAD_DEPT VARCHAR(60)
+     BIO TEXT,
+     PHOTO_LINK TEXT,
+     WEBSITE_LINK TEXT,
+     CONSTRAINT GRAD_PK PRIMARY_KEY(ID)
+    )
+
+CREATE TABLE IF NOT EXISTS Grad_Industries
+    (
+     ID INTEGER,
+     INDUSTRY TEXT,
+     INDUSTRY_DESC TEXT
+    );
+
+CREATE TABLE IF NOT EXISTS Grad_Experiences
+    (
+     ID INTEGER,
+     EXPERIENCE TEXT,
+     EXPERIENCE_DESC TEXT
+    );
+
+CREATE TABLE IF NOT EXISTS Grad_Interests
+    (
+     ID INTEGER,
+     INTEREST TEXT
+    )
+
+CREATE TABLE IF NOT EXISTS Grad_Contact
+    (
+     ID INTEGER,
+     EMAIL TEXT,
+     PHONE TEXT
+    )
