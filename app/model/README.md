@@ -29,7 +29,7 @@ Database Credentials, click View Credentials -> copy URI string
 
 Once the URI is copied to your clipboard, run this command
 ```
-echo URI_STRING_HERE > env/.env
+echo POSTGRES=paste_uri_string_here > model/.env
 ```
 
 ## Other To-Dos
