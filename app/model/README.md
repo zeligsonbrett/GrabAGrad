@@ -36,7 +36,7 @@ echo URI_STRING_HERE > env/.env
 Provided your virtual environment is activated (you should see (env) before your name on the terminal),
 ensure your requirements are up-to-date.
 ```
-pip install -r requirements.txt
+pip install -r ../requirements.txt
 ```
 If you update requirements, run 
 ```
