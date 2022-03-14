@@ -38,7 +38,7 @@ VALUES
     (8, 'Information Technology'),
     (8, 'Defense'),
     (9, 'Insurance'),
-    (10, 'Finance'),
+    (10, 'Finance');
 
 
 INSERT INTO
@@ -58,7 +58,7 @@ VALUES
     (8, 'IBM, Software Engineer', 'I was a backend developer'),
     (8, 'Lockheed Martin, Electrical Engineer', 'I worked on defense drones'),
     (9, 'Liberty Mutual, Actuary', 'I was an actuary who worked to create insurance policies'),
-    (10, 'Citigroup, Financial analyst', 'Assessed stock performance.'),
+    (10, 'Citigroup, Financial analyst', 'Assessed stock performance.');
 
 INSERT INTO
     GRAD_INTERESTS (id, interest)
@@ -75,7 +75,7 @@ VALUES
     (8, 'Hiking'),
     (9, 'Photography'),
     (10, 'Gardening'),
-    (10, 'Cooking'),
+    (10, 'Cooking');
 
 INSERT INTO
     GRAD_CONTACT (id, email, phone)
@@ -83,20 +83,20 @@ VALUES
     (2, 'fakeemail2@gmail.com', '231-345-4567'),
     (3, 'fakeemail3@gmail.com', '312-345-4567'),
     (4, 'fakeemail4@gmail.com', '444-345-4567'),
-    (5, 'fakeemail5@gmail.com', '555-345-4567'),
+    (5, 'fakeemail5@gmail.com', '555-345-4567');
 
 INSERT INTO
     GRAD_CONTACT (id, phone)
 VALUES
     (6, '666-345-4567'),
-    (7, '777-345-4567'),
+    (7, '777-345-4567');
 
 INSERT INTO
     GRAD_CONTACT (id, email)
 VALUES
     (8, 'fakeemail8@gmail.com'),
     (9, 'fakeemail9@gmail.com'),
-    (10, 'fakeemail10@gmail.com'),
+    (10, 'fakeemail10@gmail.com');
 
 
 
