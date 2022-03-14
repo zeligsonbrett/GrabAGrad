@@ -5,13 +5,19 @@ Create the environment from the GrabAGrad directory
 ```
 python -m venv env
 ```
+or
+```
+python3 -m venv env
+```
 Activate the environment. Note, this should be done every time you seek to run this project.
 ```
 source env/bin/activate
 ```
 
 ## Create a database access key file called .env
-Create an file called ".env" and add the PostgreSQL URI in. It should be available at this link below: 
+Create an file called ".env" and add the PostgreSQL URI in. 
+
+The PostgreSQL URI should be available at this link below: 
 ```
 https://data.heroku.com/datastores/e80e2442-84b5-4758-ad29-545caa556027#administration
 ```
@@ -30,11 +36,11 @@ echo URI_STRING_HERE > env/.env
 Provided your virtual environment is activated (you should see (env) before your name on the terminal),
 ensure your requirements are up-to-date.
 ```
-pip install -r requirements.txt
+pip install -r ../requirements.txt
 ```
 If you update requirements, run 
 ```
-python -m pip freeze > requriements.txt
+python -m pip freeze > ../requriements.txt
 ```
 
 
