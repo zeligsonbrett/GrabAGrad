@@ -1,0 +1,4 @@
+These are sites used in the creation of this project.
+
+https://stackoverflow.com/questions/38851564/heroku-gunicorn-procfile
+How to call app located outside of Procfile directory
