@@ -32,5 +32,9 @@ ensure your requirements are up-to-date.
 ```
 pip install -r requirements.txt
 ```
+If you update requirements, run 
+```
+python -m pip freeze > requriements.txt
+```
 
 
