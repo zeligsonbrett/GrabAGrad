@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from model.database_connection import connect_engine, get_uri
 from model.endpoints import query_all_grads
 import pandas as pd
