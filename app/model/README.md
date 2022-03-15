@@ -29,7 +29,7 @@ Database Credentials, click View Credentials -> copy URI string
 
 Once the URI is copied to your clipboard, run this command
 ```
-echo URI_STRING_HERE > env/.env
+echo POSTGRES=paste_uri_string_here > model/.env
 ```
 
 ## Other To-Dos
@@ -40,7 +40,8 @@ pip install -r ../requirements.txt
 ```
 If you update requirements, run 
 ```
-python -m pip freeze > ../requriements.txt
+python -m pip freeze > updated_requirements.txt
 ```
+Then, take what is in the new updated_requirements.txt file and make sure to put it into the master requirements.txt file (I couldn't find a way to directly edit the master requirements.txt file)
 
 

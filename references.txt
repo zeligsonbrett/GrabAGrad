@@ -5,3 +5,6 @@ How to call app located outside of Procfile directory
 
 https://www.postgresqltutorial.com/postgresql-insert-multiple-rows/
 How to insert multiple rows into PostgreSQL database
+
+https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
+Debugging PostgreSQL connection with Heroku string
