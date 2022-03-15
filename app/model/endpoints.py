@@ -1,16 +1,50 @@
 #!/usr/bin/env python
 
 import pandas as pd
-from sqlalchemy.orm import scoped_session, sessionmaker
+import sqlalchemy as sqla
 
-# Queries the database and returns a dataframe of the results
-def query_all_grads(engine):
-    print("This is running")
-    query_text = 'SELECT * FROM GRADUATES'
-    with engine.connect() as con:
-        result = con.execute(query_text)
 
-    # result = pd.read_sql(query_text, engine)
-    # print(result)
-    result = 'dang'
+def query_all_from_table(engine, table):
+    """
+    Queries all rows from the table given by parameter table and prints
+    each row out
+    :return: all rows from the table
+    """
+
+    query_text = 'SELECT * FROM {}'.format(table)
+    output = pd.read_sql(query_text, engine)
+    df = pd.DataFrame(output)
+    result = df.to_string(index=False)
+    print(result)
+
+    # alternative way to do this:
+    # with engine.connect() as con:
+    #     output = con.execute(query_text)
     return result
+
+
+def add_a_grad(engine):
+    """
+    Adds a grad to the 'graduates' table - BETA VERSION
+    *Need to add grad information to other tables too*
+    """
+    with engine.connect() as con:
+        graduates_info = ({"id": 11,
+                           "name": "Jane Doe SPA",
+                           "acad_dept": "Spanish",
+                           "bio": "DELETETHISLATER",
+                           "photo_link": "later",
+                           "website_link": "later"})
+        statement = sqla.text(
+            """INSERT INTO graduates(id, name, acad_dept, bio, photo_link, website_link) VALUES(:id, :name, :acad_dept, :bio, :photo_link, :website_link)""")
+        output = con.execute(statement, **new)
+        print(output)
+
+
+def del_a_grad(engine):
+    """
+    Deletes a grad from the 'graduates' table by ID
+    """
+    with engine.connect() as con:
+        output = con.execute('DELETE FROM graduates WHERE id == 11')
+        print(output)
