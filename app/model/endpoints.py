@@ -16,6 +16,14 @@ def query_all_grads():
 
 
 def __details_string():
+    """
+    Returns a String of all of the fields within the graduates database
+    that compose the details list of the Graduate object
+    :return: String of all fields of Graduate details, including id,
+    name, acad_dept, bio, undergrad_university, masters_university,
+    research_focus, expected_grad_date, years_worked, photo_link,
+    website_link
+    """
     details_string = """graduates.id, graduates.name, 
     graduates.acad_dept, graduates.bio, 
     graduates.undergrad_university, graduates.masters_university, 
@@ -83,12 +91,12 @@ def search_grads(name='', dept='', bio='', experience='', industry='',
               'experience': experience, 'industry': industry,
               'interest': interest}
     output = db.execute_command(command, params)
-    details = [
+    details_list = [
         [x['id'], x['name'], x['bio'], x['undergrad_university'],
          x['masters_university'], x['research_focus'],
          x['expected_grad_date'], x['years_worked'], x['photo_link'],
          x['website_link']] for x in output]
-    grad_list = [Graduate(detail, [], [], [], []) for detail in details]
+    grad_list = [Graduate(details) for details in details_list]
     return grad_list
 
 
@@ -103,7 +111,7 @@ def get_grad_information(idnum):
     return [x for x in output][0]
 
 
-def add_a_grad(name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
+def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
                research_focus=None, expected_grad_date=None,
                years_worked=None, photo_link=None,
                website_link=None, experiences=None, industries=None,
@@ -177,7 +185,7 @@ def add_a_grad(name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
         output = db.execute_command(statement, contact_info)
 
 
-def del_a_grad(del_id):
+def delete_grad(del_id):
     """
     Deletes all rows corresponding to id from the graduate tables
     """

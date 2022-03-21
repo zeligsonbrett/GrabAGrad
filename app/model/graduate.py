@@ -6,8 +6,10 @@ class Graduate:
     data fields.
     """
 
-    def __init__(self, details, industries, experiences, interests,
-                 contact):
+    def __init__(self, details=None, industries=None, experiences=None,
+                 interests=None, contact=None):
+        if details is None:
+            details = [None] * 11
         self._details = details
         self._industries = industries
         self._experiences = experiences
