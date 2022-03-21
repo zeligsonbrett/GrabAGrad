@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import pandas as pd
 import sqlalchemy as sqla
 import model.database_connection as db
 

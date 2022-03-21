@@ -5,9 +5,6 @@ import pandas as pd
 
 app = Flask(__name__)
 
-#result = pd.read_sql(query_text, engine)
-#print(result)
-
 
 @app.route('/')
 def index():
@@ -15,19 +12,24 @@ def index():
 
 
 @app.route('/see_grads')
-def db_query():
+def see_grads():
     # engine = create_engine()
     graduates = query_all_grads()
-    # graduates = graduates.replace('\n', '<br/>')
-    # print(type(graduates))
     try:
         graduates = query_all_grads()
     except Exception as ex:
+        # Note, error.html doesn't exist yet, we need to decide if we
+        # want something like this
         html = render_template('error.html', error=str(ex))
         return make_response(html)
 
-    html = render_template('regdetails.html',
-                           class_details=class_details,
-                           course_details=course_details)
+    # Note, we need an HTML file that will receive a list of graduate
+    # objects (see graduates.py), and then can display relevant info for
+    # these graduates. This should be similar to code in A3.
+    # someHTMLfileName.html would have fields inputted into it like this
+    # but with better formatting
+    # <strong>Name:</strong> {{graduate.get_course_name()}}<br>
+    html = render_template('someHTMLfileName.html',
+                           grads=graduates)
     response = make_response(html)
     return response
