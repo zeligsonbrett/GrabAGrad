@@ -6,6 +6,11 @@ CREATE TABLE IF NOT EXISTS GRADUATES
      name VARCHAR(255),
      acad_dept VARCHAR(70),
      bio TEXT,
+     undergrad_university TEXT,
+     masters_university TEXT,
+     research_focus TEXT,
+     expected_grad_date VARCHAR(10),
+     years_worked INTEGER,
      photo_link TEXT,
      website_link TEXT
     );
