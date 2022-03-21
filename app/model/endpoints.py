@@ -64,23 +64,44 @@ def get_grad_information(idnum):
     return [x for x in output][0]
 
 
-def add_a_grad(name=None, dept=None, bio=None, photo_link=None,
+def add_a_grad(name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
+               research_focus=None, expected_grad_date=None,
+               years_worked=None, photo_link=None,
                website_link=None, experiences=None, industries=None,
                interests=None, email=None, phone=None):
     """
-    Adds a grad to the database in each respective table based on data inputted
+    Adds a grad to the database in each respective table based on data
+    inputted
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255),
+        acad_dept VARCHAR(70),
+        bio TEXT,
+        undergrad_university TEXT,
+        masters_university TEXT,
+        research_focus TEXT,
+        expected_grad_date VARCHAR(10),
+        years_worked INTEGER,
+        photo_link TEXT,
+        website_link TEXT
     """
     new_id = db.get_last_id_graduates() + 1
     graduates_info = {"id": new_id,
                       "name": name,
                       "acad_dept": dept,
                       "bio": bio,
+                      "undergrad_university": un_uni,
+                      "masters_university": ma_uni,
+                      "research_focus": research_focus
+                      "expected_grad_date": expected_grad_date
+                      "years_worked": years_worked
                       "photo_link": photo_link,
                       "website_link": website_link}
     statement = sqla.text(
         """INSERT INTO graduates(id, name, acad_dept, bio, 
-        photo_link, website_link) VALUES(:id, :name, :acad_dept, 
-        :bio, :photo_link, :website_link)""")
+        undergrad_university, masters_university, research_focus, 
+        expected_grad_date, years_worked, photo_link, website_link) 
+        VALUES(:id, :name, :acad_dept, :bio, :photo_link, 
+        :website_link)""")
     output = db.execute_command(statement, graduates_info)
 
     if experiences is not None:
