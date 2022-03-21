@@ -37,11 +37,14 @@ def search_grads(name='', dept='', bio='', experience='', industry='',
     interest = __prepare_argument(interest)
 
     command = sqla.text(
-        'SELECT DISTINCT graduates.id, graduates.name FROM graduates, grad_experiences, grad_industries, grad_interests ' \
-        ' WHERE graduates.id = grad_industries.id AND graduates.id = grad_experiences.id AND ' \
-        'graduates.id = grad_interests.id AND graduates.name LIKE :name AND graduates.acad_dept LIKE :dept ' \
-        'AND graduates.bio LIKE :bio AND grad_experiences.experience LIKE :experience AND grad_industries.industry LIKE :industry AND ' \
-        'grad_interests.interest LIKE :interest;')
+        """SELECT DISTINCT graduates.id, graduates.name FROM 
+        graduates, grad_experiences, grad_industries, grad_interests 
+        WHERE graduates.id = grad_industries.id AND graduates.id = 
+        grad_experiences.id AND graduates.id = grad_interests.id AND 
+        graduates.name LIKE :name AND graduates.acad_dept LIKE :dept 
+        AND graduates.bio LIKE :bio AND grad_experiences.experience 
+        LIKE :experience AND grad_industries.industry LIKE :industry 
+        AND grad_interests.interest LIKE :interest;""")
     params = {'name': name, 'dept': dept, 'bio': bio,
               'experience': experience, 'industry': industry,
               'interest': interest}
@@ -75,7 +78,9 @@ def add_a_grad(name=None, dept=None, bio=None, photo_link=None,
                       "photo_link": photo_link,
                       "website_link": website_link}
     statement = sqla.text(
-        """INSERT INTO graduates(id, name, acad_dept, bio, photo_link, website_link) VALUES(:id, :name, :acad_dept, :bio, :photo_link, :website_link)""")
+        """INSERT INTO graduates(id, name, acad_dept, bio, 
+        photo_link, website_link) VALUES(:id, :name, :acad_dept, 
+        :bio, :photo_link, :website_link)""")
     output = db.execute_command(statement, graduates_info)
 
     if experiences is not None:
@@ -83,27 +88,32 @@ def add_a_grad(name=None, dept=None, bio=None, photo_link=None,
             experience_info = {'id': new_id, 'experience': experience,
                                'experience_desc': desc}
             statement = sqla.text(
-                """INSERT INTO grad_experiences(id, experience, experience_desc) VALUES(:id, :experience, :experience_desc)""")
+                """INSERT INTO grad_experiences(id, experience, 
+                experience_desc) VALUES(:id, :experience, 
+                :experience_desc)""")
             output = db.execute_command(statement, experience_info)
 
     if industries is not None:
         for industry in industries:
             industry_info = {'id': new_id, 'industry': industry}
             statement = sqla.text(
-                """INSERT INTO grad_industries(id, industry) VALUES(:id, :industry)""")
+                """INSERT INTO grad_industries(id, industry) VALUES(
+                :id, :industry)""")
             output = db.execute_command(statement, industry_info)
 
     if interests is not None:
         for interest in interests:
             interest_info = {'id': new_id, 'interest': interest}
             statement = sqla.text(
-                """INSERT INTO grad_interests(id, interest) VALUES(:id, :interest)""")
+                """INSERT INTO grad_interests(id, interest) VALUES(
+                :id, :interest)""")
             output = db.execute_command(statement, interest_info)
 
     if email is not None or phone is not None:
         contact_info = {'id': new_id, 'email': email, 'phone': phone}
         statement = sqla.text(
-            """INSERT INTO grad_contact(id, email, phone) VALUES(:id, :email, :phone)""")
+            """INSERT INTO grad_contact(id, email, phone) VALUES(:id, 
+            :email, :phone)""")
         output = db.execute_command(statement, contact_info)
 
 
