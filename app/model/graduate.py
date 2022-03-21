@@ -26,7 +26,7 @@ class Graduate:
     def get_bio(self):
         return self._details[3]
 
-    def get_undergrad_institution(self):
+    def get_undergrad_university(self):
         return self._details[4]
 
     def get_masters_university(self):

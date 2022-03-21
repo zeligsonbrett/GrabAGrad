@@ -2,6 +2,7 @@
 
 import sqlalchemy as sqla
 import model.database_connection as db
+from model.graduate import Graduate
 
 
 def query_all_grads():
@@ -12,6 +13,38 @@ def query_all_grads():
     """
     output = db.query_all_from_table('graduates')
     return output
+
+
+def __details_string():
+    details_string = """graduates.id, graduates.name, 
+    graduates.acad_dept, graduates.bio, 
+    graduates.undergrad_university, graduates.masters_university, 
+    graduates.research_focus, graduates.expected_grad_date, 
+    graduates.years_worked, graduates.photo_link, graduates.website_link
+    """
+    return details_string
+
+
+def __create_grad_details(grad_id='', name='', bio='',
+                          undergrad_university='',
+                          masters_university='', research_focus='',
+                          expected_grad_date='', years_worked='',
+                          photo_link='', website_link=''):
+    """
+    Creates grad details out of the supplied parameters, filling empty
+    parameters with empty Strings.
+    :params: As seen below
+    grad_id, name, acad_dept, bio, undergrad_university,
+    masters_university, research_focus, expected_grad_date,
+    years_worked, photo_link, website_link
+
+    :return: List of the parameters to compose details for Graduates
+    """
+    details = [grad_id, name, bio, undergrad_university,
+               masters_university,
+               research_focus, expected_grad_date, years_worked,
+               photo_link, website_link]
+    return details
 
 
 def __prepare_argument(user_input):
@@ -27,7 +60,7 @@ def search_grads(name='', dept='', bio='', experience='', industry='',
                  interest=''):
     """
     Search all grads for matches based on search criteria
-    :return: id of all matching graduates
+    :return: Graduate object for all matching graduates
     """
     name = __prepare_argument(name)
     dept = __prepare_argument(dept)
@@ -37,20 +70,26 @@ def search_grads(name='', dept='', bio='', experience='', industry='',
     interest = __prepare_argument(interest)
 
     command = sqla.text(
-        """SELECT DISTINCT graduates.id, graduates.name FROM 
+        """SELECT DISTINCT {} FROM 
         graduates, grad_experiences, grad_industries, grad_interests 
         WHERE graduates.id = grad_industries.id AND graduates.id = 
         grad_experiences.id AND graduates.id = grad_interests.id AND 
         graduates.name LIKE :name AND graduates.acad_dept LIKE :dept 
         AND graduates.bio LIKE :bio AND grad_experiences.experience 
         LIKE :experience AND grad_industries.industry LIKE :industry 
-        AND grad_interests.interest LIKE :interest;""")
+        AND grad_interests.interest LIKE :interest ORDER BY 
+        graduates.name ASC;""".format(__details_string()))
     params = {'name': name, 'dept': dept, 'bio': bio,
               'experience': experience, 'industry': industry,
               'interest': interest}
     output = db.execute_command(command, params)
-    matching_ids = [x[0] for x in output]
-    return matching_ids
+    details = [
+        [x['id'], x['name'], x['bio'], x['undergrad_university'],
+         x['masters_university'], x['research_focus'],
+         x['expected_grad_date'], x['years_worked'], x['photo_link'],
+         x['website_link']] for x in output]
+    grad_list = [Graduate(detail, [], [], [], []) for detail in details]
+    return grad_list
 
 
 def get_grad_information(idnum):
@@ -91,9 +130,9 @@ def add_a_grad(name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
                       "bio": bio,
                       "undergrad_university": un_uni,
                       "masters_university": ma_uni,
-                      "research_focus": research_focus
-                      "expected_grad_date": expected_grad_date
-                      "years_worked": years_worked
+                      "research_focus": research_focus,
+                      "expected_grad_date": expected_grad_date,
+                      "years_worked": years_worked,
                       "photo_link": photo_link,
                       "website_link": website_link}
     statement = sqla.text(
@@ -151,7 +190,7 @@ def del_a_grad(del_id):
 
 
 if __name__ == "__main__":
-    print("")
-    # search_grads(name='John')
+    print(search_grads())
+
     # add_a_grad(name = "Henry", dept = "COS", experiences = [("Software Engineering Intern", "Cellanome")], interests = ['Football', 'Basketball'], email = "henryjknoll@gmail.com")
     # del_a_grad(11)
