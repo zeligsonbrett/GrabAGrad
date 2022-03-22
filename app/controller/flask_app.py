@@ -5,7 +5,7 @@ from model.graduate import *
 import pandas as pd
 import os
 
-app = Flask(__name__, template_folder='../view')
+app = Flask(__name__, template_folder='../view', static_folder='../view')
 
 
 @app.route('/')
@@ -17,8 +17,7 @@ def index():
 @app.route('/see_grads')
 def see_grads():
     # engine = create_engine()
-    graduates = query_all_grads()
-    print(graduates)
+    # graduates = query_all_grads()
     try:
         graduates = query_all_grads()
     except Exception as ex:

@@ -6,11 +6,8 @@
 
     <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
-        <meta name="description" content="A multi-part series by graduate student columnist Matt Mleczko about how Princeton University can promote affordable housing in a reparative framework and provide a model for other similar institutions to follow. ">
-
-        <link href="styles.css" rel="stylesheet" type="text/css" />
-
-        <script src="script.js"></script>
+        <meta name="description" content="Displaying graduates from the given search">
+        <link href="{{ url_for('static', filename= 'theo_styles.css') }}" rel="stylesheet" type="text/css" />
     </head>
 
 <body>
@@ -20,18 +17,23 @@
         </form>
     </div>
     <br>
-    <table>
-        <tr>
-            <th>Name and Dept</th>
-            <th>Academic Dept</th>
-            <th>Bio</th>
-        </tr> 
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th align="left">Name</th>
+                <th align="left">Academic Dept</th>
+                <th align="left">Bio</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for grad_student in grads: %}
+
         <tr>
-            <td>{{grad_student[1]}}</td>
-            <td>{{grad_student[2]}}</td>
-            <td>{{grad_student[3]}}</td>
+            <td>{{grad_student.get_name()}}</td>
+            <td>{{grad_student.get_acad_dept()}}</td>
+            <td>{{grad_student.get_bio()}}</td>
         </tr>
         {% endfor %}
+        </tbody>
     </table></body>
 </html>

@@ -7,12 +7,21 @@ from model.graduate import Graduate
 
 def query_all_grads():
     """
-    Queries all graduates
-    :return: The id, name, acad_dept, bio, photo_link, and website_link
-             of all graduates
+    Query all grads in the database
+    :return: Graduate object for all graduates in the database
     """
-    output = db.query_all_from_table('graduates')
-    return output
+
+    command = sqla.text('SELECT * FROM graduates')
+
+    output = db.execute_command(command)
+    details_list = [
+        [x['id'], x['name'], x['acad_dept'], x['bio'],
+         x['undergrad_university'], x['masters_university'],
+         x['research_focus'], x['expected_grad_date'],
+         x['years_worked'], x['photo_link'], x['website_link']]
+        for x in output]
+    grad_list = [Graduate(details) for details in details_list]
+    return grad_list
 
 
 def __details_string():
@@ -91,11 +100,14 @@ def search_grads(name='', dept='', bio='', experience='', industry='',
               'experience': experience, 'industry': industry,
               'interest': interest}
     output = db.execute_command(command, params)
+    # print(x[0] for x in output)
     details_list = [
-        [x['id'], x['name'], x['bio'], x['undergrad_university'],
-         x['masters_university'], x['research_focus'],
-         x['expected_grad_date'], x['years_worked'], x['photo_link'],
-         x['website_link']] for x in output]
+        [x['id'], x['name'], x['acad_dept'], x['bio'],
+         x['undergrad_university'], x['masters_university'],
+         x['research_focus'], x['expected_grad_date'],
+         x['years_worked'], x['photo_link'], x['website_link']]
+        for x in output]
+    #print(details_list)
     grad_list = [Graduate(details) for details in details_list]
     return grad_list
 
