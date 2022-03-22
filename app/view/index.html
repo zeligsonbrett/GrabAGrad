@@ -6,11 +6,11 @@
 
     <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
-        <meta name="description" content="A multi-part series by graduate student columnist Matt Mleczko about how Princeton University can promote affordable housing in a reparative framework and provide a model for other similar institutions to follow. ">
+        <meta name="User Selection" content="Page for GrabAGrad where users choose if they are graduate or undergraduate">
 
-        <link href="styles.css" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
 
-        <script src="script.js"></script>
+        <script src="{{url_for('static', filename='script.js')}}"></script>
     </head>
 
 <body>
