@@ -147,8 +147,9 @@ def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
         """INSERT INTO graduates(id, name, acad_dept, bio, 
         undergrad_university, masters_university, research_focus, 
         expected_grad_date, years_worked, photo_link, website_link) 
-        VALUES(:id, :name, :acad_dept, :bio, :photo_link, 
-        :website_link)""")
+        VALUES(:id, :name, :acad_dept, :bio,
+        :undergrad_university, :masters_university, :research_focus,
+        :expected_grad_date, :years_worked, :photo_link, :website_link)""")
     output = db.execute_command(statement, graduates_info)
 
     if experiences is not None:

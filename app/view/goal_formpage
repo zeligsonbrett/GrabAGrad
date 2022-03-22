@@ -14,24 +14,17 @@
     </head>
 
 <body>
-    <div>
-        <form>
-            <input class="search-bar" type="text" placeholder="Search Here"></intput>
-        </form>
-    </div>
-    <br>
-    <table>
-        <tr>
-            <th>Name and Dept</th>
-            <th>Academic Dept</th>
-            <th>Bio</th>
-        </tr> 
-        {% for grad_student in grads: %}
-        <tr>
-            <td>{{grad_student[1]}}</td>
-            <td>{{grad_student[2]}}</td>
-            <td>{{grad_student[3]}}</td>
-        </tr>
-        {% endfor %}
-    </table></body>
+    <h1 style="margin-bottom: -20px">Tell Us About Yourself !</h1>
+    <form class="form-input">
+        <label for="name">Name</label>
+        <input id="name" type="text"><br>
+        <label for="major">Major</label>
+        <input id="major" type="text"><br>
+        <label for="hometown">Hometown</label>
+        <input id="hometown" type="text"><br>
+        <label for="past_experience">Past Experience</label>
+        <textarea cols="num" rows="num" id="past_experience"></textarea>
+    </form>
+<button class="submit">Submit</button>
+</body>
 </html>

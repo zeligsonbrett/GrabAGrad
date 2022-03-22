@@ -14,24 +14,12 @@
     </head>
 
 <body>
-    <div>
-        <form>
-            <input class="search-bar" type="text" placeholder="Search Here"></intput>
-        </form>
-    </div>
-    <br>
-    <table>
-        <tr>
-            <th>Name and Dept</th>
-            <th>Academic Dept</th>
-            <th>Bio</th>
-        </tr> 
-        {% for grad_student in grads: %}
-        <tr>
-            <td>{{grad_student[1]}}</td>
-            <td>{{grad_student[2]}}</td>
-            <td>{{grad_student[3]}}</td>
-        </tr>
-        {% endfor %}
-    </table></body>
+    <h1>Thanks for your submission</h1>
+    <h2>What we got from you:</h2>
+    <p><b>Name:</b> {{name}}</p>
+    <p><b>Major:</b> {{major}}</p>
+    <p><b>Bio:</b> {{bio}}</p>
+    
+
+</body>
 </html>
