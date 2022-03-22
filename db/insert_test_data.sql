@@ -1,26 +1,36 @@
 INSERT INTO
-    GRADUATES (name, acad_dept, bio)
+    GRADUATES (name, acad_dept, bio, photo_link)
 VALUES
     ('John Doe SPIA', 'Princeton School of Public and International Affairs',
-    'Hi, I am John Doe, and I really like international affairs! Specifically, I study US-Russia relations.'),
+    'Hi, I am John Doe, and I really like international affairs! Specifically, I study US-Russia relations.',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647915980/SamplePeople/JohnDoe1.jpg'),
     ('John Doe COS', 'Computer Science',
-    'Hi, I am John Doe, and I really like computers. I am researching novel machine learning algorithms.'),
+    'Hi, I am John Doe, and I really like computers. I am researching novel machine learning algorithms.',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647916828/SamplePeople/JohnDoe2.jpg'),
     ('John Doe PLM', 'Plasma Physics',
-    'Hi, I am John Doe, and I want to make the first energy net-positive fusion reactor.'),
+    'Hi, I am John Doe, and I want to make the first energy net-positive fusion reactor.',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647916971/SamplePeople/JohnDoe3.jpg'),
     ('John Doe PHI', 'Philosophy',
-    'Hi, I am John Doe... Or am I? How should I know? Also, what is knowing?'),
+    'Hi, I am John Doe... Or am I? How should I know? Also, what is knowing?',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917015/SamplePeople/JohnDoe4.jpg'),
     ('John Doe SPA', 'Spanish and Portuguese',
-    'Hola, soy John Doe, y estudio la literatura hispanica.'),
+    'Hola, soy John Doe, y estudio la literatura hispanica.',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917055/SamplePeople/JohnDoe5.jpg'),
     ('Jane Doe QCB', 'Quantitative and Computational Biology',
-    'Hi, I am Jane Doe, and I am developing statistical models to analyze biomedical data to better understand human disease.'),
+    'Hi, I am Jane Doe, and I am developing statistical models to analyze biomedical data to better understand human disease.',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917321/SamplePeople/JaneDoe1.jpg'),
     ('Jane Doe NEU', 'Neuroscience',
-    'Hi, I am Jane Doe, and I am working to image the brain!'),
+    'Hi, I am Jane Doe, and I am working to image the brain!',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917357/SamplePeople/JaneDoe2.jpg'),
     ('Jane Doe ECE', 'Electrical and Computer Engineering',
-    'Hi, I am Jane Doe, and circuits make me happy'),
+    'Hi, I am Jane Doe, and circuits make me happy',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917394/SamplePeople/JaneDoe3.jpg'),
     ('Jane Doe MAT', 'Mathematics',
-    'Hi, I am Jane Doe, and I can prove in less the 10 seconds that .9999 repeating equals 1'),
+    'Hi, I am Jane Doe, and I can prove in less the 10 seconds that .9999 repeating equals 1',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917420/SamplePeople/JaneDoe4.jpg'),
     ('Jane Doe FIN', 'Finance',
-    'Hi, I am Jane Doe, and I previously worked at Jane Street.');
+    'Hi, I am Jane Doe, and I previously worked at Jane Street.',
+    'https://res.cloudinary.com/grabagrad/image/upload/v1647917469/SamplePeople/JaneDoe5.jpg');
 
 INSERT INTO
     GRAD_INDUSTRIES (id, industry)
