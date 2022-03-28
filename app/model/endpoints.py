@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import sqlalchemy as sqla
-import database_connection as db
-from graduate import Graduate
+import model.database_connection as db
+from model.graduate import Graduate
 
 
 def query_all_grads():
@@ -107,7 +107,6 @@ def search_grads(name='', dept='', bio='', experience='', industry='',
          x['research_focus'], x['expected_grad_date'],
          x['years_worked'], x['photo_link'], x['website_link']]
         for x in output]
-    #print(details_list)
     grad_list = [Graduate(details) for details in details_list]
     return grad_list
 
