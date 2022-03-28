@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import sqlalchemy as sqla
-import model.database_connection as db
-from model.graduate import Graduate
+import database_connection as db
+from graduate import Graduate
 
 
 def query_all_grads():

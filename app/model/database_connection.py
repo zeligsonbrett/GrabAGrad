@@ -52,6 +52,8 @@ def get_last_id_graduates():
     with engine.connect() as con:
         output = con.execute('SELECT id FROM graduates')
         rows = [x for x in output]
+        if len(rows) == 0:
+            return 0
         return rows[-1][0]
 
 
