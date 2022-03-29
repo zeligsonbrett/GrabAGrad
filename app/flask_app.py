@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from flask import Flask, request, make_response, render_template
-import model.endpoints
+import model.endpoints as ep
 
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
@@ -17,7 +17,7 @@ def see_grads():
     # engine = create_engine()
     # graduates = query_all_grads()
     try:
-        graduates = endpoints.query_all_grads()
+        graduates = ep.query_all_grads()
     except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
@@ -54,7 +54,7 @@ def submit():
     bio = request.args.get('bio')
     print(name, major, bio)
     try:
-        endpoints.add_a_grad(name=name, dept=major, bio=bio)
+        ep.add_a_grad(name=name, dept=major, bio=bio)
     except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
