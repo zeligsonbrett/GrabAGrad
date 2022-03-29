@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 from flask import Flask, request, make_response, render_template
-import endpoints #import query_all_grads, add_a_grad
-from ..test_package import test_file
+import model.endpoints
 
 
-app = Flask(__name__, template_folder='../view', static_folder='../view')
+app = Flask(__name__, template_folder='./view', static_folder='./view')
 
 
 @app.route('/')
 def index():
-    test_file.print_contact_made()
     html = render_template('index.html')
     return make_response(html)
 

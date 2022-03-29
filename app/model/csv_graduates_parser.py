@@ -1,5 +1,5 @@
 import pandas as pd
-import endpoints as ep
+import model.endpoints as ep
 
 graduates = pd.read_csv("/Users/henryknoll/Downloads/Speedy GrabAGrad Graduate Student Information Form (Responses) - Form Responses 1.csv")
 """Index(['Timestamp', 'Email Address', 'Name (First Last)',
