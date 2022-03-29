@@ -3,10 +3,11 @@
 # ----------------------------------------------------------------------
 # app.py
 # Author: Theo Knoll, Henry Knoll, Brett Zeligson
+# For use in running the program locally
 # ----------------------------------------------------------------------
 
 from sys import argv, exit, stderr
-from controller_and_model.flask_app import app
+from flask_app import app
 
 
 # Below code is from Princeton University Professor
