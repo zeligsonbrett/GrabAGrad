@@ -12,12 +12,17 @@ def get_uri():
     Loads in the environmental variables to get the database URI
     :return: the database URI
     """
-    load_dotenv()
-    uri = os.getenv("POSTGRES")
+    # Below comments for loading in environment locally
+    # load_dotenv()
+    # uri = os.getenv("POSTGRES")
+
+    # The below URI should work in postgres
+    uri = os.environ['DATABASE_URL']
     # Heroku variable provides slightly incorrect connection String
     if uri and uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)
     return uri
+
 
 
 def create_engine():
@@ -74,6 +79,5 @@ def __print_query(query_result):
     for row in query_result:
         print(row)
 
-print(get_uri())
+
 engine = sqla.create_engine(get_uri())
-print("Engine: " + str(engine))
