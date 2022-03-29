@@ -6,7 +6,7 @@
 # ----------------------------------------------------------------------
 
 from sys import argv, exit, stderr
-from controller.flask_app import app
+from controller_and_model.flask_app import app
 
 
 # Below code is from Princeton University Professor

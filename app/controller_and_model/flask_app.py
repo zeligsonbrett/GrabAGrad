@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, request, make_response, render_template
-from model import endpoints #import query_all_grads, add_a_grad
-from model import graduate
-import pandas as pd
-import os
+from controller_and_model import endpoints #import query_all_grads, add_a_grad
+
 
 app = Flask(__name__, template_folder='../view', static_folder='../view')
 
