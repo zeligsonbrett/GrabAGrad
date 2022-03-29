@@ -24,14 +24,18 @@ def get_uri():
     return uri
 
 
+<<<<<<< HEAD
 
 def create_engine():
+=======
+def create_engine(uri):
+>>>>>>> a77c8f0a3e8fb37bbf0be62c39a1727edbb3de14
     """
     Creates an engine linked to the database
     :return: sqlalchemy engine linked to postgresql database
     """
     global engine
-    engine = sqla.create_engine(get_uri())
+    engine = sqla.create_engine(uri)
 
 
 def query_all_from_table(table):
@@ -79,5 +83,9 @@ def __print_query(query_result):
     for row in query_result:
         print(row)
 
+<<<<<<< HEAD
 
 engine = sqla.create_engine(get_uri())
+=======
+engine = sqla.create_engine("postgresql://ruxygftkaufzpd:9ba414b96d4a50d87de47d6984f1cd090cf2318c3579dbcf7a60a52d31133a71@ec2-52-70-186-184.compute-1.amazonaws.com:5432/d3u5tigp9qpsbb")
+>>>>>>> a77c8f0a3e8fb37bbf0be62c39a1727edbb3de14
