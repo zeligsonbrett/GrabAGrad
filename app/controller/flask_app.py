@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, request, make_response, render_template
-from model.endpoints import query_all_grads, add_a_grad
-from model.graduate import *
+from model import endpoints #import query_all_grads, add_a_grad
+from model import graduate
 import pandas as pd
 import os
 
@@ -19,7 +19,7 @@ def see_grads():
     # engine = create_engine()
     # graduates = query_all_grads()
     try:
-        graduates = query_all_grads()
+        graduates = endpoints.query_all_grads()
     except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
@@ -56,7 +56,7 @@ def submit():
     bio = request.args.get('bio')
     print(name, major, bio)
     try:
-        add_a_grad(name=name, dept=major, bio=bio)
+        endpoints.add_a_grad(name=name, dept=major, bio=bio)
     except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
