@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS GRADUATES
      expected_grad_date VARCHAR(10),
      years_worked INTEGER,
      photo_link TEXT,
-     website_link TEXT
+     website_link TEXT,
+     netid VARCHAR (15)
     );
 
 CREATE TABLE IF NOT EXISTS GRAD_INDUSTRIES

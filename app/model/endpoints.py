@@ -42,26 +42,17 @@ def __details_string():
     return details_string
 
 
-def __create_grad_details(grad_id='', name='', bio='',
-                          undergrad_university='',
-                          masters_university='', research_focus='',
-                          expected_grad_date='', years_worked='',
-                          photo_link='', website_link=''):
+def __id_string(id_list):
     """
-    Creates grad details out of the supplied parameters, filling empty
-    parameters with empty Strings.
-    :params: As seen below
-    grad_id, name, acad_dept, bio, undergrad_university,
-    masters_university, research_focus, expected_grad_date,
-    years_worked, photo_link, website_link
-
-    :return: List of the parameters to compose details for Graduates
+    Returns a String WHERE clause to only search for ids that appear in
+    id_list
+    :return: WHERE id IN ( ... )
     """
-    details = [grad_id, name, bio, undergrad_university,
-               masters_university,
-               research_focus, expected_grad_date, years_worked,
-               photo_link, website_link]
-    return details
+    if len(id_list) > 0:
+        id_string = ', '.join(map(str, id_list))
+        return 'WHERE id IN ( {} )'.format(id_string)
+    else:
+        return ''
 
 
 def __prepare_argument(user_input):
@@ -73,41 +64,111 @@ def __prepare_argument(user_input):
     return prepped_arg
 
 
-def search_grads(name='', dept='', bio='', experience='', industry='',
-                 interest=''):
+def __create_graduates_list(id_list):
+    """
+    Creates and returns a list of graduates that have ids from id_list.
+    In doing so, retrieves information about details, industries,
+    experiences, interests, and contact information.
+    Note, this currently queries pretty inefficiently to create the
+    industry, experiences, interest, and contact attributes of a grad
+    :param id_list: A list of id's corresponding to graduates in the
+                    database.
+    :return: A list of Graduate objects corresponding with ids from
+             id_list
+    """
+    details_command = sqla.text("""SELECT {} FROM graduates {} 
+        ORDER BY id""".format(__details_string(), __id_string(id_list)))
+    details_output = db.execute_command(details_command)
+    details_list = [
+        [x['id'], x['name'], x['acad_dept'], x['bio'],
+         x['undergrad_university'], x['masters_university'],
+         x['research_focus'], x['expected_grad_date'],
+         x['years_worked'], x['photo_link'], x['website_link']]
+        for x in details_output]
+
+    industry_list = []
+    experiences_list = []
+    interests_list = []
+    contact_list = []
+
+    # Note, row[0] is the row's id. This is used to query the other
+    # tables.
+    for row in details_list:
+        industries_command = sqla.text("""SELECT DISTINCT industry FROM 
+                                   grad_industries WHERE id =
+                                   {}""".format(row[0]))
+        industry_output = db.execute_command(industries_command)
+        row_industries = [x['industry'] for x in industry_output]
+        industry_list.append(row_industries)
+
+        experiences_command = sqla.text("""SELECT DISTINCT experience 
+                                    FROM grad_experiences WHERE id = 
+                                    {}""".format(row[0]))
+        experiences_output = db.execute_command(experiences_command)
+        row_experiences = [x['experience'] for x in experiences_output]
+        experiences_list.append(row_experiences)
+
+        interests_command = sqla.text("""SELECT DISTINCT interest 
+                                  FROM grad_interests WHERE id = 
+                                  {}""".format(row[0]))
+        interests_output = db.execute_command(interests_command)
+        row_interests = [x['interest'] for x in interests_output]
+        interests_list.append(row_interests)
+
+        contacts_command = sqla.text("""SELECT email, phone
+                                          FROM grad_contact WHERE id = 
+                                          {}""".format(row[0]))
+        contact_output = db.execute_command(contacts_command)
+        row_contact = [[x['email'], x['phone']] for x in contact_output]
+        contact_list.append(row_contact)
+
+    grad_list = [Graduate(details=details_list[i],
+                          industries=industry_list[i],
+                          experiences=experiences_list,
+                          interests=interests_list,
+                          contact=contact_list)
+                 for i in range(len(details_list))]
+    return grad_list
+
+
+# Based on Henry's valid search fields from search.py
+def search_grads(name='', dept='', research='', grad_year='',
+                 undergrad_uni='', masters_uni='', years_worked=None,
+                 industry=''):
     """
     Search all grads for matches based on search criteria
     :return: Graduate object for all matching graduates
     """
     name = __prepare_argument(name)
     dept = __prepare_argument(dept)
-    bio = __prepare_argument(bio)
-    experience = __prepare_argument(experience)
+    research = __prepare_argument(research)
+    undergrad_uni = __prepare_argument(undergrad_uni)
+    masters_uni = __prepare_argument(masters_uni)
+    grad_year = __prepare_argument(grad_year)
     industry = __prepare_argument(industry)
-    interest = __prepare_argument(interest)
+
+    if years_worked is None:
+        years_worked_c = ''
+    else:
+        years_worked_c = 'AND years_worked = {}'.format(years_worked)
 
     command = sqla.text(
-        """SELECT DISTINCT {} FROM 
-        graduates, grad_experiences, grad_industries, grad_interests 
-        WHERE graduates.id = grad_industries.id AND graduates.id = 
-        grad_experiences.id AND graduates.id = grad_interests.id AND 
-        graduates.name LIKE :name AND graduates.acad_dept LIKE :dept 
-        AND graduates.bio LIKE :bio AND grad_experiences.experience 
-        LIKE :experience AND grad_industries.industry LIKE :industry 
-        AND grad_interests.interest LIKE :interest ORDER BY 
-        graduates.name ASC;""".format(__details_string()))
-    params = {'name': name, 'dept': dept, 'bio': bio,
-              'experience': experience, 'industry': industry,
-              'interest': interest}
+        """SELECT DISTINCT graduates.id FROM 
+        graduates, grad_industries
+        WHERE graduates.id = grad_industries.id AND name LIKE :name AND 
+        acad_dept LIKE :dept AND research_focus LIKE :research AND 
+        undergrad_university LIKE :undergrad_uni AND masters_university
+        LIKE :masters_uni AND expected_grad_date LIKE :grad_year {} AND
+        industry LIKE :industry ORDER BY graduates.id
+        ASC;""".format(years_worked_c))
+    params = {'name': name, 'dept': dept, 'research': research,
+              'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
+              'masters_uni': masters_uni, 'years_worked': years_worked,
+              'industry': industry}
     output = db.execute_command(command, params)
-    # print(x[0] for x in output)
-    details_list = [
-        [x['id'], x['name'], x['acad_dept'], x['bio'],
-         x['undergrad_university'], x['masters_university'],
-         x['research_focus'], x['expected_grad_date'],
-         x['years_worked'], x['photo_link'], x['website_link']]
-        for x in output]
-    grad_list = [Graduate(details) for details in details_list]
+    ids = [x['id'] for x in output]
+    grad_list = __create_graduates_list(ids)
+
     return grad_list
 
 
