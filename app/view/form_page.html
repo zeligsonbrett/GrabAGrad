@@ -9,21 +9,55 @@
         <meta name="description" content="A multi-part series by graduate student columnist Matt Mleczko about how Princeton University can promote affordable housing in a reparative framework and provide a model for other similar institutions to follow. ">
 
         <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
-
         <script src="{{url_for('static', filename='script.js')}}"></script>
-    </head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
 
 <body>
     <h1>Tell Us About Yourself !</h1>
-    <br>
     <form class="form-input" action="/submit">
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text"><br>
-        <label for="major">Major</label>
-        <input id="major" name="major" type="text"><br>
-        <label for="bio">Bio</label>
-        <input id="bio" name="bio" type="text"><br>
-        <input type="submit" value="Submit">
+        <div class="input-label">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text"><br>
+        </div>
+        <div class="input-label">
+            <label for="academic-dept">Academic Department</label>
+            <input id="academic-dept" name="academic-dept" type="text"><br>
+        </div>
+        <div class="input-label">
+            <label for="years-worked">Years of Work Experience</label>
+            <input id="years-worked" name="years-worked" type="text"><br>
+        </div>
+        <div class="input-label">
+            <label for="undergrad-institution">Undergraduate Institution</label>
+            <input id="undergrad-institution" name="undergrad-institution" type="text"><br>
+        </div>
+        <div class="input-label">
+            <label for="masters-institution">Masters Institution</label>
+            <input id="masters-institution" name="masters-institution" type="text"><br>
+        </div>
+        <div class="input-label">
+            <label for="email">Preferred Contact Email</label>
+            <input id="email" name="email" type="text"><br>
+        </div>
+        <div class="input-label">
+            <label for="phone-number">Preferred Phone Number</label>
+            <input id="phone-number" name="phone-number" type="text"><br>
+        </div>
+        <label for="research-focus">Current Research Focus</label>
+        <textarea id="research-focus" name="research-focus" rows="0" cols="0"></textarea>  
+        <div style="text-align: right;">    
+            <input class="submit-button" type="submit" value="Submit">
+        </div>
+        <label for="consent">Do You Consent?</label>
+            <div class="input-label">
+                <input id="consent-1" name="consent-1" type="radio" value="Yes">
+                <label for="consent-1">Yes</label><br>
+                <input id="consent-2" name="consent-2" type="radio" value="No">
+                <label for="consent-2">No</label>
+            </div>
     </form>
 </body>
 </html>
