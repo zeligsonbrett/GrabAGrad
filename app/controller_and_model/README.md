@@ -14,7 +14,14 @@ Activate the environment. Note, this should be done every time you seek to run t
 source env/bin/activate
 ```
 
+## Accessing the application
+Go to `https://grab-a-grad.herokuapp.com/` to access the GrabAGrad application.
+
 ## Create a database access key file called .env
+Note, as of 3/29, these instructions are no longer relevant, as the application is deployed to Heroku.
+Instead, see Accessing the application section.
+
+
 Create an file called ".env" and add the PostgreSQL URI in. 
 
 The PostgreSQL URI should be available at this link below: 
