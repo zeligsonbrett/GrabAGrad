@@ -1,5 +1,5 @@
 
-from ..model import endpoints as ep
+from model import endpoints
 
 sample_search_bar_input = 'name:"Austin Wang,  Cedrick Argueta,Henry Knoll   " name:"Henry Knoll" department:"Computer Science" undergraduate_university:"Princeton, Stanford"'
 VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year', 'industry', 'undergraduate_university', 'masters_institution', 'years_industry']
@@ -45,4 +45,3 @@ def search_grads(query):
 
     #grad_list.extend(ep.search_grads(name=name, department=department, research=research, grad_year=grad_year, industry=industry, undergraduate_university=undergraduate_university, masters_institution=masters_institution, years_industry=yeras_industry))
     return grad_list
-
