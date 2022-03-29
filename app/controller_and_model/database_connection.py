@@ -74,5 +74,4 @@ def __print_query(query_result):
     for row in query_result:
         print(row)
 
-
 engine = sqla.create_engine(get_uri())
