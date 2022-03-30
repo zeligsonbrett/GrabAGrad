@@ -23,7 +23,7 @@
     <div class="flexer">
         {% for grad_student in grads: %}
             <div class="card">  <img src="practice pic.jpg" alt="John" style="width: 90%; margin-top: 12px;">
-                <h2>{{grad}}</h2>
+                <h2>{{grad.get}}</h2>
                 <p style="text-align:left; margin-left: 15px;"><b>Major:</b>{{grad_student.get_acad_dept()}}</p>
                 <p style="text-align:left; margin-left: 15px; margin-bottom: -10px;"><b>Past Experience:</b></p>
                 <ul style="margin-bottom: 30px">
