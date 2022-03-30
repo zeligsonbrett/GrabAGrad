@@ -47,6 +47,10 @@ class Graduate:
         return self._details[8]
 
     def get_photo_link(self):
+        if self._details[9] == 'NaN':
+            return 'https://res.cloudinary.com/grabagrad/image/upload' \
+                   '/v1648614960/GrabAGradPeople' \
+                   '/Princeton_Tiger_ebn1ip.jpg '
         return self._details[9]
 
     def get_website_link(self):
