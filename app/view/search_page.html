@@ -26,12 +26,21 @@
                 </form>
                 <p style="margin-bottom: 15px;">Filter By:</p>
                 <form style="text-align: left;">
+<<<<<<< HEAD
                     <input class="search-filter" type="text" placeholder="Name"></intput>
                     <input class="search-filter" type="text" placeholder="Department"></intput>
                     <input class="search-filter" type="text" placeholder="Research"></intput>
                     <input class="search-filter" type="text" placeholder="Industry"></intput>
                     <input class="search-filter" type="text" placeholder="Undergrad University"></intput>
                     <input class="search-filter" type="text" placeholder="Grad Year"></intput>
+=======
+                    <input class="search-filter" type="text" placeholder="Major"></intput>
+                    <input class="search-filter" type="text" placeholder="Research Focus"></intput>
+                    <input class="search-filter" type="text" placeholder="Industries Worked In"></intput>
+                </form>
+                <p style="margin-bottom: 15px;">Sort By:</p>
+                <form style="text-align: left;">
+>>>>>>> 5471093577a1e5b1f842b2c5b18c499bacf5e109
                 </form>
             </div>
         </div>
@@ -39,19 +48,30 @@
         <div class="header">
             <span class="menu-closed menu-button" onclick="openNav()">&#9776;</span>
             <a href="/">Home</a>
-            <a href="/form_page">Become a Mentor</a>
+            <a href="/form">Become a Mentor</a>
             <span class="title">GrabAGrad</span>
         </div>
     
         <div id="main" style="margin-left: 315px;">    
             <div class="flexer">
                 {% for grad in graduates: %}
+<<<<<<< HEAD
                 <div class="card">  <img src={{grad.get_photo_link()}} alt="Graduate student">
                     <h2>{{grad.get_first_name()}}</h2>
                     <p><b></b>{{grad.get_acad_dept()}}</p>
                     <p><b>Main Industry:</b> {{grad.get_industries()[0]}}</p>
                     <p style="margin-bottom: 30px;"><b>Current Research Focus:</b> Thing</p>
                     
+=======
+                <div class="card">  <img src="{{grad.get_photo_link()}}" alt="Image">
+                    <h2>{{grad.get_first_name()}}</h2>
+                    <p><b></b>{{grad.get_acad_dept()}}</p>
+                    <!--<p><b>Main Industry:</b> {{grad.get_industries()[0]}}</p>
+                    <p style="margin-bottom: 30px;"><b>Current Rearch Focus:</b> Thing</p>
+                    -->
+                    <br>
+                    <br>
+>>>>>>> 5471093577a1e5b1f842b2c5b18c499bacf5e109
                     <a href="zoom_in.html" class="learn-more">Learn More</a>
                 </div> 
                 {% endfor %}
