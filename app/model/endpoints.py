@@ -60,6 +60,8 @@ def __prepare_argument(user_input):
     Prepares the user input for use in SQL by adding wildcards
     :return: The user input, prepared for use in an SQL statement
     """
+    if user_input == None:
+        user_input = ''
     prepped_arg = '%' + user_input + '%'
     return prepped_arg
 
@@ -76,6 +78,9 @@ def __create_graduates_list(id_list):
     :return: A list of Graduate objects corresponding with ids from
              id_list
     """
+    if len(id_list) == 0:
+        return []
+
     details_command = sqla.text("""SELECT {} FROM graduates {} 
         ORDER BY id""".format(__details_string(), __id_string(id_list)))
     details_output = db.execute_command(details_command)
@@ -272,6 +277,5 @@ def delete_grad(del_id):
 
 if __name__ == "__main__":
     print(search_grads())
-
     # add_a_grad(name = "Henry", dept = "COS", experiences = [("Software Engineering Intern", "Cellanome")], interests = ['Football', 'Basketball'], email = "henryjknoll@gmail.com")
     # del_a_grad(11)

@@ -17,7 +17,10 @@ def get_uri():
     # uri = os.getenv("POSTGRES")
 
     # The below URI should work in postgres
-    uri = os.environ['DATABASE_URL']
+    try:
+        uri = os.environ['DATABASE_URL']
+    except:
+        uri = "postgres://ruxygftkaufzpd:9ba414b96d4a50d87de47d6984f1cd090cf2318c3579dbcf7a60a52d31133a71@ec2-52-70-186-184.compute-1.amazonaws.com:5432/d3u5tigp9qpsbb"
     # Heroku variable provides slightly incorrect connection String
     if uri and uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)

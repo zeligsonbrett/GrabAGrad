@@ -22,6 +22,9 @@ class Graduate:
     def get_name(self):
         return self._details[1]
 
+    def get_first_name(self):
+        return self._details[1].split(" ", 1)[0]
+
     def get_acad_dept(self):
         return self._details[2]
 

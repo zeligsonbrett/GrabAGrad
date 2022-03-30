@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
+import controller.search as search
 
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
@@ -16,14 +17,20 @@ def index():
 def see_grads():
     # engine = create_engine()
     # graduates = query_all_grads()
-    try:
+    search_input = request.args.get('searchbar')
+    #try:
+    graduates = None
+    if search_input:
+        graduates = search.search(search_input)
+    else:
         graduates = ep.query_all_grads()
-    except Exception as ex:
+    '''except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
 
         html = render_template('error.html', error=str(ex))
         return make_response(html)
+    '''
 
     # Note, we need an HTML file that will receive a list of graduate
     # objects (see graduates.py), and then can display relevant info for
@@ -32,7 +39,7 @@ def see_grads():
     # but with better formatting
     # <strong>Name:</strong> {{graduate.get_course_name()}}<br>
     html = render_template('search_page.html',
-                           grads=graduates)
+                           graduates=graduates)
     response = make_response(html)
     return response
 
