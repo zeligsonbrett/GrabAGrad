@@ -2,10 +2,10 @@
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
 import controller.search as search
-
+from keys import APP_SECRET_KEY
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
-
+b'MT`\xd9\x94\xc3a\xc0\xe0\xdfb\x9b\xde\xce&@'
 
 @app.route('/')
 def index():
