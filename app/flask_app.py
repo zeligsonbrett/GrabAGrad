@@ -36,8 +36,9 @@ def see_grads():
     search_input = request.args.get('searchbar')
     #try:
     graduates = None
+    success_msg = "Success"
     if search_input:
-        graduates = search.search(search_input)
+        success_msg, graduates = search.search(search_input)
     else:
         graduates = ep.query_all_grads()
     '''except Exception as ex:
@@ -55,7 +56,7 @@ def see_grads():
     # but with better formatting
     # <strong>Name:</strong> {{graduate.get_course_name()}}<br>
     html = render_template('search_page.html',
-                           graduates=graduates)
+                           success=success_msg, graduates=graduates)
     response = make_response(html)
     return response
 

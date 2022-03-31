@@ -5,7 +5,10 @@ import model.endpoints as ep
 VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year', 'industry', 'undergraduate_university', 'masters_institution', 'years_industry']
 
 def search(search_input):
-    return search_grads(parse_search_bar_input(search_input))
+    try:
+        return "Success", search_grads(parse_search_bar_input(search_input))
+    except:
+        return "Error occurred when searching, make sure search input is valid", []
 
 def parse_search_bar_input(search_input):
     query = {}
