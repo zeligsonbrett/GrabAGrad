@@ -26,3 +26,20 @@ function openNav() {
       document.getElementById("main").style.marginLeft= "20px";
   }    
 }
+
+function details() {
+  if(document.getElementById("details").className.includes("details-closed")) {
+      document.getElementById("details").style.width = "45%";
+      document.getElementById("details").style.visibility = "visible";
+      document.getElementById("details").classList.add("details-open");
+      document.getElementById("details").classList.remove("details-closed");
+  }
+
+  else{
+      document.getElementById("details").style.width = "0";
+      document.getElementById("details").style.boxShadow = "none";
+      document.getElementById("details").style.visibility = "hidden";
+      document.getElementById("details").classList.remove("details-open");
+      document.getElementById("details").classList.add("details-closed");
+  }   
+}
