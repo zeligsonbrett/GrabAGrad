@@ -11,9 +11,14 @@ import auth
 
 try:
     app.secret_key = os.environ['APP_SECRET_KEY']
+    # Note, CAS approved for our Heroku site, not for all sites,
+    # meaning CAS doesn't work for our local tests.
+    cas_enabled = True
 except:
+    # Note, this except clause is designed to function locally.
     from controller.keys import APP_SECRET_KEY
     app.secret_key = APP_SECRET_KEY
+    cas_enabled = False
 
 
 @app.route('/')
@@ -25,9 +30,9 @@ def index():
 
 @app.route('/see_grads')
 def see_grads():
-    auth.authenticate()
-    # engine = create_engine()
-    # graduates = query_all_grads()
+    if cas_enabled:
+        auth.authenticate()
+
     search_input = request.args.get('searchbar')
     #try:
     graduates = None
@@ -56,7 +61,8 @@ def see_grads():
 
 @app.route('/form')
 def form():
-    username = auth.authenticate()
+    if cas_enabled:
+        username = auth.authenticate()
 
     html = render_template('form_page.html')
     return make_response(html)
@@ -68,9 +74,9 @@ def form():
 
 @app.route('/submit')
 def submit():
-    username = auth.authenticate()
+    if cas_enabled:
+        username = auth.authenticate()
 
-    # engine = create_engine()
     name = request.args.get('name')
     major = request.args.get('major')
     bio = request.args.get('bio')
