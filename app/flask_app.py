@@ -2,7 +2,6 @@
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
 import controller.search as search
-from controller.keys import APP_SECRET_KEY
 import auth
 import os
 
@@ -11,6 +10,7 @@ app = Flask(__name__, template_folder='./view', static_folder='./view')
 try:
     app.secret_key = os.environ['APP_SECRET_KEY']
 except:
+    from controller.keys import APP_SECRET_KEY
     app.secret_key = APP_SECRET_KEY
 
 
