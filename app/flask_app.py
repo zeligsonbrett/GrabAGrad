@@ -2,19 +2,23 @@
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
 import controller.search as search
-from keys import APP_SECRET_KEY
+from controller.keys import APP_SECRET_KEY
+import auth
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
-b'MT`\xd9\x94\xc3a\xc0\xe0\xdfb\x9b\xde\xce&@'
+app.secret_key = APP_SECRET_KEY
+
 
 @app.route('/')
 def index():
+
     html = render_template('index.html')
     return make_response(html)
 
 
 @app.route('/see_grads')
 def see_grads():
+    auth.authenticate()
     # engine = create_engine()
     # graduates = query_all_grads()
     search_input = request.args.get('searchbar')
@@ -45,6 +49,8 @@ def see_grads():
 
 @app.route('/form')
 def form():
+    username = auth.authenticate()
+
     html = render_template('form_page.html')
     return make_response(html)
 
@@ -55,6 +61,8 @@ def form():
 
 @app.route('/submit')
 def submit():
+    username = auth.authenticate()
+
     # engine = create_engine()
     name = request.args.get('name')
     major = request.args.get('major')
