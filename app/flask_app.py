@@ -2,10 +2,12 @@
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
 import controller.search as search
-import auth
 import os
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
+
+import auth
+
 
 try:
     app.secret_key = os.environ['APP_SECRET_KEY']
