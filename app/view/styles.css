@@ -156,6 +156,7 @@ textarea:hover {
     margin-top: 10px;
     padding: 0;   
 }
+
 #custom-file-input::-webkit-file-upload-button {
   visibility: hidden;
 }
@@ -163,11 +164,13 @@ textarea:hover {
 #custom-file-input::before {
   content: 'Choose Your Photo';
   display: inline-block;
- margin-right: 80px;
+  margin-right: 80px;
+  line-height: 20px;
   background: #f89f39;
   border-style: none;
   padding: 5px 8px;
   outline: none;
+  height: 40px;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
@@ -177,14 +180,6 @@ textarea:hover {
 #custom-file-input:hover,
 #custom-file-input:active {
  color: black;
-}
-
-#custom-file-input:active::before {
-  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
-
-#custom-file-input:active::after {
-   display: none;
 }
 
 .details ul{
