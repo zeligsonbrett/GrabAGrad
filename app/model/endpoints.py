@@ -137,9 +137,9 @@ def __create_graduates_list(id_list):
 
 
 # Based on Henry's valid search fields from search.py
-def search_grads(name='', dept='', research='', grad_year='',
-                 undergrad_uni='', masters_uni='', years_worked=None,
-                 industry=''):
+def search_grads(name=None, dept=None, research=None, grad_year=None,
+                 undergrad_uni=None, masters_uni=None, years_worked=None,
+                 industry=None):
     """
     Search all grads for matches based on search criteria
     :return: Graduate object for all matching graduates
@@ -150,29 +150,43 @@ def search_grads(name='', dept='', research='', grad_year='',
     undergrad_uni = __prepare_argument(undergrad_uni)
     masters_uni = __prepare_argument(masters_uni)
     grad_year = __prepare_argument(grad_year)
-    industry = __prepare_argument(industry)
 
     if years_worked is None:
         years_worked_c = ''
     else:
         years_worked_c = 'AND years_worked = {}'.format(years_worked)
 
-    command = sqla.text(
-        """SELECT DISTINCT graduates.id FROM 
-        graduates, grad_industries
-        WHERE graduates.id = grad_industries.id AND name LIKE :name AND 
-        acad_dept LIKE :dept AND research_focus LIKE :research AND 
-        undergrad_university LIKE :undergrad_uni AND masters_university
-        LIKE :masters_uni AND expected_grad_date LIKE :grad_year {} AND
-        industry LIKE :industry ORDER BY graduates.id
-        ASC;""".format(years_worked_c))
-    params = {'name': name, 'dept': dept, 'research': research,
-              'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
-              'masters_uni': masters_uni, 'years_worked': years_worked,
-              'industry': industry}
-    output = db.execute_command(command, params)
-    ids = [x['id'] for x in output]
-    grad_list = __create_graduates_list(ids)
+    grad_list = []
+    if industry is not None:
+        industry = __prepare_argument(industry)
+        command = sqla.text(
+            """SELECT DISTINCT graduates.id FROM 
+            graduates, grad_industries
+            WHERE graduates.id = grad_industries.id AND name LIKE :name AND 
+            acad_dept LIKE :dept AND research_focus LIKE :research AND 
+            undergrad_university LIKE :undergrad_uni AND masters_university
+            LIKE :masters_uni {} AND industry LIKE :industry ORDER BY graduates.id
+            ASC;""".format(years_worked_c))
+        params = {'name': name, 'dept': dept, 'research': research,
+                  'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
+                  'masters_uni': masters_uni, 'years_worked': years_worked,
+                  'industry': industry}
+        output = db.execute_command(command, params)
+        ids = [x['id'] for x in output]
+        grad_list = __create_graduates_list(ids)
+    else:
+        command = sqla.text(
+            """SELECT DISTINCT graduates.id FROM 
+            graduates WHERE name LIKE :name AND acad_dept LIKE :dept 
+            AND research_focus LIKE :research AND 
+            undergrad_university LIKE :undergrad_uni AND masters_university
+            LIKE :masters_uni {} ORDER BY graduates.id ASC;""".format(years_worked_c))
+        params = {'name': name, 'dept': dept, 'research': research,
+                  'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
+                  'masters_uni': masters_uni, 'years_worked': years_worked}
+        output = db.execute_command(command, params)
+        ids = [x['id'] for x in output]
+        grad_list = __create_graduates_list(ids)
 
     return grad_list
 

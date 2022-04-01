@@ -66,19 +66,31 @@ def submit():
         username = auth.authenticate()
 
     name = request.args.get('name')
-    major = request.args.get('major')
-    bio = request.args.get('bio')
+    dept = request.args.get('academic-dept')
+    undergrad = request.args.get('undergrad-institution')
+    masters = request.args.get('masters-institution')
+    email = request.args.get('email')
+    phone_number = request.args.get('phone_number')
+    years_worked = request.args.get('years-worked')
+    photo = request.args.get('photo')
+    research = request.args.get('research-focus')
 
     try:
-        ep.add_a_grad(name=name, dept=major, bio=bio)
+        ep.add_a_grad(name=name, dept=dept, bio=None, un_uni=undergrad, ma_uni=masters,
+               research_focus=research, expected_grad_date=None,
+               years_worked=years_worked, photo_link=photo,
+               website_link=None, experiences=None, industries=None,
+               interests=None, email=email, phone=phone_number)
     except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
-        html = render_template('error.html', error=str(ex))
-        return make_response(html)
+        #html = render_template('error.html', error=str(ex))
+        #return make_response(html)
+        raise Exception(ex)
+        pass
 
     html = render_template('search_thanks.html',
-                           name=name, major=major, bio=bio)
+                           name=name, major=dept, bio=None)
     response = make_response(html)
     return response
 
