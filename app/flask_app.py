@@ -34,27 +34,14 @@ def see_grads():
         auth.authenticate()
 
     search_input = request.args.get('searchbar')
-    #try:
+
     graduates = None
     success_msg = "Success"
     if search_input:
         success_msg, graduates = search.search(search_input)
     else:
         graduates = ep.query_all_grads()
-    '''except Exception as ex:
-        # Note, error.html doesn't exist yet, we need to decide if we
-        # want something like this
 
-        html = render_template('error.html', error=str(ex))
-        return make_response(html)
-    '''
-
-    # Note, we need an HTML file that will receive a list of graduate
-    # objects (see graduates.py), and then can display relevant info for
-    # these graduates. This should be similar to code in A3.
-    # someHTMLfileName.html would have fields inputted into it like this
-    # but with better formatting
-    # <strong>Name:</strong> {{graduate.get_course_name()}}<br>
     html = render_template('search_page.html',
                            success=success_msg, graduates=graduates)
     response = make_response(html)
@@ -69,7 +56,7 @@ def form():
     return make_response(html)
 
 # add in form one
-# call add_a grad with the saerch form
+# call add_a grad with the search form
 # name and dept is required
 # use add_a_grad variable names
 
@@ -81,22 +68,15 @@ def submit():
     name = request.args.get('name')
     major = request.args.get('major')
     bio = request.args.get('bio')
-    print(name, major, bio)
+
     try:
         ep.add_a_grad(name=name, dept=major, bio=bio)
     except Exception as ex:
         # Note, error.html doesn't exist yet, we need to decide if we
         # want something like this
-
         html = render_template('error.html', error=str(ex))
         return make_response(html)
 
-    # Note, we need an HTML file that will receive a list of graduate
-    # objects (see graduates.py), and then can display relevant info for
-    # these graduates. This should be similar to code in A3.
-    # someHTMLfileName.html would have fields inputted into it like this
-    # but with better formatting
-    # <strong>Name:</strong> {{graduate.get_course_name()}}<br>
     html = render_template('search_thanks.html',
                            name=name, major=major, bio=bio)
     response = make_response(html)
