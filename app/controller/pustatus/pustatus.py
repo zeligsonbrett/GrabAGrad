@@ -35,7 +35,9 @@ def is_graduate(netid):
         uid=newNetID,
     )
     supernewnetid = netid[:]
-    print(newNetID == newVar)
+    print("This is the supernewnetid:", supernewnetid)
+    print("This is the newVar:", newVar)
+    print(supernewnetid == newVar)
     req5 = req_lib.getJSON(
         req_lib.configs.USERS,
         uid=supernewnetid,
