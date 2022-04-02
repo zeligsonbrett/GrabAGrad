@@ -18,7 +18,7 @@ def is_graduate(netid):
     print(netid)
     req = req_lib.getJSON(
         req_lib.configs.USERS,
-        uid=netid,
+        uid="taknoll",
     )
     print("This is the netid you searched for:", netid)
     print("The below print statement is what was returned by req")
