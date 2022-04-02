@@ -5,7 +5,7 @@ import controller.search as search
 import os
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
-
+search_input = ""
 import auth
 
 
@@ -27,21 +27,24 @@ def index():
     html = render_template('index.html')
     return make_response(html)
 
-
-@app.route('/see_grads')
-def see_grads():
-    if cas_enabled:
-        auth.authenticate()
-
-    search_input = request.args.get('searchbar')
-
+def get_grads(search_input):
     graduates = None
     success_msg = "Success"
     if search_input:
         success_msg, graduates = search.search(search_input)
     else:
         graduates = ep.query_all_grads()
+    return success_msg, graduates
 
+@app.route('/see_grads')
+def see_grads():
+    global search_input
+    if cas_enabled:
+        auth.authenticate()
+
+    search_input = request.args.get('searchbar')
+
+    success_msg, graduates = get_grads(search_input)
     html = render_template('search_page.html',
                            success=success_msg, graduates=graduates)
     response = make_response(html)
@@ -54,6 +57,22 @@ def form():
 
     html = render_template('form_page.html')
     return make_response(html)
+
+@app.route('/sortgradsby')
+def sort_grads():
+    global search_input
+    type_sort = request.args.get('Submit')
+    success_msg, graduates = get_grads(search_input)
+    '''if success_msg == "Success":
+        if type_sort == "First Name: Z-A":
+            graduates = sorted(graduates, key=lambda x: (x._details is None, x._details[1]), reverse=True)
+        else:
+            graduates = sorted(graduates, key=lambda x: (x._details is None, x._details[1]), reverse=False)
+    '''
+    html = render_template('search_page.html',
+                           success=success_msg, graduates=graduates)
+    response = make_response(html)
+    return response
 
 # add in form one
 # call add_a grad with the search form

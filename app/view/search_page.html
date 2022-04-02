@@ -37,14 +37,16 @@
                     <input class="search-filter" type="text" placeholder="Industries Worked In"></intput>
                 </form> -->
                 <div id="sort" class="btn-group">
-                    <button style="margin-left: 20px; background-color: white; color: black; border-style: none;" type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort By:
-                    </button>
-                    <div style="margin-left: 33px; margin-top: 5px;" class="dropdown-menu dropdown-menu-right">
-                      <button id="alphabetical" class="dropdown-item" type="button">First Name: A &#8594; Z</button>
-                      <button id="reverse-alphabetical" class="dropdown-item" type="button">First Name: Z &#8594; A</button>
-                      <button id="year" class="dropdown-item" type="button">Graduation Year</button>
-                    </div>
+                        <button style="margin-left: 20px; background-color: white; color: black; border-style: none;" type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sort By:
+                        </button>
+                        <div style="margin-left: 33px; margin-top: 5px;" class="dropdown-menu dropdown-menu-right">
+                          <form id="sortby" method="get" action="sortgradsby">
+                              <input name="Submit" id="alphabetical" class="dropdown-item" type="submit" value="First Name: A-Z"></input>
+                              <input name="Submit" id="reverse-alphabetical" class="dropdown-item" type="submit" value="First Name: Z-A"></input>
+                              <input name="submit" id="year" class="dropdown-item" type="submit" value="Graduation Year"></input>
+                           <form>
+                        </div>
                   </div>
             
             </div>
