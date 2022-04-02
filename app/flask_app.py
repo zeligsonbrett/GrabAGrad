@@ -3,6 +3,7 @@ from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
 import controller.search as search
 import os
+import controller.pustatus.pustatus as pu
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 search_input = ""
@@ -40,7 +41,8 @@ def get_grads(search_input):
 def see_grads():
     global search_input
     if cas_enabled:
-        auth.authenticate()
+        netid = auth.authenticate()
+        pu.is_graduate(netid)
 
     search_input = request.args.get('searchbar')
 
@@ -53,7 +55,7 @@ def see_grads():
 @app.route('/form')
 def form():
     if cas_enabled:
-        username = auth.authenticate()
+        netid = auth.authenticate()
 
     html = render_template('form_page.html')
     return make_response(html)
@@ -82,7 +84,7 @@ def sort_grads():
 @app.route('/submit')
 def submit():
     if cas_enabled:
-        username = auth.authenticate()
+        netid = auth.authenticate()
 
     name = request.args.get('name')
     dept = request.args.get('academic-dept')
