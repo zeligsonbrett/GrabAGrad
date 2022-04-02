@@ -86,6 +86,7 @@ def authenticate():
     # The user is authenticated, so store the username in
     # the session.
     session['username'] = username
+    username = username.strip()
     return username
 
 
