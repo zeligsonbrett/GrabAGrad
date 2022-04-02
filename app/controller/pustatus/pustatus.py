@@ -15,9 +15,10 @@ telephoneNumber (phone number if it is a faculty member)
 
 def is_graduate(netid):
     req_lib = ReqLib()
-    print(type(netid))
     req = req_lib.getJSON(
         req_lib.configs.USERS,
         uid=str(netid),
     )
-    return req[0]['pustatus'] == 'graduate'
+    print(req)
+    # return req[0]['pustatus'] == 'graduate'
+    return True
