@@ -174,6 +174,8 @@ textarea:hover {
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
+  margin-right: -40px;
+  margin-left: 20px;
   font-size: 20px;
 }
 
@@ -181,6 +183,7 @@ textarea:hover {
 #custom-file-input:active {
  color: black;
 }
+
 
 .details ul{
     list-style: none;
@@ -299,6 +302,15 @@ h1{
     height: 40px;
     border-radius: 4px;
     font-size: 22px;
+}
+
+#sort button:hover{
+    background-color: #FFB98B;
+}
+
+#sort button:focus{
+    outline: none;
+    background-color: #EE9440;
 }
 
 .search-bar:hover{
