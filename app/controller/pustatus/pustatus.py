@@ -1,4 +1,4 @@
-from pustatus.req_lib import ReqLib
+from controller.pustatus.req_lib import ReqLib
 
 '''
 Users endpoint displays following information, when given a netid.
