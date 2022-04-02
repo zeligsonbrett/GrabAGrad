@@ -19,10 +19,8 @@ def is_graduate(netid):
         req_lib.configs.USERS,
         uid=netid,
     )
+    print("This is the netid you searched for: ", netid)
+    print("The below print statement is what was returned by req")
     print(req)
     # Trying a print
-    try:
-        print(req['pustatus'])
-    except Exception as ex:
-        print("Your code had this error: %s", ex)
     return True
