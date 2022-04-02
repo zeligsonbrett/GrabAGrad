@@ -15,38 +15,13 @@ telephoneNumber (phone number if it is a faculty member)
 
 def is_graduate(netid):
     req_lib = ReqLib()
+    netid = netid.strip()
     req = req_lib.getJSON(
         req_lib.configs.USERS,
         uid=netid,
     )
-    req2 = req_lib.getJSON(
-        req_lib.configs.USERS,
-        uid="taknoll",
-    )
-    newVar = "taknoll"
-    req3 = req_lib.getJSON(
-        req_lib.configs.USERS,
-        uid=newVar,
-    )
-    newNetID = netid
-    print(newNetID == newVar)
-    req4 = req_lib.getJSON(
-        req_lib.configs.USERS,
-        uid=newNetID,
-    )
-    supernewnetid = netid[:]
-    print("This is the supernewnetid:", supernewnetid)
-    print("This is the newVar:", newVar)
-    print(supernewnetid == newVar)
-    req5 = req_lib.getJSON(
-        req_lib.configs.USERS,
-        uid=supernewnetid,
-    )
+    try:
+        return req[0]['pustatus'] == 'graduate'
 
-    print(req)
-    print(req2)
-    print(req3)
-    print(req4)
-    print(req5)
-    # return req[0]['pustatus'] == 'graduate'
-    return True
+    except Exception:
+        return False
