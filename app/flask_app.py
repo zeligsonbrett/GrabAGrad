@@ -63,12 +63,12 @@ def sort_grads():
     global search_input
     type_sort = request.args.get('Submit')
     success_msg, graduates = get_grads(search_input)
-    '''if success_msg == "Success":
+    if success_msg == "Success":
         if type_sort == "First Name: Z-A":
             graduates = sorted(graduates, key=lambda x: (x._details is None, x._details[1]), reverse=True)
         else:
             graduates = sorted(graduates, key=lambda x: (x._details is None, x._details[1]), reverse=False)
-    '''
+    
     html = render_template('search_page.html',
                            success=success_msg, graduates=graduates)
     response = make_response(html)
