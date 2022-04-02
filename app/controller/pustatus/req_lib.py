@@ -2,7 +2,7 @@
 # https://github.com/vr2amesh/COS333-API-Code-Examples/tree/master/ActiveDirectory/python
 import requests
 import json
-from controller.pustatus.configs import Configs
+from configs import Configs
 
 
 class ReqLib:
