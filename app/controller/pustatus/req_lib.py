@@ -2,20 +2,8 @@
 # https://github.com/vr2amesh/COS333-API-Code-Examples/tree/master/ActiveDirectory/python
 import requests
 import json
-try:
-    from configs import Configs
-    print('from configs import Configs worked')
-except:
-    try:
-        from pustatus.configs import Configs
-        print('from pustatus.configs import Configs worked')
-    except:
-        from controller.pustatus.configs import Configs
-        print('from controller.pustatus.configs import Configs worked')
 
-
-
-
+from controller.pustatus.config import Configs
 
 class ReqLib:
 
