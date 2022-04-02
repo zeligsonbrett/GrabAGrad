@@ -28,9 +28,16 @@ def is_graduate(netid):
         req_lib.configs.USERS,
         uid=newVar,
     )
+    newNetID = netid
+    print(newNetID == newVar)
+    req4 = req_lib.getJSON(
+        req_lib.configs.USERS,
+        uid=newNetID,
+    )
 
     print(req)
     print(req2)
     print(req3)
+    print(req4)
     # return req[0]['pustatus'] == 'graduate'
     return True
