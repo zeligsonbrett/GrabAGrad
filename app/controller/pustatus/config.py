@@ -8,7 +8,9 @@ import os
 class Configs:
     def __init__(self):
         self.CONSUMER_KEY = os.environ['P_API_CONSUMER_KEY']
+        print(self.CONSUMER_KEY)
         self.CONSUMER_SECRET = os.environ['P_API_CONSUMER_SECRET']
+        print(self.CONSUMER_SECRET)
         self.BASE_URL="https://api.princeton.edu:443/active-directory/1.0.5"
         self.USERS = "/users"
         self.USERS_BASIC = "/users/basic"
