@@ -6,7 +6,7 @@
 
     <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
-        <meta name="description" content="A multi-part series by graduate student columnist Matt Mleczko about how Princeton University can promote affordable housing in a reparative framework and provide a model for other similar institutions to follow. ">
+        <meta name="description" content="A form to upload graduates.">
 
         <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
         <script src="{{url_for('static', filename='script.js')}}"></script>
@@ -86,10 +86,11 @@
                 <input class="submit-button" type="submit" value="Submit">
             </div>
     </form>
-
+    <input type="hidden" id="photolink" name ="photolink" value = "">
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <script type="text/javascript">
     function setup(){
+
         var upload_widget = cloudinary.createUploadWidget({
             cloudName: '{{cloud_name}}',
             maxFiles: 1,
@@ -97,12 +98,18 @@
             cropping: 'true',
             sources: ['local', 'camera', 'instagram'],
             croppingAspectRatio: 0.8514,
+            singleUploadAutoClose: false,
             uploadPreset: 'GrabAGrad'}, (error, result) => {
                 if (!error && result && result.event === "success") {
                     imageUrl = result.info.url;
                     console.log("The image url is: " + imageUrl);
                 }
+                $('#cloudinary_upload').text("upload another photo (up to 4)");
+                if (error){
+                    console.log("There was an error while uploading."
+                }
             }
+
         )
 
         document.getElementById("cloudinary_upload").addEventListener("click",
