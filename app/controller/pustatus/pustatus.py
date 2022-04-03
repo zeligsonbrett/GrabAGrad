@@ -18,16 +18,13 @@ def _request_users_endpoint(netid):
     :param netid: The netid to search for in ActiveDirectory.
     :return: A JSON String of the results of the users endpoint.
     """
-    print("expected netid: taknoll")
-    print("actual netid: %s" % netid)
-    print('taknoll' == netid)
     try:
+        netid = netid.strip()
         req_lib = ReqLib()
         req = req_lib.getJSON(
             req_lib.configs.USERS,
             uid=netid,
         )
-        print(req)
         return req[0]
     except Exception as ex:
         print("Exception discovered while attemping ActiveDirectory request:\n", ex)
