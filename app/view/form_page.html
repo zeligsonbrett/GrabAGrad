@@ -59,21 +59,21 @@
             <label for="phone-number">Preferred Phone Number</label>
             <input id="phone-number" name="phone-number" type="text"><br>
         </div>
-        <div class="input-label">
-            <label for="photo">Profile Photo</label>
-            <input style="height: 40px; color: black; border-style:none" id="custom-file-input" id="photo" name="photo" type="file">
-        </div>
-       
 
-        <label for="industires">Industries Worked In (Please separate by commas)</label>
-        <textarea id="industries" name="industries" rows="0" cols="0"></textarea>  
-        
+        <div id="profile_photo" class="input-label">
+            <label for="cloudinary_upload">Profile Photo</label>
+            <button id="cloudinary_upload" type="button"> Choose Your Photo </button>
+        </div>
+
+        <label for="industries">Industries Worked In (Please separate by commas)</label>
+        <textarea id="industries" name="industries" rows="0" cols="0"></textarea>
+
         <br>
         <label for="research-focus">Current Research Focus</label>
-        <textarea id="research-focus" name="research-focus" rows="0" cols="0"></textarea>  
+        <textarea id="research-focus" name="research-focus" rows="0" cols="0"></textarea>
 
         <br>
-        <label for="consent">Do you consent to having your information shared with undegraduates?</label>
+        <label for="consent">Do you consent to having your information shared with undergraduates?</label>
             <div class="custom-control custom-radio">
                 <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
                 <label class="custom-control-label" for="customRadio1">Yes</label>
@@ -82,12 +82,36 @@
                 <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
                 <label class="custom-control-label" for="customRadio2">No</label>
             </div>
-            <div style="text-align: right;">    
+            <div style="text-align: right;">
                 <input class="submit-button" type="submit" value="Submit">
             </div>
-
-
-    
     </form>
+
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    function setup(){
+        var upload_widget = cloudinary.createUploadWidget({
+            cloudName: '{{cloud_name}}',
+            maxFiles: 1,
+            resourceType: 'image',
+            cropping: 'true',
+            sources: ['local', 'camera', 'instagram'],
+            croppingAspectRatio: 0.8514,
+            uploadPreset: 'GrabAGrad'}, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    imageUrl = result.info.url;
+                    console.log("The image url is: " + imageUrl);
+                }
+            }
+        )
+
+        document.getElementById("cloudinary_upload").addEventListener("click",
+            function(){upload_widget.open(); }, false);
+    }
+
+    $('#document').ready(setup);
+</script>
+
+
 </body>
 </html>

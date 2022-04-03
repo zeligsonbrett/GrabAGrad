@@ -57,8 +57,12 @@ def see_grads():
 def form():
     if cas_enabled:
         netid = auth.authenticate()
-
-    html = render_template('form_page.html')
+    try:
+        html = render_template('form_page.html', cloud_name=os.environ['CLOUD_NAME'])
+    except:
+        from controller.keys import CLOUD_NAME
+        html = render_template('form_page.html',
+                               cloud_name=CLOUD_NAME)
     return make_response(html)
 
 @app.route('/sortgradsby')

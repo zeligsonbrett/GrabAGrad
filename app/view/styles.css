@@ -179,9 +179,29 @@ textarea:hover {
   font-size: 20px;
 }
 
+#cloudinary_upload {
+  display: inline-block;
+  margin-right: 80px;
+  line-height: 20px;
+  background: #f89f39;
+  border-style: none;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  height: 40px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
 #custom-file-input:hover,
-#custom-file-input:active {
- color: black;
+#custom-file-input:active,
+#cloudinary_upload:hover,
+#cloudinary_upload:active
+{
+ outline: black solid 2px;
 }
 
 
