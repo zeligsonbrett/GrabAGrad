@@ -60,7 +60,7 @@ def form():
 
     uploaded_image = request.args.get('image_link')
     try:
-        html = render_template('form_page.html', cloud_name=os.environ['CLOUD_NAME'])
+        html = render_template('form_page.html', cloud_name=os.environ['CLOUD_NAME'], )
     except:
         from controller.keys import CLOUD_NAME
         html = render_template('form_page.html',
@@ -100,7 +100,11 @@ def submit():
     email = request.args.get('email')
     phone_number = request.args.get('phone_number')
     years_worked = request.args.get('years-worked')
-    photo = request.args.get('photo')
+    try:
+        years_worked = int(years_worked)
+    except:
+        years_worked = None
+    photo = request.args.get('image_link')
     research = request.args.get('research-focus')
 
     try:
@@ -110,12 +114,9 @@ def submit():
                website_link=None, experiences=None, industries=None,
                interests=None, email=email, phone=phone_number)
     except Exception as ex:
-        # Note, error.html doesn't exist yet, we need to decide if we
-        # want something like this
-        #html = render_template('error.html', error=str(ex))
-        #return make_response(html)
-        raise Exception(ex)
-        pass
+        print(ex)
+        html = render_template('error.html', error=str(ex))
+        return make_response(html)
 
     html = render_template('search_thanks.html',
                            name=name, major=dept, bio=None)
