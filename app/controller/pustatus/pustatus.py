@@ -18,6 +18,9 @@ def _request_users_endpoint(netid):
     :param netid: The netid to search for in ActiveDirectory.
     :return: A JSON String of the results of the users endpoint.
     """
+    print("expected netid: taknoll")
+    print("actual netid: %s" % netid)
+    print('taknoll' == netid)
     try:
         req_lib = ReqLib()
         req = req_lib.getJSON(
