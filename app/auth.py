@@ -77,7 +77,7 @@ def authenticate():
 
     # If the login ticket is invalid, then redirect the browser
     # to the login page to get a new one.
-    username = validate(ticket)
+    username = validate(ticket).strip()
     if username is None:
         login_url = (_CAS_URL + 'login?service='
                      + quote(strip_ticket(request.url)))
@@ -86,7 +86,6 @@ def authenticate():
     # The user is authenticated, so store the username in
     # the session.
     session['username'] = username
-    username = username.strip()
     return username
 
 
