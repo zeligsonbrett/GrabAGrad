@@ -24,6 +24,7 @@ def _request_users_endpoint(netid):
             req_lib.configs.USERS,
             uid=netid,
         )
+        print(req)
         return req[0]
     except Exception as ex:
         print("Exception discovered while attemping ActiveDirectory request:\n", ex)
