@@ -81,7 +81,7 @@
                     <p style="text-align: center">No Grad Students Match The Search Criteria</p>
                 {% else %}
                     {% for grad in graduates|list: %}
-                    <div class="card">  <img src="{{grad.get_photo_link()}}" alt="Image">
+                    <div class="card">  <img src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/grabagrad/image/upload/v1648614960/GrabAGradPeople/Princeton_Tiger_ebn1ip.jpg'" alt="Image of graduate">
                         <h2>{{grad.get_first_name()}}</h2>
                         <p><b></b>{{grad.get_acad_dept()}}</p>
                         <!--<p><b>Main Industry:</b> {{grad.get_industries()[0]}}</p>
