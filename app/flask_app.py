@@ -58,7 +58,7 @@ def form():
     if cas_enabled:
         netid = auth.authenticate()
 
-    uploaded_image = request.get('imagelink')
+    uploaded_image = request.args.get('image_link')
     try:
         html = render_template('form_page.html', cloud_name=os.environ['CLOUD_NAME'])
     except:
