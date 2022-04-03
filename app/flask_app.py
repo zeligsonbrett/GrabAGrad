@@ -41,9 +41,8 @@ def get_grads(search_input):
 def see_grads():
     global search_input
     if cas_enabled:
-
         netid = auth.authenticate()
-        print(pu.is_graduate(netid))
+        pu.is_graduate(netid)
 
 
     search_input = request.args.get('searchbar')
