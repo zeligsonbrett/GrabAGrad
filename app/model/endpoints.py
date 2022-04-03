@@ -196,11 +196,16 @@ def get_grad_information(idnum):
     Gets overview information for a certain id number graduate
     """
     command = sqla.text(
-        'SELECT * FROM graduates WHERE graduates.id = :id')
+        'SELECT * FROM public.graduates, public.grad_contact WHERE graduates.id=:id AND graduates.id = grad_contact.id;')
     params = {'id': idnum}
     output = db.execute_command(command, params)
-    return [x for x in output][0]
-
+    all_details = [
+        [x['id'], x['name'], x['acad_dept'], x['bio'],
+         x['undergrad_university'], x['masters_university'],
+         x['research_focus'], x['expected_grad_date'],
+         x['years_worked'], x['photo_link'], x['website_link'], x['email']]
+        for x in output]
+    return Graduate(details=all_details[0][:11], contact=all_details[0][11])
 
 def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
                research_focus=None, expected_grad_date=None,

@@ -53,6 +53,14 @@ def see_grads():
     response = make_response(html)
     return response
 
+@app.route('/popup')
+def search_results():
+    grad_id = request.args.get('id')
+    graduate = ep.get_grad_information(grad_id)
+    html = render_template('popup_box.html', grad=graduate)
+    response = make_response(html)
+    return response
+
 @app.route('/form')
 def form():
     if cas_enabled:
