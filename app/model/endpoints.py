@@ -198,14 +198,17 @@ def get_grad_information(idnum):
     command = sqla.text(
         'SELECT * FROM public.graduates, public.grad_contact WHERE graduates.id=:id AND graduates.id = grad_contact.id;')
     params = {'id': idnum}
-    output = db.execute_command(command, params)
+    output1 = db.execute_command(command, params)
+    industries_command = sqla.text('SELECT * FROM public.grad_industries WHERE grad_industries.id=:id')
+    output2 = db.execute_command(industries_command, params)
     all_details = [
         [x['id'], x['name'], x['acad_dept'], x['bio'],
          x['undergrad_university'], x['masters_university'],
          x['research_focus'], x['expected_grad_date'],
          x['years_worked'], x['photo_link'], x['website_link'], x['email']]
-        for x in output]
-    return Graduate(details=all_details[0][:11], contact=all_details[0][11])
+        for x in output1]
+    industries = [x['industry'] for x in output2]
+    return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries)
 
 def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
                research_focus=None, expected_grad_date=None,

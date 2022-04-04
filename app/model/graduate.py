@@ -55,6 +55,9 @@ class Graduate:
     def get_industries(self):
         return self._industries
 
+    def get_industries_str(self):
+        return str.join(', ', self._industries)
+
     def get_experiences(self):
         return self._experiences
 

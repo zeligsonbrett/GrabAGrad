@@ -54,7 +54,7 @@ def see_grads():
     return response
 
 @app.route('/popup')
-def search_results():
+def popup_results():
     grad_id = request.args.get('id')
     graduate = ep.get_grad_information(grad_id)
     html = render_template('popup_box.html', grad=graduate)
@@ -114,12 +114,14 @@ def submit():
         years_worked = None
     photo = request.args.get('image_link')
     research = request.args.get('research-focus')
+    industries = request.args.get('industries')
+    industries = [x.strip() for x in industries.split(',')];
 
     try:
         ep.add_a_grad(name=name, dept=dept, bio=None, un_uni=undergrad, ma_uni=masters,
                research_focus=research, expected_grad_date=None,
                years_worked=years_worked, photo_link=photo,
-               website_link=None, experiences=None, industries=None,
+               website_link=None, experiences=None, industries=industries,
                interests=None, email=email, phone=phone_number)
     except Exception as ex:
         print(ex)
