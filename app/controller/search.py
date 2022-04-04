@@ -21,7 +21,7 @@ def parse_search_bar_input(search_input):
         if field_name in query:
             raise Exception('Duplicate values for field: ' + field_name)
 
-        field_value = field_value.replace('"', "")
+        field_value = field_value.replace('"', "").lower()
         query[field_name] = field_value
     return query
 

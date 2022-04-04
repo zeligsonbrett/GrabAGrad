@@ -162,10 +162,10 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
         command = sqla.text(
             """SELECT DISTINCT graduates.id FROM 
             graduates, grad_industries
-            WHERE graduates.id = grad_industries.id AND name LIKE :name AND 
-            acad_dept LIKE :dept AND research_focus LIKE :research AND 
-            undergrad_university LIKE :undergrad_uni AND masters_university
-            LIKE :masters_uni {} AND industry LIKE :industry ORDER BY graduates.id
+            WHERE graduates.id = grad_industries.id AND name ILIKE :name AND 
+            acad_dept ILIKE :dept AND research_focus ILIKE :research AND 
+            undergrad_university ILIKE :undergrad_uni AND masters_university
+            ILIKE :masters_uni {} AND industry ILIKE :industry ORDER BY graduates.id
             ASC;""".format(years_worked_c))
         params = {'name': name, 'dept': dept, 'research': research,
                   'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
@@ -177,10 +177,10 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
     else:
         command = sqla.text(
             """SELECT DISTINCT graduates.id FROM 
-            graduates WHERE name LIKE :name AND acad_dept LIKE :dept 
-            AND research_focus LIKE :research AND 
-            undergrad_university LIKE :undergrad_uni AND masters_university
-            LIKE :masters_uni {} ORDER BY graduates.id ASC;""".format(years_worked_c))
+            graduates WHERE name ILIKE :name AND acad_dept ILIKE :dept 
+            AND research_focus ILIKE :research AND 
+            undergrad_university ILIKE :undergrad_uni AND masters_university
+            ILIKE :masters_uni {} ORDER BY graduates.id ASC;""".format(years_worked_c))
         params = {'name': name, 'dept': dept, 'research': research,
                   'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
                   'masters_uni': masters_uni, 'years_worked': years_worked}
