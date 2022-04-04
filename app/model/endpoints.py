@@ -154,7 +154,7 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
     if years_worked is None:
         years_worked_c = ''
     else:
-        years_worked_c = 'AND years_worked = {}'.format(years_worked)
+        years_worked_c = 'AND years_worked >= {}'.format(years_worked)
 
     grad_list = []
     if industry is not None:

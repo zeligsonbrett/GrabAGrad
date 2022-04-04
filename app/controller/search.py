@@ -2,7 +2,7 @@
 import model.endpoints as ep
 
 #sample_search_bar_input = 'name:"Austin Wang,  Cedrick Argueta,Henry Knoll   " name:"Henry Knoll" department:"Computer Science" undergraduate_university:"Princeton, Stanford"'
-VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year', 'industry', 'undergraduate_university', 'masters_university', 'years_industry']
+VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year', 'industry', 'undergraduate_university', 'masters_university', 'years_worked']
 
 def search(search_input):
     try:
@@ -27,7 +27,7 @@ def parse_search_bar_input(search_input):
 
 def search_grads(query):
     grad_list = []
-    name = department = research = grad_year = industry = undergraduate_university = masters_university = years_industry = None
+    name = department = research = grad_year = industry = undergraduate_university = masters_university = years_worked = None
     if 'name' in query:
         name = query['name']
     if 'department' in query:
@@ -42,10 +42,10 @@ def search_grads(query):
         undergraduate_university = query['undergraduate_university']
     if 'masters_university' in query:
         masters_university = query['masters_university']
-    if 'years_industry' in query:
-        years_industry = query['years_industry']
+    if 'years_worked' in query:
+        years_worked = query['years_worked']
 
-    grad_list.extend(ep.search_grads(name=name, dept=department, research=research, grad_year=grad_year, industry=industry, undergrad_uni=undergraduate_university, masters_uni=masters_university, years_worked=years_industry))
+    grad_list.extend(ep.search_grads(name=name, dept=department, research=research, grad_year=grad_year, industry=industry, undergrad_uni=undergraduate_university, masters_uni=masters_university, years_worked=years_worked))
     return grad_list
 
 def parse_search_bar_input_complex(search_input):
@@ -66,7 +66,7 @@ def parse_search_bar_input_complex(search_input):
 
 def search_grads_complex(query):
     grad_list = []
-    name = department = research = grad_year = industry = undergraduate_university = masters_university = years_industry = None
+    name = department = research = grad_year = industry = undergraduate_university = masters_university = years_worked = None
     if 'name' in query:
         name = query['name']
     if 'department' in query:
@@ -81,8 +81,8 @@ def search_grads_complex(query):
         undergraduate_university = query['undergraduate_university']
     if 'masters_university' in query:
         masters_university = query['masters_university']
-    if 'years_industry' in query:
-        years_industry = query['years_industry']
+    if 'years_worked' in query:
+        years_worked = query['years_worked']
 
-    grad_list.extend(ep.search_grads(name=name, dept=department, research=research, grad_year=grad_year, industry=industry, undergrad_uni=undergraduate_university, masters_uni=masters_university, years_worked=years_industry))
+    grad_list.extend(ep.search_grads(name=name, dept=department, research=research, grad_year=grad_year, industry=industry, undergrad_uni=undergraduate_university, masters_uni=masters_university, years_worked=years_worked))
     return grad_list
