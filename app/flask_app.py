@@ -127,7 +127,11 @@ def submit():
         return make_response(html)
 
     html = render_template('search_thanks.html',
-                           name=name, major=dept, bio=None)
+                           name=name, dept=dept, bio=None, un_uni=undergrad, ma_uni=masters,
+               research_focus=research, expected_grad_date=None,
+               years_worked=years_worked, photo_link=photo,
+               website_link=None, experiences=None, industries=None,
+               interests=None, email=email, phone=phone_number)
     response = make_response(html)
     return response
 

@@ -324,11 +324,11 @@ h1{
     font-size: 22px;
 }
 
-#sort button:hover{
+#sortby input:hover{
     background-color: #FFB98B;
 }
 
-#sort button:focus{
+#sortby input:focus{
     outline: none;
     background-color: #EE9440;
 }
@@ -528,4 +528,54 @@ img{
     transition: ease;
     padding-top: 50px;  
 }
-  
+
+.thanks{
+    margin-left: 20px;
+}
+
+.thanks h1{
+   color: black;
+    font-weight: bolder;
+    font-size: 50px;
+    text-align: center;
+}
+ 
+.thanks h2::first-letter,
+.thanks h2 {
+    color: black;
+    font-weight: bolder;
+    font-size: 40px;
+    color: white;
+ }
+
+ .thanks h2{
+    padding: 20px;
+    background-color: black;
+    color: white;
+    width: 450px;
+    margin-left: -21px;
+    border-radius: 0 12px 12px 0;
+ }
+
+ .thanks ul{
+    list-style: none;
+    font-size: 20px;
+    color: black;
+    float: left;
+    text-align: left;
+    margin-top: 10px;
+    padding: 0;
+    width: 100%;
+ }
+
+
+
+ .thanks b{
+    color: black;
+    background-color: rgb(238, 148, 64);
+    padding: 10px;
+    padding-left: 30%;
+    margin-left: -20px;
+    border-radius: 0 12px 12px 0;
+    margin-right: 10px;
+}

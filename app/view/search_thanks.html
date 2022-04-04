@@ -6,21 +6,45 @@
 
     <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
-        <meta name="description" content="Thanks graduates for inputting information into their profiles.">
+        <meta name="description" content="A form to upload graduates.">
 
         <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
-
         <script src="{{url_for('static', filename='script.js')}}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
     </head>
 
-<body>
-    <h1>Thanks for your submission</h1>
-    <h2>What we got from you:</h2>
-    <p><b>Name:</b> {{name}}</p>
-    <p><b>Major:</b> {{major}}</p>
-    <p><b>Bio:</b> {{bio}}</p>
-    <br>
-    <a href="/">Home</a>
+<body style="font-family: 'Lato', sans-serif;">
+    
+    <div class="header">
+        <a style="text-decoration: none" href="/">Home</a>
+        <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
+        <a style="text-decoration: none" href="/about">About GrabAGrad</a>
+        <span class="title">GrabAGrad</span>
+    </div>
+    <div style="height: 80px"></div>
+
+    <main class="thanks">
+        <h1>Thanks for your submission</h1>
+        <br>
+        <h2>What we got from you:</h2>
+        <br>
+        <ul>
+            <li><p><b>Name</b> {{name}}</p></li>
+            <li><p><b>Academic Department</b> {{dept}}</p></li>
+            <li><p><b>Years of Work Experience</b> {{years_worked}}</p></li>
+            <li><p><b>Undergraduate Institution</b> {{un_uni}}</p></li>
+            <li><p><b>Master's Institution</b> {{ma_uni}}</p></li>
+            <li><p><b>Preferred Contact Email</b> {{email}}</p></li>
+            <li><p><b>Preferred Phone Number</b> {{phone}}</p></li>
+            <li><p><b>Profile Photo</b> <img style="width: 300px; height: auto" src="{{photo_link}}"></p></li>
+            <li><p><b>Current Research Focus</b> {{research_focus}}</p></li>
+        </ul>
+    </main>
+
 
 </body>
 </html>
