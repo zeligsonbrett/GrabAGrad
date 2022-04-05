@@ -44,6 +44,8 @@ class Graduate:
         return self._details[7]
 
     def get_years_worked(self):
+        if self._details[8] is None:
+            return ''
         return self._details[8]
 
     def get_photo_link(self):
