@@ -27,6 +27,11 @@ def index():
     html = render_template('index.html')
     return make_response(html)
 
+@app.route('/about')
+def about():
+    html = render_template('about.html')
+    return make_response(html)
+
 
 def get_grads(search_input):
     graduates = None

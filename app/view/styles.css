@@ -364,21 +364,19 @@ h2::first-letter{
     margin-top: -35px;
     padding: 0px;
     line-height: 0px;
-    color: #ffb98b;
+    color: #EE9440;
     text-shadow: 
-  -3px 0px 0 #b8591b,
-  2px 0px 0 #000000,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff,
-  0px 0px 20px #ffffff;
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff,
+    0px 0px 20px #ffffff;
   
     /*margin-right: 11px;
     margin-top: 8px;
@@ -568,8 +566,6 @@ img{
     width: 100%;
  }
 
-
-
  .thanks b{
     color: black;
     background-color: rgb(238, 148, 64);
@@ -578,4 +574,43 @@ img{
     margin-left: -20px;
     border-radius: 0 12px 12px 0;
     margin-right: 10px;
+}
+
+.about-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-right: 2vw;
+    margin-left: 2vw;
+    flex-wrap: wrap;
+}
+
+.about-card{
+    min-width: 310px;
+    max-width: 320px;
+    margin: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+   
+}
+
+.about-card img{
+    border-radius: 20px;
+    box-shadow: -20px -20px #b8591b;
+}
+
+.about-card h1{
+    margin-top: 20px;
+    color:rgb(238, 148, 64)
+}
+
+.about-card h3{
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.thanks p{
+    font-size: 30px;
+    font-weight: bolder;
+    padding-top: 20px;
 }
