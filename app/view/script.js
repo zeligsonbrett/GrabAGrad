@@ -22,13 +22,14 @@ function openNav() {
   }
 
   else{
+      document.getElementById("mySidenav").classList.remove("menu-open");
+      document.getElementById("mySidenav").classList.add("menu-closed");  
       document.getElementById("filter").style.visibility = "hidden";
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("sort").style.height="0";
       document.getElementById("search").style.height="0";
       document.getElementById("mySidenav").style.boxShadow = "none";
-      document.getElementById("mySidenav").classList.remove("menu-open");
-      document.getElementById("mySidenav").classList.add("menu-closed");
+      
       document.getElementById("main").style.marginLeft= "20px";
       document.getElementById("details").style.width = "calc(100vw - 110px)";
   }    

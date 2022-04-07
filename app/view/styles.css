@@ -215,8 +215,6 @@ textarea:hover {
     padding: 0;   
 }
 
-
-
 .close:after {
     content: '';
     height: 30px;
@@ -336,6 +334,10 @@ h1{
 .search-bar:hover{
     border-style: none;
 }
+
+.search-bar:focus::placeholder {
+    color: transparent;
+  }
 
 ::placeholder{
     opacity: 1;
@@ -471,21 +473,20 @@ img{
 
 .search-filter{
     background-color: transparent;
-    padding-bottom: 3px;
+    padding-bottom: 10px;
     border-bottom-style: solid;
     border-bottom-width: 4px;
     border-color: black;
     width: 90%;
-    font-size: 20px;
-    transition: 0.5s ease-out;
-    margin-bottom: 12px;
+    font-size: 22px;
+    margin-bottom: 18px;
 }
 
-/*.search-filter:focus::placeholder,
+.search-filter:focus::placeholder,
 .search-filter:hover::placeholder {
     color: white;
-    transition: 0.5s ease-out;
-}*/
+    transition: 0.5s ease-in;
+}
 
 .search-filter:focus,
 .search-filter:hover {
@@ -493,7 +494,11 @@ img{
     color: white;
     outline: none;
     border-bottom-width: 4px;
-    transition: 0.5s ease-out;
+    transition: 0.5s ease-in;
+}
+
+.search-filter:focus::placeholder{
+    color: transparent;
 }
 
 .sidenav p{
