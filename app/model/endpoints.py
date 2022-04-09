@@ -49,7 +49,9 @@ def __id_string(id_list):
     :return: WHERE id IN ( ... )
     """
     if len(id_list) > 0:
-        id_string = ', '.join(map(str, id_list))
+        id_string = "'"
+        id_string += "', '".join(id_list)
+        id_string += "'"
         return 'WHERE netid IN ( {} )'.format(id_string)
     else:
         return ''
@@ -101,28 +103,28 @@ def __create_graduates_list(id_list):
     for row in details_list:
         industries_command = sqla.text("""SELECT DISTINCT industry FROM 
                                    grad_industries WHERE netid =
-                                   {}""".format(row[0]))
+                                   '{}'""".format(row[0]))
         industry_output = db.execute_command(industries_command)
         row_industries = [x['industry'] for x in industry_output]
         industry_list.append(row_industries)
 
         experiences_command = sqla.text("""SELECT DISTINCT experience 
                                     FROM grad_experiences WHERE netid = 
-                                    {}""".format(row[0]))
+                                    '{}'""".format(row[0]))
         experiences_output = db.execute_command(experiences_command)
         row_experiences = [x['experience'] for x in experiences_output]
         experiences_list.append(row_experiences)
 
         interests_command = sqla.text("""SELECT DISTINCT interest 
                                   FROM grad_interests WHERE netid = 
-                                  {}""".format(row[0]))
+                                  '{}'""".format(row[0]))
         interests_output = db.execute_command(interests_command)
         row_interests = [x['interest'] for x in interests_output]
         interests_list.append(row_interests)
 
         contacts_command = sqla.text("""SELECT email, phone
                                           FROM grad_contact WHERE netid = 
-                                          {}""".format(row[0]))
+                                          '{}'""".format(row[0]))
         contact_output = db.execute_command(contacts_command)
         row_contact = [[x['email'], x['phone']] for x in contact_output]
         contact_list.append(row_contact)
