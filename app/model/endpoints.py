@@ -254,37 +254,41 @@ def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
     output = db.execute_command(statement, graduates_info)
 
     if experiences is not None:
-        for experience, desc in experiences:
-            experience_info = {'netid': netid, 'experience': experience,
-                               'experience_desc': desc}
-            statement = sqla.text(
-                """INSERT INTO grad_experiences(netid, experience, 
-                experience_desc) VALUES(:netid, :experience, 
-                :experience_desc)""")
-            output = db.execute_command(statement, experience_info)
+        if experiences != '':
+            for experience, desc in experiences:
+                experience_info = {'netid': netid, 'experience': experience,
+                                   'experience_desc': desc}
+                statement = sqla.text(
+                    """INSERT INTO grad_experiences(netid, experience, 
+                    experience_desc) VALUES(:netid, :experience, 
+                    :experience_desc)""")
+                output = db.execute_command(statement, experience_info)
 
     if industries is not None:
-        for industry in industries:
-            industry_info = {'netid': netid, 'industry': industry}
-            statement = sqla.text(
-                """INSERT INTO grad_industries(netid, industry) VALUES(
-                :netid, :industry)""")
-            output = db.execute_command(statement, industry_info)
+        if industries != '':
+            for industry in industries:
+                industry_info = {'netid': netid, 'industry': industry}
+                statement = sqla.text(
+                    """INSERT INTO grad_industries(netid, industry) VALUES(
+                    :netid, :industry)""")
+                output = db.execute_command(statement, industry_info)
 
     if interests is not None:
-        for interest in interests:
-            interest_info = {'netid': netid, 'interest': interest}
-            statement = sqla.text(
-                """INSERT INTO grad_interests(netid, interest) VALUES(
-                :netid, :interest)""")
-            output = db.execute_command(statement, interest_info)
+        if interests != '':
+            for interest in interests:
+                interest_info = {'netid': netid, 'interest': interest}
+                statement = sqla.text(
+                    """INSERT INTO grad_interests(netid, interest) VALUES(
+                    :netid, :interest)""")
+                output = db.execute_command(statement, interest_info)
 
     if email is not None or phone is not None:
-        contact_info = {'netid': netid, 'email': email, 'phone': phone}
-        statement = sqla.text(
-            """INSERT INTO grad_contact(netid, email, phone) VALUES(:netid, 
-            :email, :phone)""")
-        output = db.execute_command(statement, contact_info)
+        if email != '' or phone != '':
+            contact_info = {'netid': netid, 'email': email, 'phone': phone}
+            statement = sqla.text(
+                """INSERT INTO grad_contact(netid, email, phone) VALUES(:netid, 
+                :email, :phone)""")
+            output = db.execute_command(statement, contact_info)
 
 
 def delete_grad(del_id):
