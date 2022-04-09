@@ -48,7 +48,10 @@ def see_grads():
     global search_input
     if cas_enabled:
         netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
         is_graduate = pu.is_graduate(netid)
+
 
     search_input = request.args.get('searchbar')
 
@@ -72,6 +75,8 @@ def popup_results():
 def form():
     if cas_enabled:
         netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
     else:
         netid = "testingid"
 
@@ -114,6 +119,8 @@ def sort_grads():
 def submit():
     if cas_enabled:
         netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
     else:
         netid = "testingid"
 
