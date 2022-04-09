@@ -58,7 +58,7 @@ def execute_command(command, params=None):
 
 def get_last_id_graduates():
     with engine.connect() as con:
-        output = con.execute('SELECT id FROM graduates')
+        output = con.execute('SELECT netid FROM graduates')
         rows = [x[0] for x in output]
         if len(rows) == 0:
             return 0
@@ -67,7 +67,7 @@ def get_last_id_graduates():
 def del_id_from_tables(tables, del_id):
     with engine.connect() as con:
         for table in tables:
-            statement = 'DELETE FROM ' + table + ' WHERE id = ' + str(
+            statement = 'DELETE FROM ' + table + ' WHERE netid = ' + str(
                 del_id)
             con.execute(statement)
 

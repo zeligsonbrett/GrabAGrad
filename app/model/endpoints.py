@@ -15,7 +15,7 @@ def query_all_grads():
 
     output = db.execute_command(command)
     details_list = [
-        [x['id'], x['name'], x['acad_dept'], x['bio'],
+        [x['netid'], x['name'], x['acad_dept'], x['bio'],
          x['undergrad_university'], x['masters_university'],
          x['research_focus'], x['expected_grad_date'],
          x['years_worked'], x['photo_link'], x['website_link']]
@@ -28,12 +28,12 @@ def __details_string():
     """
     Returns a String of all of the fields within the graduates database
     that compose the details list of the Graduate object
-    :return: String of all fields of Graduate details, including id,
+    :return: String of all fields of Graduate details, including netid,
     name, acad_dept, bio, undergrad_university, masters_university,
     research_focus, expected_grad_date, years_worked, photo_link,
     website_link
     """
-    details_string = """graduates.id, graduates.name, 
+    details_string = """graduates.netid, graduates.name, 
     graduates.acad_dept, graduates.bio, 
     graduates.undergrad_university, graduates.masters_university, 
     graduates.research_focus, graduates.expected_grad_date, 
@@ -44,13 +44,13 @@ def __details_string():
 
 def __id_string(id_list):
     """
-    Returns a String WHERE clause to only search for ids that appear in
-    id_list
+    Returns a String WHERE clause to only search for netids that appear
+    in id_list
     :return: WHERE id IN ( ... )
     """
     if len(id_list) > 0:
         id_string = ', '.join(map(str, id_list))
-        return 'WHERE id IN ( {} )'.format(id_string)
+        return 'WHERE netid IN ( {} )'.format(id_string)
     else:
         return ''
 
@@ -73,19 +73,19 @@ def __create_graduates_list(id_list):
     experiences, interests, and contact information.
     Note, this currently queries pretty inefficiently to create the
     industry, experiences, interest, and contact attributes of a grad
-    :param id_list: A list of id's corresponding to graduates in the
+    :param id_list: A list of netid's corresponding to graduates in the
                     database.
-    :return: A list of Graduate objects corresponding with ids from
+    :return: A list of Graduate objects corresponding with netids from
              id_list
     """
     if len(id_list) == 0:
         return []
 
     details_command = sqla.text("""SELECT {} FROM graduates {} 
-        ORDER BY id""".format(__details_string(), __id_string(id_list)))
+        ORDER BY netid""".format(__details_string(), __id_string(id_list)))
     details_output = db.execute_command(details_command)
     details_list = [
-        [x['id'], x['name'], x['acad_dept'], x['bio'],
+        [x['netid'], x['name'], x['acad_dept'], x['bio'],
          x['undergrad_university'], x['masters_university'],
          x['research_focus'], x['expected_grad_date'],
          x['years_worked'], x['photo_link'], x['website_link']]
@@ -100,28 +100,28 @@ def __create_graduates_list(id_list):
     # tables.
     for row in details_list:
         industries_command = sqla.text("""SELECT DISTINCT industry FROM 
-                                   grad_industries WHERE id =
+                                   grad_industries WHERE netid =
                                    {}""".format(row[0]))
         industry_output = db.execute_command(industries_command)
         row_industries = [x['industry'] for x in industry_output]
         industry_list.append(row_industries)
 
         experiences_command = sqla.text("""SELECT DISTINCT experience 
-                                    FROM grad_experiences WHERE id = 
+                                    FROM grad_experiences WHERE netid = 
                                     {}""".format(row[0]))
         experiences_output = db.execute_command(experiences_command)
         row_experiences = [x['experience'] for x in experiences_output]
         experiences_list.append(row_experiences)
 
         interests_command = sqla.text("""SELECT DISTINCT interest 
-                                  FROM grad_interests WHERE id = 
+                                  FROM grad_interests WHERE netid = 
                                   {}""".format(row[0]))
         interests_output = db.execute_command(interests_command)
         row_interests = [x['interest'] for x in interests_output]
         interests_list.append(row_interests)
 
         contacts_command = sqla.text("""SELECT email, phone
-                                          FROM grad_contact WHERE id = 
+                                          FROM grad_contact WHERE netid = 
                                           {}""".format(row[0]))
         contact_output = db.execute_command(contacts_command)
         row_contact = [[x['email'], x['phone']] for x in contact_output]
@@ -160,32 +160,32 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
     if industry is not None:
         industry = __prepare_argument(industry)
         command = sqla.text(
-            """SELECT DISTINCT graduates.id FROM 
+            """SELECT DISTINCT graduates.netid FROM 
             graduates, grad_industries
-            WHERE graduates.id = grad_industries.id AND name ILIKE :name AND 
+            WHERE graduates.netid = grad_industries.netid AND name ILIKE :name AND 
             acad_dept ILIKE :dept AND research_focus ILIKE :research AND 
             undergrad_university ILIKE :undergrad_uni AND masters_university
-            ILIKE :masters_uni {} AND industry ILIKE :industry ORDER BY graduates.id
+            ILIKE :masters_uni {} AND industry ILIKE :industry ORDER BY graduates.netid
             ASC;""".format(years_worked_c))
         params = {'name': name, 'dept': dept, 'research': research,
                   'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
                   'masters_uni': masters_uni, 'years_worked': years_worked,
                   'industry': industry}
         output = db.execute_command(command, params)
-        ids = [x['id'] for x in output]
+        ids = [x['netid'] for x in output]
         grad_list = __create_graduates_list(ids)
     else:
         command = sqla.text(
-            """SELECT DISTINCT graduates.id FROM 
+            """SELECT DISTINCT graduates.netid FROM 
             graduates WHERE name ILIKE :name AND acad_dept ILIKE :dept 
             AND research_focus ILIKE :research AND 
             undergrad_university ILIKE :undergrad_uni AND masters_university
-            ILIKE :masters_uni {} ORDER BY graduates.id ASC;""".format(years_worked_c))
+            ILIKE :masters_uni {} ORDER BY graduates.netid ASC;""".format(years_worked_c))
         params = {'name': name, 'dept': dept, 'research': research,
                   'undergrad_uni': undergrad_uni, 'grad_year':grad_year,
                   'masters_uni': masters_uni, 'years_worked': years_worked}
         output = db.execute_command(command, params)
-        ids = [x['id'] for x in output]
+        ids = [x['netid'] for x in output]
         grad_list = __create_graduates_list(ids)
 
     return grad_list
@@ -196,13 +196,13 @@ def get_grad_information(idnum):
     Gets overview information for a certain id number graduate
     """
     command = sqla.text(
-        'SELECT * FROM public.graduates, public.grad_contact WHERE graduates.id=:id AND graduates.id = grad_contact.id;')
-    params = {'id': idnum}
+        'SELECT * FROM public.graduates, public.grad_contact WHERE graduates.netid=:netid AND graduates.netid = grad_contact.netid;')
+    params = {'netid': idnum}
     output1 = db.execute_command(command, params)
-    industries_command = sqla.text('SELECT * FROM public.grad_industries WHERE grad_industries.id=:id')
+    industries_command = sqla.text('SELECT * FROM public.grad_industries WHERE grad_industries.netid=:netid')
     output2 = db.execute_command(industries_command, params)
     all_details = [
-        [x['id'], x['name'], x['acad_dept'], x['bio'],
+        [x['netid'], x['name'], x['acad_dept'], x['bio'],
          x['undergrad_university'], x['masters_university'],
          x['research_focus'], x['expected_grad_date'],
          x['years_worked'], x['photo_link'], x['website_link'], x['email']]
@@ -210,7 +210,8 @@ def get_grad_information(idnum):
     industries = [x['industry'] for x in output2]
     return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries)
 
-def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
+
+def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                research_focus=None, expected_grad_date=None,
                years_worked=None, photo_link=None,
                website_link=None, experiences=None, industries=None,
@@ -218,7 +219,7 @@ def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
     """
     Adds a grad to the database in each respective table based on data
     inputted
-        id SERIAL PRIMARY KEY,
+        netid VARCHAR(20) PRIMARY KEY,
         name VARCHAR(255),
         acad_dept VARCHAR(70),
         bio TEXT,
@@ -230,8 +231,7 @@ def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
         photo_link TEXT,
         website_link TEXT
     """
-    new_id = db.get_last_id_graduates() + 1
-    graduates_info = {"id": new_id,
+    graduates_info = {"netid": netid,
                       "name": name,
                       "acad_dept": dept,
                       "bio": bio,
@@ -243,44 +243,44 @@ def add_a_grad(name, dept, bio=None, un_uni=None, ma_uni=None,
                       "photo_link": photo_link,
                       "website_link": website_link}
     statement = sqla.text(
-        """INSERT INTO graduates(id, name, acad_dept, bio, 
+        """INSERT INTO graduates(netid, name, acad_dept, bio, 
         undergrad_university, masters_university, research_focus, 
         expected_grad_date, years_worked, photo_link, website_link) 
-        VALUES(:id, :name, :acad_dept, :bio,
+        VALUES(:netid, :name, :acad_dept, :bio,
         :undergrad_university, :masters_university, :research_focus,
         :expected_grad_date, :years_worked, :photo_link, :website_link)""")
     output = db.execute_command(statement, graduates_info)
 
     if experiences is not None:
         for experience, desc in experiences:
-            experience_info = {'id': new_id, 'experience': experience,
+            experience_info = {'netid': netid, 'experience': experience,
                                'experience_desc': desc}
             statement = sqla.text(
-                """INSERT INTO grad_experiences(id, experience, 
-                experience_desc) VALUES(:id, :experience, 
+                """INSERT INTO grad_experiences(netid, experience, 
+                experience_desc) VALUES(:netid, :experience, 
                 :experience_desc)""")
             output = db.execute_command(statement, experience_info)
 
     if industries is not None:
         for industry in industries:
-            industry_info = {'id': new_id, 'industry': industry}
+            industry_info = {'netid': netid, 'industry': industry}
             statement = sqla.text(
-                """INSERT INTO grad_industries(id, industry) VALUES(
-                :id, :industry)""")
+                """INSERT INTO grad_industries(netid, industry) VALUES(
+                :netid, :industry)""")
             output = db.execute_command(statement, industry_info)
 
     if interests is not None:
         for interest in interests:
-            interest_info = {'id': new_id, 'interest': interest}
+            interest_info = {'netid': netid, 'interest': interest}
             statement = sqla.text(
-                """INSERT INTO grad_interests(id, interest) VALUES(
-                :id, :interest)""")
+                """INSERT INTO grad_interests(netid, interest) VALUES(
+                :netid, :interest)""")
             output = db.execute_command(statement, interest_info)
 
     if email is not None or phone is not None:
-        contact_info = {'id': new_id, 'email': email, 'phone': phone}
+        contact_info = {'netid': netid, 'email': email, 'phone': phone}
         statement = sqla.text(
-            """INSERT INTO grad_contact(id, email, phone) VALUES(:id, 
+            """INSERT INTO grad_contact(netid, email, phone) VALUES(:netid, 
             :email, :phone)""")
         output = db.execute_command(statement, contact_info)
 
