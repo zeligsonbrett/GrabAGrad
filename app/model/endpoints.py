@@ -212,6 +212,20 @@ def get_grad_information(idnum):
     industries = [x['industry'] for x in output2]
     return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries)
 
+def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None, 
+                research_focus=None, expected_grad_date=None, years_worked=None, photo_link=None,
+                website_link=None):
+    """
+    Initial update function for updating fields for certain graduates
+    """
+    command = sqla.text(
+            """UPDATE graduates SET 
+            name = :name, acad_dept = :dept, research_focus = :research, 
+            undergrad_university = :undergrad_uni, masters_university
+            = :masters_uni WHERE graduates.netid = :netid;""")
+    params = {'netid': netid, 'name': name, 'dept': dept, 'research': research_focus, 'undergrad_uni': un_uni, 'masters_uni': ma_uni}
+    output = db.execute_command(command, params)
+
 
 def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                research_focus=None, expected_grad_date=None,
