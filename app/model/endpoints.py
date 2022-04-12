@@ -214,7 +214,7 @@ def get_grad_information(netid):
          x['years_worked'], x['photo_link'], x['website_link'], x['email'], x['phone']]
         for x in output1]
     industries = [x['industry'] for x in output2]
-    experiences = [x['experience'], x['experience_desc'] for x in output3]
+    experiences = [[x['experience'], x['experience_desc']] for x in output3]
     interests = [x['interest'] for x in output4]
     return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries, experiences=experiences, interests=interests)
 
