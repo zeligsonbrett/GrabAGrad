@@ -55,15 +55,6 @@ def execute_command(command, params=None):
             output = con.execute(command)
         return output
 
-
-def get_last_id_graduates():
-    with engine.connect() as con:
-        output = con.execute('SELECT netid FROM graduates')
-        rows = [x[0] for x in output]
-        if len(rows) == 0:
-            return 0
-        return max(rows)
-
 def del_id_from_tables(tables, del_id):
     with engine.connect() as con:
         for table in tables:

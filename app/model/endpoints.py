@@ -193,28 +193,34 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
     return grad_list
 
 
-def get_grad_information(idnum):
+def get_grad_information(netid):
     """
-    Gets overview information for a certain id number graduate
+    Gets overview information for a certain netid graduate
     """
     command = sqla.text(
         'SELECT * FROM public.graduates, public.grad_contact WHERE graduates.netid=:netid AND graduates.netid = grad_contact.netid;')
-    params = {'netid': idnum}
+    params = {'netid': netid}
     output1 = db.execute_command(command, params)
     industries_command = sqla.text('SELECT * FROM public.grad_industries WHERE grad_industries.netid=:netid')
     output2 = db.execute_command(industries_command, params)
+    experiences_command = sqla.text('SELECT * FROM public.grad_experiences WHERE grad_experiences.netid=:netid')
+    output3 = db.execute_command(experiences_command, params)
+    interests_command = sqla.text('SELECT * FROM public.grad_interests WHERE grad_interests.netid=:netid')
+    output4 = db.execute_command(interests_command, params)
     all_details = [
         [x['netid'], x['name'], x['acad_dept'], x['bio'],
          x['undergrad_university'], x['masters_university'],
          x['research_focus'], x['expected_grad_date'],
-         x['years_worked'], x['photo_link'], x['website_link'], x['email']]
+         x['years_worked'], x['photo_link'], x['website_link'], x['email'], x['phone']]
         for x in output1]
     industries = [x['industry'] for x in output2]
-    return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries)
+    experiences = [x['experience'], x['experience_desc'] for x in output3]
+    interests = [x['interest'] for x in output4]
+    return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries, experiences=experiences, interests=interests)
 
 def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None, 
                 research_focus=None, expected_grad_date=None, years_worked=None, photo_link=None,
-                website_link=None):
+                website_link=None, industries=None, experiences=None, interests=None, email=None, phone=None):
     """
     Initial update function for updating fields for certain graduates
     """
@@ -226,6 +232,52 @@ def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
     params = {'netid': netid, 'name': name, 'dept': dept, 'research': research_focus, 'undergrad_uni': un_uni, 'masters_uni': ma_uni}
     output = db.execute_command(command, params)
 
+    params = {'netid': netid}
+    remove_industries = sqla.text("""DELETE FROM public.grad_industries WHERE netid=:netid;""")
+    remove_experiences = sqla.text("""DELETE FROM public.grad_experiences WHERE netid=:netid;""")
+    remove_interests = sqla.text("""DELETE FROM public.grad_interests WHERE netid=:netid;""")
+    remove_contact = sqla.text("""DELETE FROM public.grad_contact WHERE netid=:netid;""")
+    output = db.execute_command(remove_industries, params)
+    output = db.execute_command(remove_experiences, params)
+    output = db.execute_command(remove_interests, params)
+    output = db.execute_command(remove_contact, params)
+
+    if experiences is not None:
+        if experiences != '':
+            for experience, desc in experiences:
+                experience_info = {'netid': netid, 'experience': experience,
+                                   'experience_desc': desc}
+                statement = sqla.text(
+                    """INSERT INTO grad_experiences(netid, experience, 
+                    experience_desc) VALUES(:netid, :experience, 
+                    :experience_desc)""")
+                output = db.execute_command(statement, experience_info)
+
+    if industries is not None:
+        if industries != '':
+            for industry in industries:
+                industry_info = {'netid': netid, 'industry': industry}
+                statement = sqla.text(
+                    """INSERT INTO grad_industries(netid, industry) VALUES(
+                    :netid, :industry)""")
+                output = db.execute_command(statement, industry_info)
+
+    if interests is not None:
+        if interests != '':
+            for interest in interests:
+                interest_info = {'netid': netid, 'interest': interest}
+                statement = sqla.text(
+                    """INSERT INTO grad_interests(netid, interest) VALUES(
+                    :netid, :interest)""")
+                output = db.execute_command(statement, interest_info)
+
+    if email is not None or phone is not None:
+        if email != '' or phone != '':
+            contact_info = {'netid': netid, 'email': email, 'phone': phone}
+            statement = sqla.text(
+                """INSERT INTO grad_contact(netid, email, phone) VALUES(:netid, 
+                :email, :phone)""")
+            output = db.execute_command(statement, contact_info)
 
 def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                research_focus=None, expected_grad_date=None,
@@ -305,7 +357,7 @@ def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
             output = db.execute_command(statement, contact_info)
 
 
-def delete_grad(del_id):
+def delete_grad(net_id):
     """
     Deletes all rows corresponding to id from the graduate tables
     """
@@ -314,7 +366,7 @@ def delete_grad(del_id):
     # output = db.execute_command(statement, param)
     db.del_id_from_tables(
         ['grad_contact', 'grad_experiences', 'grad_industries',
-         'grad_interests', 'graduates'], del_id)
+         'grad_interests', 'graduates'], net_id)
 
 
 if __name__ == "__main__":
