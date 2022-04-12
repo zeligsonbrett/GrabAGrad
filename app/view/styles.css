@@ -42,11 +42,38 @@ a:hover{
     background-color: #ffb990;
 }
 
-.form-input{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 03vw;
+.next-to-card{
+    width: 60%;
+}
+
+.form-input .container{
+    margin: 0;
+    padding: 0;
+}
+
+.form-input .row{
+    margin-top: 10px;
+}
+
+
+.container label{
+    color: black;
+    background-color: rgb(238, 148, 64);
+    padding: 10px;
+    padding-left: 20px;
+    margin-left: -20px;
+    border-radius: 0 12px 12px 0;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.col-8{
+    text-align:left;
+    padding-top: 30px;
+}
+
+.col-8 input{
+    width: 100%;
 }
 
 label{
@@ -58,6 +85,7 @@ label{
     margin-bottom: 8px;;
     font-size: 22px;
     display: inline;
+    
 }
 
 input{
@@ -76,7 +104,7 @@ input{
 
 
 .submit-button{
-    margin-top: 20px;
+    margin: 20px;
     width: 180px;
     border-width: 0px;
     padding: 20px;
@@ -106,10 +134,15 @@ textarea{
     border-style: solid;
     background-color: white;
     resize: none;
-    height: 60px;
+    height: 100px;
     padding: 10px;
-    margin-top: 9px;
     font-size: 23px;
+    width: 100%;
+    display: inline-block;
+}
+
+.form-bottom{
+    margin: 20px;
 }
 
 textarea:focus,
@@ -560,6 +593,17 @@ img{
     border-radius: 0 12px 12px 0;
  }
 
+ .form-title{    
+    padding: 25px;
+    background-color: black;
+    color: white;
+    width: 50%;
+    text-align: right;
+    font-weight: bolder;
+    font-size: 50px;
+    border-radius: 0 12px 12px 0;
+}
+
  .thanks ul{
     list-style: none;
     font-size: 20px;
@@ -579,6 +623,28 @@ img{
     margin-left: -20px;
     border-radius: 0 12px 12px 0;
     margin-right: 10px;
+}
+
+.textarea-label{
+    color: black;
+    background-color: rgb(238, 148, 64);
+    padding: 10px;
+    padding-left: 30%;
+    margin-left: -20px;
+    border-radius: 0 12px 12px 0;
+    margin-right: 10px;
+    margin-bottom: 40px;
+}
+
+.card-mockup{
+    display: inline-block; 
+    background-color: rgba(58, 29, 0, 0.8);
+    width: 35%;
+    height: 100%;
+    position: absolute;
+    margin:30px;
+    margin-right: -20px;
+    border-radius: 10px;
 }
 
 .about-flex{
