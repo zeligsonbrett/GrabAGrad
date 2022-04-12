@@ -153,7 +153,7 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
     masters_uni = __prepare_argument(masters_uni)
     grad_year = __prepare_argument(grad_year)
 
-    if years_worked is None:
+    if years_worked is None or years_worked == '':
         years_worked_c = ''
     else:
         years_worked_c = 'AND years_worked >= {}'.format(years_worked)
