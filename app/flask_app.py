@@ -160,7 +160,7 @@ def submit():
     if phone_number is None:
         phone_number = ""
 
-    html = render_template('search_thanks.html',
+    html = render_template('submission_thanks.html',
                            name=name, dept=dept, bio=None,
                            un_uni=undergrad, ma_uni=masters,
                            research_focus=research,
