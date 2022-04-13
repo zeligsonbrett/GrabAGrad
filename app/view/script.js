@@ -48,3 +48,11 @@ function details() {
       document.getElementById("details").classList.add("details-closed");
   }   
 }
+
+function changeName(input){
+  var elementValue = input.value;
+  if (elementValue == "") elementValue = '...';
+  if (elementValue.length > 12 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
+  if (elementValue.length > 20) elementValue = elementValue.substring(0, 20) + "...";
+	document.getElementById(input.id + "Card").innerHTML = elementValue;
+}

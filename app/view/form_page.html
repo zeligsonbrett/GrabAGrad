@@ -35,53 +35,54 @@
             <div class="container">    
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="name">Name</label></div>
-                        <div class="col-8"><input id="name" name="name" type="text"></div>
+                        <div class="col-6"><label for="name">Name</label></div>
+                        <div class="col-6"><input onkeyup=changeName(this) id="name" name="name" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="academic-dept">Academic Department</label></div>
-                        <div class="col-8"><input id="academic-dept" name="academic-dept" type="text"></div>
+                        <div class="col-6"><label for="academic-dept">Academic Department</label></div>
+                        <div class="col-6"><input onkeyup=changeName(this) id="academic-dept" name="academic-dept" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="years-worked">Years of Work Experience</label></div>
-                        <div class="col-8"><input id="years-worked" name="years-worked" type="text"></div>
+                        <div class="col-6"><label for="years-worked">Years of Work Experience</label></div>
+                        <div class="col-6"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="text"></div>
+                        
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="undergrad-institution">Undergraduate Institution</label></div>
-                        <div class="col-8"> <input id="undergrad-institution" name="undergrad-institution" type="text"></div>
+                        <div class="col-6"><label for="undergrad-institution">Undergraduate Institution</label></div>
+                        <div class="col-6"> <input onkeyup=changeName(this) id="undergrad-institution" name="undergrad-institution" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="masters-institution">Masters Institution</label></div>
-                        <div class="col-8"><input id="masters-institution" name="masters-institution" type="text"></div>
+                        <div class="col-6"><label for="masters-institution">Masters Institution</label></div>
+                        <div class="col-6"><input onkeyup=changeName(this) id="masters-institution" name="masters-institution" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="email">Preferred Contact Email</label></div>
-                        <div class="col-8"><input id="email" name="email" type="text"></div>
+                        <div class="col-6"><label for="email">Preferred Contact Email</label></div>
+                        <div class="col-6"><input onkeyup=changeName(this) id="email" name="email" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4"><label for="phone-number">Preferred Phone Number</label></div>
-                        <div class="col-8"><input id="phone-number" name="phone-number" type="text"></div>
+                        <div class="col-6"><label for="phone-number">Preferred Phone Number</label></div>
+                        <div class="col-6"><input onkeyup=changeName(this) id="phone-number" name="phone-number" type="text"></div>
                     </div>
                 </div>
 
                 <div id="profile_photo" class="input-label">
                     <div style="text-align: right" class="row no-gutters">
-                        <div class="col-4">
+                        <div class="col-6">
 
                         <label for="cloudinary_upload">Profile Photo</label></div>
-                        <div class="col-8"><button id="cloudinary_upload" type="button"> Choose Your Photo </button></div>
+                        <div class="col-6" style="text-align: center;"><button id="cloudinary_upload" style="margin-left: 100px; margin-top: 20px" type="button"> Choose Your Photo </button></div>
                     </div>
                 </div>
                 <input type="hidden" id="image_link" name ="image_link" value = "">
@@ -94,18 +95,30 @@
         </div>
 
         <div class="card-mockup">
+            <span style="font-weight: bolder; font-size: 50px;">More About</span><p style="font-weight: bolder; font-size: 50px;" id="nameCard">...</p><br>
             <div id="uploaded_image" class="uploaded_image" style="padding:15px; display: none;">
-                <img id="image" src="" style="width:149px; height:175px; padding:10px; object-fit:contain;" >
+                <img id="image" src="" style="width:149px; height:175px; object-fit:contain; position: absolute;" >
             </div>
+            <div id="img-placeholder">0</div>
+            <div style="height: 190px;"></div>
+            <span>Academic Department:</span><p id="academic-deptCard">...</p><br>
+            <span>Years of Work Experience:</span><p id="years-workedCard">...</p><br>
+            <span>Undergraduate Institution:</span><p id="undergrad-institutionCard">...</p><br>
+            <span>Master's Institution:</span><p id="masters-institutionCard">...</p><br>
+            <span>Preferred Contact Email:</span><p id="emailCard">...</p><br>
+            <span>Preferred Phone Number</span><p id="phone-numberCard">...</p><br>
+            <span>Current Reasearch Focus:</span><p id="research-focusCard" style="margin-right: 10px;">...</p><br>
+            <span>Industries Worked In:</span><p id="industriesCard">...</p><br>
+            
         </div>
             
         <div class="form-bottom">
             <label class="textarea-label" for="research-focus">Current Research Focus</label>
-            <textarea id="research-focus" name="research-focus" rows="0" cols="0"></textarea>
+            <textarea onkeyup=changeName(this) id="research-focus" name="research-focus" rows="0" cols="0"></textarea>
             <br>
             <br>
             <label class="textarea-label" for="industries">Industries Worked In (Separated by commas)</label>
-            <textarea id="industries" name="industries" rows="0" cols="0"></textarea>
+            <textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0"></textarea>
         </div>
         
         <br>
@@ -131,6 +144,7 @@
                     let image_link = $('#image_link').val(imageUrl);
                     $('#image').attr("src", imageUrl);
                     document.getElementById("uploaded_image").style.display = "block";
+                    document.getElementById("img-placeholder").style.visibility = "hidden";
                 }
 
                 if (error){
