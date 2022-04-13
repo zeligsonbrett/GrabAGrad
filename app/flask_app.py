@@ -61,7 +61,7 @@ def filter_grads():
     dept = request.args.get('dept')
     industry = request.args.get('industry')
     years_worked = request.args.get('years_worked')
-    un_uni = request.args.get('un-uni')
+    un_uni = request.args.get('un_uni')
     type_sort = request.args.get('sortby')
     success_msg, graduates = get_grads_by_filter(name, dept, industry,
                                                  years_worked, un_uni)
