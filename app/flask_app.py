@@ -42,6 +42,64 @@ def get_grads(search_input):
         graduates = ep.query_all_grads()
     return success_msg, graduates
 
+def get_grads_by_filter(name, dept, industry, years_worked, un_uni):
+    """
+    Takes in the filter parameters and returns a list of graduates.
+    """
+    graduates = None
+    success_msg = "Success"
+    if name or dept or industry or years_worked or un_uni:
+        success_msg, graduates = search.filter_search(name, dept,
+                                                      industry,
+                                                      years_worked,
+                                                      un_uni)
+    else:
+        graduates = ep.query_all_grads()
+    return success_msg, graduates
+
+
+@app.route('/filter_grads')
+def filter_grads():
+    global search_input
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+        is_graduate = pu.is_graduate(netid)
+
+    # search_input = request.args.get('searchbar')
+
+    # success_msg, graduates = get_grads(search_input)
+    name = request.args.get('name')
+    dept = request.args.get('dept')
+    industry = request.args.get('industry')
+    years_worked = request.args.get('years_worked')
+    un_uni = request.args.get('un-uni')
+    success_msg, graduates = get_grads_by_filter(name, dept, industry,
+                                                 years_worked, un_uni)
+
+    if success_msg != "Success":
+        html = '<p style="margin: 23px">%s</p>' % success_msg
+    elif len(graduates) == 0:
+        html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
+    else:
+        html = ""
+        grad_card = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        </div>"""
+        for grad in graduates:
+            grad_card_info = (
+            grad.get_photo_link(), grad.get_first_name(),
+            grad.get_acad_dept(), grad.get_grad_id())
+            html += grad_card % grad_card_info
+    response = make_response(html)
+    return response
+
 
 @app.route('/see_grads')
 def see_grads():

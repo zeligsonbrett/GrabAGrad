@@ -1,14 +1,33 @@
-
 import model.endpoints as ep
 
-#sample_search_bar_input = 'name:"Austin Wang,  Cedrick Argueta,Henry Knoll   " name:"Henry Knoll" department:"Computer Science" undergraduate_university:"Princeton, Stanford"'
-VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year', 'industry', 'undergraduate_university', 'masters_university', 'years_worked']
+# sample_search_bar_input = 'name:"Austin Wang,  Cedrick Argueta,Henry Knoll   " name:"Henry Knoll" department:"Computer Science" undergraduate_university:"Princeton, Stanford"'
+VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year',
+                       'industry', 'undergraduate_university',
+                       'masters_university', 'years_worked']
+
 
 def search(search_input):
     try:
-        return "Success", search_grads(parse_search_bar_input(search_input))
+        return "Success", search_grads(
+            parse_search_bar_input(search_input))
     except:
         return "Error occurred when searching, make sure search input is valid", []
+
+
+def filter_search(name, dept, industry, years_worked, un_uni):
+    """
+    Search function for if the filter by options are used.
+    """
+    try:
+        grad_list = ep.search_grads(name=name, dept=dept,
+                                    industry=industry,
+                                    undergrad_uni=un_uni,
+                                    years_worked=years_worked)
+
+        return "Success", grad_list
+    except:
+        return "Error occurred when searching, make sure filter input is valid", []
+
 
 def parse_search_bar_input(search_input):
     query = {}
@@ -24,6 +43,7 @@ def parse_search_bar_input(search_input):
         field_value = field_value.replace('"', "").lower()
         query[field_name] = field_value
     return query
+
 
 def search_grads(query):
     grad_list = []
@@ -45,8 +65,14 @@ def search_grads(query):
     if 'years_worked' in query:
         years_worked = query['years_worked']
 
-    grad_list.extend(ep.search_grads(name=name, dept=department, research=research, grad_year=grad_year, industry=industry, undergrad_uni=undergraduate_university, masters_uni=masters_university, years_worked=years_worked))
+    grad_list.extend(
+        ep.search_grads(name=name, dept=department, research=research,
+                        grad_year=grad_year, industry=industry,
+                        undergrad_uni=undergraduate_university,
+                        masters_uni=masters_university,
+                        years_worked=years_worked))
     return grad_list
+
 
 def parse_search_bar_input_complex(search_input):
     query = {}
@@ -57,12 +83,14 @@ def parse_search_bar_input_complex(search_input):
         if field_name not in VALID_SEARCH_FIELDS:
             raise Exception('Unknown field in query: ' + field_name)
 
-        field_values = list(map(str.strip, field_value.replace('"', "").split(',')))
+        field_values = list(
+            map(str.strip, field_value.replace('"', "").split(',')))
         if field_name in query:
             query[field_name].extend(field_values)
         else:
             query[field_name] = field_values
     return query
+
 
 def search_grads_complex(query):
     grad_list = []
@@ -84,5 +112,10 @@ def search_grads_complex(query):
     if 'years_worked' in query:
         years_worked = query['years_worked']
 
-    grad_list.extend(ep.search_grads(name=name, dept=department, research=research, grad_year=grad_year, industry=industry, undergrad_uni=undergraduate_university, masters_uni=masters_university, years_worked=years_worked))
+    grad_list.extend(
+        ep.search_grads(name=name, dept=department, research=research,
+                        grad_year=grad_year, industry=industry,
+                        undergrad_uni=undergraduate_university,
+                        masters_uni=masters_university,
+                        years_worked=years_worked))
     return grad_list

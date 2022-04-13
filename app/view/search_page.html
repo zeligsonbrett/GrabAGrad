@@ -30,11 +30,11 @@
                 <br>
                 <p style="margin-bottom: 15px;">Filter By:</p>
                 <form style="text-align: left;">
-                    <input class="search-filter" name="name" type="text" placeholder="Name"></intput>
-                    <input class="search-filter" name="dept" type="text" placeholder="Department"></intput>
-                    <input class="search-filter" name="industry" type="text" placeholder="Industry"></intput>
-                    <input class="search-filter" name="years-worked" type="text" placeholder="Years Worked"></intput>
-                    <input class="search-filter" name="un-uni" type="text" placeholder="Undergraduate University"></intput>
+                    <input class="search-filter" id="name" name="name" type="text" placeholder="Name"></intput>
+                    <input class="search-filter" id="dept" name="dept" type="text" placeholder="Department"></intput>
+                    <input class="search-filter" id="industry" name="industry" type="text" placeholder="Industry"></intput>
+                    <input class="search-filter" id="years-worked" name="years-worked" type="text" placeholder="Years Worked"></intput>
+                    <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></intput>
                 </form>
                 <br>
                 <br>
@@ -67,25 +67,7 @@
         </div>
     
         <div id="main" style="transition: ease .3s;margin-left: 315px;">
-            <div class="flexer">
-                {% if success != "Success": %}
-                    <p style="margin: 23px">{{success}}</p>
-                {% elif graduates|length == 0: %}
-                    <p style="text-align: center">No Grad Students Match The Search Criteria</p>
-                {% else %}
-                    {% for grad in graduates|list: %}
-                    <div class="card">  <img src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <h2>{{grad.get_first_name()}}</h2>
-                        <p><b></b>{{grad.get_acad_dept()}}</p>
-                        <!--<p><b>Main Industry:</b> {{grad.get_industries()[0]}}</p>
-                        <p style="margin-bottom: 30px;"><b>Current Rearch Focus:</b> Thing</p>
-                        -->
-                        <br>
-                        <br>
-                        <button onclick="view_popup('{{ grad.get_grad_id() }}')" class="learn-more">Learn More</button>
-                    </div> 
-                    {% endfor %}
-                {% endif %}
+            <div id="grad_cards" class="flexer">
             </div>
         </div>
 
@@ -121,6 +103,52 @@
                 );
             }
 
+            function filterResponse(response)
+            {
+                 console.log('New filters applied');
+                 $('#grad_cards').html(response);
+            }
+
+            function filterResults() {
+                let name = $('#name').val();
+                let dept = $('#dept').val();
+                let industry = $('#industry').val();
+                let years_worked = $('#years-worked').val();
+                let un_uni = $('#un-uni').val();
+
+                name = encodeURIComponent(name);
+                dept = encodeURIComponent(dept);
+                industry = encodeURIComponent(industry);
+                years_worked = encodeURIComponent(years_worked);
+                un_uni = encodeURIComponent(un_uni);
+
+                let url = '/filter_grads?name=' + name + '&dept=' + dept +
+                          '&industry=' + industry + '&years_worked=' + 
+                          years_worked + '&un_uni=' + un_uni
+
+                if (request !== null)
+                   request.abort();
+
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: filterResponse
+                   }
+                );
+            }
+
+            function setup()
+            {
+                $('#name').on('input', filterResults);
+                $('#dept').on('input', filterResults);
+                $('#industry').on('input', filterResults);
+                $('#years-worked').on('input', filterResults);
+                $('#un-uni').on('input', filterResults);
+                filterResults()
+            }
+
+            $('document').ready(setup);
             </script>
     </body>
     </html>
