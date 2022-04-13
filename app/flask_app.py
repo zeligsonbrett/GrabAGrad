@@ -6,7 +6,6 @@ import os
 import controller.pustatus.pustatus as pu
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
-search_input = ""
 import auth
 
 try:
@@ -27,20 +26,12 @@ def index():
     html = render_template('index.html')
     return make_response(html)
 
+
 @app.route('/about')
 def about():
     html = render_template('about.html')
     return make_response(html)
 
-
-def get_grads(search_input):
-    graduates = None
-    success_msg = "Success"
-    if search_input:
-        success_msg, graduates = search.search(search_input)
-    else:
-        graduates = ep.query_all_grads()
-    return success_msg, graduates
 
 def get_grads_by_filter(name, dept, industry, years_worked, un_uni):
     """
@@ -60,23 +51,27 @@ def get_grads_by_filter(name, dept, industry, years_worked, un_uni):
 
 @app.route('/filter_grads')
 def filter_grads():
-    global search_input
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
         is_graduate = pu.is_graduate(netid)
 
-    # search_input = request.args.get('searchbar')
-
-    # success_msg, graduates = get_grads(search_input)
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
     years_worked = request.args.get('years_worked')
     un_uni = request.args.get('un-uni')
+    type_sort = request.args.get('sortby')
     success_msg, graduates = get_grads_by_filter(name, dept, industry,
                                                  years_worked, un_uni)
+    if type_sort == "First Name: Z-A":
+        graduates = sorted(graduates, key=lambda x: (
+            x._details is None, x._details[1]), reverse=True)
+    else:
+        graduates = sorted(graduates, key=lambda x: (
+            x._details is None, x._details[1]), reverse=False)
+
 
     if success_msg != "Success":
         html = '<p style="margin: 23px">%s</p>' % success_msg
@@ -103,19 +98,13 @@ def filter_grads():
 
 @app.route('/see_grads')
 def see_grads():
-    global search_input
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
         is_graduate = pu.is_graduate(netid)
 
-
-    search_input = request.args.get('searchbar')
-
-    success_msg, graduates = get_grads(search_input)
-    html = render_template('search_page.html',
-                           success=success_msg, graduates=graduates)
+    html = render_template('search_page.html')
     response = make_response(html)
     return response
 
@@ -148,30 +137,6 @@ def form():
                                cloud_name=CLOUD_NAME)
     return make_response(html)
 
-
-@app.route('/sortgradsby')
-def sort_grads():
-    global search_input
-    type_sort = request.args.get('Submit')
-    success_msg, graduates = get_grads(search_input)
-    if success_msg == "Success":
-        if type_sort == "First Name: Z-A":
-            graduates = sorted(graduates, key=lambda x: (
-            x._details is None, x._details[1]), reverse=True)
-        else:
-            graduates = sorted(graduates, key=lambda x: (
-            x._details is None, x._details[1]), reverse=False)
-
-    html = render_template('search_page.html',
-                           success=success_msg, graduates=graduates)
-    response = make_response(html)
-    return response
-
-
-# add in form one
-# call add_a grad with the search form
-# name and dept is required
-# use add_a_grad variable names
 
 @app.route('/submit')
 def submit():
