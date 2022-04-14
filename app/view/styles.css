@@ -352,15 +352,25 @@ h1{
     font-size: 22px;
 }
 
-#sortby input:hover{
+#sortby option:hover{
     background-color: #FFB98B;
 }
 
-#sortby input:focus{
+#sortby option:focus{
     outline: none;
     background-color: #EE9440;
 }
 
+#sortby {
+    padding: 10px;
+    border-style: none;
+    border-radius: 5px;
+}
+
+#sortby option{
+    color: black;
+    font-size: 18px;
+}
 .search-bar:hover{
     border-style: none;
 }
@@ -706,4 +716,37 @@ img{
     font-size: 30px;
     font-weight: bolder;
     padding-top: 20px;
+}
+
+@media screen and (max-width: 780px) {
+    #mySidenav {
+        position: static;
+        padding-top: 50px;
+        width: 100vw;
+        height: 525px;
+    }
+
+    #main{
+        margin-left: 0;
+    }
+
+    .details{
+        height: calc(100vh - 150px);
+        width: 90vw;
+        position: fixed;
+        text-align: left;
+        z-index: 1;
+        bottom: 40px;
+        right: 20px;
+        left: 20px;
+        top: 70px;
+        border-radius: 8px;
+        background-color: rgb(66, 33, 1, 0.9);
+        overflow-x: hidden;
+        transition: ease;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+
 }
