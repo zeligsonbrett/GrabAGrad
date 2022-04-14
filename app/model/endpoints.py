@@ -64,6 +64,8 @@ def __prepare_argument(user_input):
     """
     if user_input == None:
         user_input = ''
+    user_input = user_input.replace("%", "\%")
+    user_input = user_input.replace("%", "\_")
     prepped_arg = '%' + user_input + '%'
     return prepped_arg
 
