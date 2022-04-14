@@ -19,6 +19,13 @@ def filter_search(name, dept, industry, years_worked, un_uni):
     Search function for if the filter by options are used.
     """
     try:
+        if years_worked is not None:
+            if not years_worked.isdigit() and years_worked != '':
+                return "Please ensure Years Worked filter is a valid integer", []
+    except:
+        pass
+
+    try:
         grad_list = ep.search_grads(name=name, dept=dept,
                                     industry=industry,
                                     undergrad_uni=un_uni,
