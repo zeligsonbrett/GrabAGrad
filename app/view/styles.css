@@ -661,7 +661,6 @@ img{
 .card-mockup p{
     display: inline-block;
     color: white;
-    font-size: 20px;
 }
 
 #img-placeholder{
@@ -674,9 +673,12 @@ img{
 
 .card-mockup span{
     font-weight: bolder;
+    font-size: 22px;
 }
 .card-mockup p{
     margin-left: 10px;
+    font-weight: normal;
+    font-size: 20px;
 }
 
 .about-flex{

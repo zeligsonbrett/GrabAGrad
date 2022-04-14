@@ -138,7 +138,6 @@ def __create_graduates_list(id_list):
     return grad_list
 
 
-# Based on Henry's valid search fields from search.py
 def search_grads(name=None, dept=None, research=None, grad_year=None,
                  undergrad_uni=None, masters_uni=None, years_worked=None,
                  industry=None):
@@ -213,6 +212,9 @@ def get_grad_information(netid):
          x['research_focus'], x['expected_grad_date'],
          x['years_worked'], x['photo_link'], x['website_link'], x['email'], x['phone']]
         for x in output1]
+    # Returns if no graduate was found for the netid
+    if len(all_details) == 0:
+        return Graduate()
     industries = [x['industry'] for x in output2]
     experiences = [[x['experience'], x['experience_desc']] for x in output3]
     interests = [x['interest'] for x in output4]

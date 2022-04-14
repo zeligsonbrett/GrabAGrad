@@ -94,21 +94,20 @@
             </div>
         </div>
 
-        <div class="card-mockup">
+        <div class="card-mockup" style="overflow-y:auto;">
             <span style="font-weight: bolder; font-size: 50px;">More About</span><p style="font-weight: bolder; font-size: 50px;" id="nameCard">...</p><br>
-            <div id="uploaded_image" class="uploaded_image" style="padding:15px; display: none;">
-                <img id="image" src="" style="width:149px; height:175px; object-fit:contain; position: absolute;" >
+            <div id="uploaded_image" class="uploaded_image" style="padding:15px;">
+                <img id="image" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="width:149px; height:175px; object-fit:contain; position: absolute;" >
             </div>
-            <div id="img-placeholder">0</div>
             <div style="height: 190px;"></div>
-            <span>Academic Department:</span><p id="academic-deptCard">...</p><br>
-            <span>Years of Work Experience:</span><p id="years-workedCard">...</p><br>
-            <span>Undergraduate Institution:</span><p id="undergrad-institutionCard">...</p><br>
-            <span>Master's Institution:</span><p id="masters-institutionCard">...</p><br>
-            <span>Preferred Contact Email:</span><p id="emailCard">...</p><br>
-            <span>Preferred Phone Number</span><p id="phone-numberCard">...</p><br>
-            <span>Current Research Focus:</span><p id="research-focusCard" style="margin-right: 10px;">...</p><br>
-            <span>Industries Worked In:</span><p id="industriesCard">...</p><br>
+            <span>Academic Department:</span><p id="academic-deptCard">{{grad.get_acad_dept()}}</p><br>
+            <span>Years of Work Experience:</span><p id="years-workedCard">{{grad.get_years_worked()}}</p><br>
+            <span>Undergraduate Institution:</span><p id="undergrad-institutionCard">{{grad.get_undergrad_university()}}</p><br>
+            <span>Master's Institution:</span><p id="masters-institutionCard">{{grad.get_masters_university()}}</p><br>
+            <span>Preferred Contact Email:</span><p id="emailCard">{{grad.get_contact()}}</p><br>
+            <span>Preferred Phone Number</span><p id="phone-numberCard">{{grad.get_contact()}}</p><br>
+            <span>Current Research Focus:</span><p id="research-focusCard" style="margin-right: 10px;">{{grad.get_research_focus()}}</p><br>
+            <span>Industries Worked In:</span><p id="industriesCard">{{grad.get_industries_str()}}</p><br>
             
         </div>
             

@@ -125,16 +125,19 @@ def form():
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
     else:
-        netid = "testingid"
+        netid = "test"
 
+    current_grad = ep.get_grad_information(netid)
+    print(current_grad)
     uploaded_image = request.args.get('image_link')
     try:
         html = render_template('form_page.html',
-                               cloud_name=os.environ['CLOUD_NAME'], )
+                               cloud_name=os.environ['CLOUD_NAME'],
+                               grad=current_grad)
     except:
         from controller.keys import CLOUD_NAME
         html = render_template('form_page.html',
-                               cloud_name=CLOUD_NAME)
+                               cloud_name=CLOUD_NAME, grad=current_grad)
     return make_response(html)
 
 
