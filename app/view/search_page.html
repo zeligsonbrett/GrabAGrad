@@ -28,7 +28,7 @@
             <a style="text-decoration: none" href="/about">About GrabAGrad</a>
             <span class="title">GrabAGrad</span>
         </div>
-    
+        <span id="top"></span>
         <div id="mySidenav" style="transition: ease .3s; width: 360px" class="sidenav">
             <div id="filter">
                 <br>
@@ -40,19 +40,20 @@
                     <input class="search-filter" id="years-worked" name="years-worked" type="text" placeholder="Years Worked"></intput>
                     <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></intput>
                 </form>
-                <br>
+                <div class="small-screen">
+                    <br>
+                </div>
 
-                <div>
-                    <p style="margin-bottom: 15px;">Sort By:</p>
+                <div class="sorter">
+                    <p class="sortby">Sort By:</p>
                         <select id="sortby" name="sortby">
                             <option value="First Name: A-Z">First Name: A-Z</option>
                             <option value="First Name: Z-A">First Name: Z-A</option>
                         </select>
-
                 </div>
-
             </div>
         </div>
+        <a class="backToTop" style="transition: height 250ms ease-in;" href="#top">Back To Top</a>
 
         <div id="details" class="details details-closed" style="visibility: hidden; transition: ease .3s;">
             <div onclick="details()" class="close"></div>
@@ -60,8 +61,7 @@
         </div>
     
         <div id="main" style="margin-left: 315px; transition: ease .3s;">
-            <div id="grad_cards" class="flexer">
-            </div>
+            <div id="grad_cards" class="flexer"></div>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

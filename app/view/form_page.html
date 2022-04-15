@@ -29,60 +29,57 @@
     </div>
     <div style="height: 80px"></div>
 
-    <h1 class="form-title">Tell Us About Yourself</h1>
-    <form class="form-input" action="submit" method="get">
+    <div style="width: 100%"><h1 class="form-title">Tell Us About Yourself</h1></div>
+    <form class="form-input" action="submit" style="margin-left:0" method="get">
         <div class="next-to-card" style="display: inline-block">
-            <div class="container">    
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="name">Name</label></div>
-                        <div class="col-6"><input onkeyup=changeName(this) id="name" name="name" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="name">Name</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="name" name="name" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="academic-dept">Academic Department</label></div>
-                        <div class="col-6"><input onkeyup=changeName(this) id="academic-dept" name="academic-dept" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="academic-dept">Academic Department</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="academic-dept" name="academic-dept" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="years-worked">Years of Work Experience</label></div>
-                        <div class="col-6"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="years-worked">Years of Work Experience</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="text"></div>
                         
                     </div>
                 </div>
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="undergrad-institution">Undergraduate Institution</label></div>
-                        <div class="col-6"> <input onkeyup=changeName(this) id="undergrad-institution" name="undergrad-institution" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="undergrad-institution">Undergraduate Institution</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="undergrad-institution" name="undergrad-institution" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="masters-institution">Masters Institution</label></div>
-                        <div class="col-6"><input onkeyup=changeName(this) id="masters-institution" name="masters-institution" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="masters-institution">Masters Institution</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="masters-institution" name="masters-institution" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="email">Preferred Contact Email</label></div>
-                        <div class="col-6"><input onkeyup=changeName(this) id="email" name="email" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="email">Preferred Contact Email</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="email" name="email" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6"><label for="phone-number">Preferred Phone Number</label></div>
-                        <div class="col-6"><input onkeyup=changeName(this) id="phone-number" name="phone-number" type="text"></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="phone-number">Preferred Phone Number</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="phone-number" name="phone-number" type="text"></div>
                     </div>
                 </div>
 
                 <div id="profile_photo" class="input-label">
-                    <div style="text-align: right" class="row no-gutters">
-                        <div class="col-6">
-
-                        <label for="cloudinary_upload">Profile Photo</label></div>
-                        <div class="col-6" style="text-align: center;"><button id="cloudinary_upload" style="margin-left: 100px; margin-top: 20px" type="button"> Choose Your Photo </button></div>
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="cloudinary_upload">Profile Photo</label></div>
+                        <div class="inputStyle" style="text-align: center;"><button id="cloudinary_upload" class="submit-button" style="margin: 0; outline: none;" type="button"> Choose Your Photo </button></div>
                     </div>
                 </div>
                 <input type="hidden" id="image_link" name ="image_link" value = "">
@@ -91,39 +88,44 @@
                 <textarea id="industries" name="industries" rows="0" cols="0"></textarea>
 
                 <br>-->
-            </div>
+                <br>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="research-focus">Current Research Focus</label></div>
+                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="research-focus" name="research-focus" rows="0" cols="0"></textarea></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="industries">Industries Worked In (Separated by commas)</label></div>
+                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0"></textarea></div>
+                    </div>
+                </div>
         </div>
 
-        <div class="card-mockup" style="overflow-y:auto;">
-            <span style="font-weight: bolder; font-size: 50px;">More About</span><p style="font-weight: bolder; font-size: 50px;" id="nameCard">...</p><br>
-            <div id="uploaded_image" class="uploaded_image" style="padding:15px;">
-                <img id="image" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="width:149px; height:175px; object-fit:contain; position: absolute;" >
+        <button class="backToTop" onclick=showCard() style="width: 30%; left: 20px; bottom: 20px; background-color: black; color: white; transition: height 250ms ease-in;">See Your Profile Card</button>
+
+        <div id="card-mockup" style="overflow-y:auto;">
+            <span style="margin-top: -20px; font-weight: bolder; font-size: 30px;">More About</span><p style="font-weight: bolder; font-size: 30px;" id="nameCard">...</p><br>
+            <div id="uploaded_image" class="uploaded_image">
+                <img id="img-placeholder" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="display: inline-block; width:25%; height:auto; object-fit:contain; position: absolute;" >
             </div>
-            <div style="height: 190px;"></div>
+            <br>
+            <!--<div style="height: 190px;"></div>-->
             <span>Academic Department:</span><p id="academic-deptCard">{{grad.get_acad_dept()}}</p><br>
             <span>Years of Work Experience:</span><p id="years-workedCard">{{grad.get_years_worked()}}</p><br>
             <span>Undergraduate Institution:</span><p id="undergrad-institutionCard">{{grad.get_undergrad_university()}}</p><br>
             <span>Master's Institution:</span><p id="masters-institutionCard">{{grad.get_masters_university()}}</p><br>
             <span>Preferred Contact Email:</span><p id="emailCard">{{grad.get_contact()}}</p><br>
             <span>Preferred Phone Number</span><p id="phone-numberCard">{{grad.get_contact()}}</p><br>
-            <span>Current Research Focus:</span><p id="research-focusCard" style="margin-right: 10px;">{{grad.get_research_focus()}}</p><br>
-            <span>Industries Worked In:</span><p id="industriesCard">{{grad.get_industries_str()}}</p><br>
-            
-        </div>
-            
-        <div class="form-bottom">
-            <label class="textarea-label" for="research-focus">Current Research Focus</label>
-            <textarea onkeyup=changeName(this) id="research-focus" name="research-focus" rows="0" cols="0"></textarea>
-            <br>
-            <br>
-            <label class="textarea-label" for="industries">Industries Worked In (Separated by commas)</label>
-            <textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0"></textarea>
-        </div>
-        
+            <span>Current Research Focus:</span><p id="research-focusCard">{{grad.get_research_focus()}}</p><br>
+            <span>Industries Worked In:</span><p id="industriesCard">{{grad.get_industries_str()}}</p><br> 
+            <p style="color: #FFB98B; width: 100%; position: absolute; right: 10px; text-align: right; bottom: 10px; font-style: italic; font-size: 20px; margin: 0;">Mockup of Your Proflie Card</p>
+        </div>        
         <br>
-            <div style="text-align: right;">
-                <input class="submit-button" style="font-size:22px;" type="submit" value="Submit">
-  
+        <div style="text-align: right;">
+            <input class="submit-button" style="font-size:22px;" type="submit" value="Submit">
+        </div>
     </form>
     <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <script type="text/javascript">
