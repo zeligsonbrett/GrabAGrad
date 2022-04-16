@@ -90,6 +90,7 @@ input{
     border-width: 0px;
     padding: 20px;
     line-height: 0px;
+    font-size: 20px;
     border-radius: 8px;
     background-color:rgb(248, 159, 57);
 }
@@ -682,8 +683,7 @@ img{
     max-width: 320px;
     margin: 20px;
     margin-bottom: 50px;
-    text-align: center;
-   
+    text-align: center;  
 }
 
 .about-card img{
@@ -719,6 +719,49 @@ img{
     display: inline-block;
     padding-right: 10px;
     margin-right: 20px;
+}
+
+.delete-button{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #b82d1b;
+    color: white;
+    border-style: none;
+    border-radius: 4px;
+    font-size: 20px;
+    padding: 5px;
+    text-align: center;
+}
+
+#mockup-btn{
+    width: 40%; 
+    left: 20px; 
+    bottom: 20px; 
+    background-color: black; 
+    color: white; 
+    transition: height 250ms ease-in;
+    border-style: none;
+    padding: 20px;
+    line-height: 0px;
+    font-size: 20px;
+    border-radius: 8px;
+}
+
+#card-mockup .mockup-note{
+    color: #FFB98B; 
+    width: 100%; 
+    position: absolute; 
+    right: 10px; 
+    text-align: right; 
+    bottom: 10px; 
+    font-style: italic; 
+    font-size: 2vw; 
+    margin: 0;
+}
+
+#card-mockup{
+    visibility: visible;
 }
 
 @media screen and (max-width: 780px) {
@@ -795,7 +838,7 @@ img{
 
     #card-mockup{
         width: 90%;
-        top: 20vh;
+        top: 50vh;
         right: 5%;
         visibility: hidden;
     }
@@ -805,17 +848,13 @@ img{
         padding: 3vw;
     }
 
-    .next-to-card .labelStyle{
-        display: block;
+    .labelStyle{
+        text-align: left;
         width: 100%;
     }
 
-    .labelStyle{
-        text-align: left;
-    }
-
     .labelStyle label{
-        font-size: 2.5vw;
+        font-size: 3vw;
         margin-top: 10px;
     }
 
@@ -825,11 +864,60 @@ img{
     }
 
     .inputStyle input{
-        font-size: 2.5vw;
+        font-size: 3vw;
     }
 
     .form-title{
-        font-size: 7vw;
+        font-size: 8vw;
         margin-bottom: -20px;
     }
+
+
+}
+
+@media screen and (max-width: 500px){
+    .labelStyle{
+        text-align: left;
+        width: 100%;
+    }
+
+    .labelStyle label{
+        font-size: 4vw;
+        margin-top: 10px;
+    }
+
+    .next-to-card .inputStyle{
+        display: block;
+        width: 100%;
+    }
+
+    .inputStyle input{
+        font-size: 4vw;
+    }
+
+    .form-title{
+        font-size: 8vw;
+        margin-bottom: -20px;
+    }
+
+    #mockup-btn{
+        font-size: 3.8vw;
+        width: 50%;
+    }
+
+    .submit-button{
+        font-size: 4vw;
+        width: 100px;
+    }
+
+    .photo{
+        width: 200px;
+        font-size: 3vw;
+    }
+
+    #card-mockup .mockup-note{
+        font-size: 5vw;
+    }
+
+
 }

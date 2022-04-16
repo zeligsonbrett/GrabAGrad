@@ -93,7 +93,19 @@ function details() {
 }
 
 function showCard(){
-  document.getElementById("card-mockup").style.visibility = "visible";    
+  document.getElementById("card-mockup").style.visibility = "visible"; 
+  document.querySelector('#mockup-btn').textContent = "Close Mockup";    
+  document.getElementById("mockup-btn").setAttribute('onclick', 'closeCard()')
+  document.getElementById("mockup-btn").style.backgroundColor = "#FFB98B";
+  document.getElementById("mockup-btn").style.color = "black"; 
+}
+
+function closeCard(){
+  document.getElementById("card-mockup").style.visibility = "hidden"; 
+  document.querySelector('#mockup-btn').textContent = "See Your Profile Card";  
+  document.getElementById("mockup-btn").setAttribute('onclick', 'showCard()');
+  document.getElementById("mockup-btn").style.backgroundColor = "black";
+  document.getElementById("mockup-btn").style.color = "white";
 }
 
 function changeName(input){

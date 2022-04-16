@@ -56,7 +56,12 @@ def filter_grads():
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
         is_graduate = pu.is_graduate(netid)
+    else:
+        netid = "not an administrator"
 
+    netid="zeligson"
+
+    isAdministrator = pu.is_administrator(netid)
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
@@ -79,7 +84,19 @@ def filter_grads():
         html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
     else:
         html = ""
-        grad_card = """
+        if(isAdministrator):
+            grad_card = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <button class="delete-button">Delete Graduate</button>
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        </div>"""
+        else: 
+            html = ""
+            grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
                         <h2>%s</h2>
                         <p><b></b>%s</p>
