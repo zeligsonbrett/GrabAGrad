@@ -147,9 +147,8 @@
                     imageUrl = result.info.url;
                     console.log("The image url is: " + imageUrl);
                     let image_link = $('#image_link').val(imageUrl);
-                    $('#image').attr("src", imageUrl);
+                    $('#img-placeholder').attr("src", imageUrl);
                     document.getElementById("uploaded_image").style.display = "block";
-                    document.getElementById("img-placeholder").style.visibility = "hidden";
                 }
 
                 if (error){
