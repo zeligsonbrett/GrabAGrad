@@ -55,11 +55,11 @@ def execute_command(command, params=None):
             output = con.execute(command)
         return output
 
+
 def del_id_from_tables(tables, del_id):
     with engine.connect() as con:
         for table in tables:
-            statement = 'DELETE FROM ' + table + ' WHERE netid = ' + str(
-                del_id)
+            statement = "DELETE FROM {} WHERE netid = '{}'".format(table, str(del_id))
             con.execute(statement)
 
 

@@ -75,24 +75,30 @@ def filter_grads():
         graduates = sorted(graduates, key=lambda x: (
             x._details is None, x._details[1]), reverse=False)
 
-
     if success_msg != "Success":
         html = '<p style="margin: 23px">%s</p>' % success_msg
     elif len(graduates) == 0:
         html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
     else:
         html = ""
-        if(is_admin):
+        if (is_admin):
             grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button class="delete-button">Delete Graduate</button>
+                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
                         <br>
                         <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
                         </div>"""
-        else: 
+            for grad in graduates:
+                grad_id = grad.get_grad_id()
+                grad_card_info = (
+                    grad.get_photo_link(), grad_id,
+                    grad.get_first_name(),
+                    grad.get_acad_dept(), grad_id)
+                html += grad_card % grad_card_info
+        else:
             html = ""
             grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -102,11 +108,11 @@ def filter_grads():
                         <br>
                         <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
                         </div>"""
-        for grad in graduates:
-            grad_card_info = (
-            grad.get_photo_link(), grad.get_first_name(),
-            grad.get_acad_dept(), grad.get_grad_id())
-            html += grad_card % grad_card_info
+            for grad in graduates:
+                grad_card_info = (
+                    grad.get_photo_link(), grad.get_first_name(),
+                    grad.get_acad_dept(), grad.get_grad_id())
+                html += grad_card % grad_card_info
     response = make_response(html)
     return response
 
@@ -129,6 +135,18 @@ def popup_results():
     grad_id = request.args.get('id')
     graduate = ep.get_grad_information(grad_id)
     html = render_template('popup_box.html', grad=graduate)
+    response = make_response(html)
+    return response
+
+
+@app.route('/delete_grad')
+def delete_grad():
+    grad_id = request.args.get('id')
+    print(grad_id)
+    graduate = ep.get_grad_information(grad_id)
+    print(graduate.get_name())
+    ep.delete_grad(grad_id)
+    html = render_template('grad_deleted_page.html', grad=graduate)
     response = make_response(html)
     return response
 
@@ -190,6 +208,7 @@ def submit():
                       industries=industries,
                       interests=None, email=email, phone=phone_number)
     except Exception as ex:
+        print("Error from function ep.add_a_grad()")
         print(ex)
         html = render_template('error.html', error=str(ex))
         return make_response(html)

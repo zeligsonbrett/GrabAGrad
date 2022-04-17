@@ -198,9 +198,15 @@ def get_grad_information(netid):
     Gets overview information for a certain netid graduate
     """
     command = sqla.text(
-        'SELECT * FROM public.graduates, public.grad_contact WHERE graduates.netid=:netid AND graduates.netid = grad_contact.netid;')
+        'SELECT * FROM public.graduates WHERE graduates.netid=:netid')
     params = {'netid': netid}
     output1 = db.execute_command(command, params)
+
+    contact_command = sqla.text(
+        'SELECT * FROM public.grad_contact WHERE grad_contact.netid=:netid')
+    params = {'netid': netid}
+    contact_output = db.execute_command(contact_command, params)
+
     industries_command = sqla.text('SELECT * FROM public.grad_industries WHERE grad_industries.netid=:netid')
     output2 = db.execute_command(industries_command, params)
     experiences_command = sqla.text('SELECT * FROM public.grad_experiences WHERE grad_experiences.netid=:netid')
@@ -211,15 +217,18 @@ def get_grad_information(netid):
         [x['netid'], x['name'], x['acad_dept'], x['bio'],
          x['undergrad_university'], x['masters_university'],
          x['research_focus'], x['expected_grad_date'],
-         x['years_worked'], x['photo_link'], x['website_link'], x['email'], x['phone']]
+         x['years_worked'], x['photo_link'], x['website_link']]
         for x in output1]
+
     # Returns if no graduate was found for the netid
     if len(all_details) == 0:
         return Graduate()
+
+    contact = [[x['email'], x['phone']] for x in contact_output]
     industries = [x['industry'] for x in output2]
     experiences = [[x['experience'], x['experience_desc']] for x in output3]
     interests = [x['interest'] for x in output4]
-    return Graduate(details=all_details[0][:11], contact=all_details[0][11:], industries=industries, experiences=experiences, interests=interests)
+    return Graduate(details=all_details[0], contact=contact, industries=industries, experiences=experiences, interests=interests)
 
 def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None, 
                 research_focus=None, expected_grad_date=None, years_worked=None, photo_link=None,
@@ -352,7 +361,7 @@ def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                 output = db.execute_command(statement, interest_info)
 
     if email is not None or phone is not None:
-        if email[0] != '' or phone[0] != '':
+        if email != '' or phone != '':
             contact_info = {'netid': netid, 'email': email, 'phone': phone}
             statement = sqla.text(
                 """INSERT INTO grad_contact(netid, email, phone) VALUES(:netid, 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- usually this can just be the headline -->
+        <title>GrabAGrad</title>
+
+    <!-- HTML Meta Tags -->
+        <title>GrabAGrad</title>
+        <meta name="description" content="A form to upload graduates.">
+        <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    </head>
+
+<body style="font-family: 'Lato', sans-serif;">
+
+    <div class="header">
+        <a style="text-decoration: none" href="/">Home</a>
+        <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
+        <a style="text-decoration: none" href="/about">About GrabAGrad</a>
+        <span class="title">GrabAGrad</span>
+    </div>
+    <div style="height: 80px"></div>
+
+    <main class="thanks">
+        <h1>The graduate has been deleted</h1>
+        <br>
+        <h2>Here was some of their information:</h2>
+        <br>
+        <ul>
+            <li><p><b>Name</b> {{grad.get_first_name()}}</p></li>
+            <li><p><b>Academic Department</b> {{grad.get_acad_dept()}}</p></li>
+            <li><p><b>Years of Work Experience</b> {{grad.get_years_worked()}}</p></li>
+            <li><p><b>Undergraduate Institution</b> {{grad.get_undergrad_university()}}</p></li>
+            <li><p><b>Master's Institution</b> {{grad.get_masters_university()}}</p></li>
+            <li><p><b>Preferred Contact Email</b> {{grad.get_email()}}</p></li>
+            <li><p><b>Preferred Phone Number</b> {{grad.get_phone()}}</p></li>
+            <li><p><b>Profile Photo</b> <img style="width: 300px; height: auto" src="{{grad.get_photo_link()}}"></p></li>
+            <li><p><b>Current Research Focus</b> {{grad.get_research_focus()}}</p></li>
+        </ul>
+    </main>
+
+
+</body>
+</html>

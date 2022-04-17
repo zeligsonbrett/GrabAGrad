@@ -104,7 +104,7 @@ class Graduate:
         if self._contact is None:
             return ""
         try:
-            return self._contact[0]
+            return self._contact[0][0]
         except Exception:
             return ""
 
@@ -112,6 +112,6 @@ class Graduate:
         if self._contact is None:
             return ""
         try:
-            return self._contact[1]
+            return self._contact[0][1]
         except Exception:
             return ""
