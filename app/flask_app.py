@@ -57,11 +57,12 @@ def filter_grads():
         netid = netid.strip()
         is_graduate = pu.is_graduate(netid)
     else:
-        netid = "not an administrator"
+        netid = "testingadmin"
 
-    netid="zeligson"
-
-    isAdministrator = pu.is_administrator(netid)
+    print(netid)
+    is_admin = pu.is_administrator(netid)
+    print("Is Admin:")
+    print(is_admin)
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
@@ -84,7 +85,7 @@ def filter_grads():
         html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
     else:
         html = ""
-        if(isAdministrator):
+        if(is_admin):
             grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
                         <button class="delete-button">Delete Graduate</button>

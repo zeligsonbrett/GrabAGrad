@@ -58,4 +58,4 @@ def is_administrator(netid):
              netid doesn't correspond to the admin or there was an
              error within the database.
     """
-    return netid == 'taknoll' or netid == 'zeligson' or netid == 'hknoll'
+    return netid == 'taknoll' or netid == 'zeligson' or netid == 'hknoll' or netid == 'testingadmin'
