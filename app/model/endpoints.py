@@ -160,7 +160,7 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
         years_worked_c = 'AND years_worked >= {}'.format(years_worked)
 
     grad_list = []
-    if industry is not None:
+    if industry is not None and industry != '':
         industry = __prepare_argument(industry)
         command = sqla.text(
             """SELECT DISTINCT graduates.netid FROM 
@@ -190,7 +190,6 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
         output = db.execute_command(command, params)
         ids = [x['netid'] for x in output]
         grad_list = __create_graduates_list(ids)
-
     return grad_list
 
 
@@ -220,7 +219,7 @@ def get_grad_information(netid):
     industries = [x['industry'] for x in output2]
     experiences = [[x['experience'], x['experience_desc']] for x in output3]
     interests = [x['interest'] for x in output4]
-    return Graduate(details=all_details[0][:11], contact=all_details[0][11], industries=industries, experiences=experiences, interests=interests)
+    return Graduate(details=all_details[0][:11], contact=all_details[0][11:], industries=industries, experiences=experiences, interests=interests)
 
 def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None, 
                 research_focus=None, expected_grad_date=None, years_worked=None, photo_link=None,
@@ -335,7 +334,7 @@ def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                 output = db.execute_command(statement, experience_info)
 
     if industries is not None:
-        if industries != '':
+        if industries[0] != '':
             for industry in industries:
                 industry_info = {'netid': netid, 'industry': industry}
                 statement = sqla.text(
@@ -344,7 +343,7 @@ def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                 output = db.execute_command(statement, industry_info)
 
     if interests is not None:
-        if interests != '':
+        if interests[0] != '':
             for interest in interests:
                 interest_info = {'netid': netid, 'interest': interest}
                 statement = sqla.text(
@@ -353,7 +352,7 @@ def add_a_grad(netid, name, dept, bio=None, un_uni=None, ma_uni=None,
                 output = db.execute_command(statement, interest_info)
 
     if email is not None or phone is not None:
-        if email != '' or phone != '':
+        if email[0] != '' or phone[0] != '':
             contact_info = {'netid': netid, 'email': email, 'phone': phone}
             statement = sqla.text(
                 """INSERT INTO grad_contact(netid, email, phone) VALUES(:netid, 

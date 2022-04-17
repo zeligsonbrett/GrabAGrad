@@ -140,7 +140,7 @@ def form():
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
     else:
-        netid = "aminerva"
+        netid = "testingadmin"
 
     current_grad = ep.get_grad_information(netid)
     uploaded_image = request.args.get('image_link')
@@ -162,14 +162,14 @@ def submit():
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
     else:
-        netid = "testingid"
+        netid = "testingadmin"
 
     name = request.args.get('name')
     dept = request.args.get('academic-dept')
     undergrad = request.args.get('undergrad-institution')
     masters = request.args.get('masters-institution')
     email = request.args.get('email')
-    phone_number = request.args.get('phone_number')
+    phone_number = request.args.get('phone-number')
     years_worked = request.args.get('years-worked')
     try:
         years_worked = int(years_worked)

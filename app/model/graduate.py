@@ -100,7 +100,18 @@ class Graduate:
             return ""
         return self._interests
 
-    def get_contact(self):
+    def get_email(self):
         if self._contact is None:
             return ""
-        return self._contact
+        try:
+            return self._contact[0]
+        except Exception:
+            return ""
+
+    def get_phone(self):
+        if self._contact is None:
+            return ""
+        try:
+            return self._contact[1]
+        except Exception:
+            return ""
