@@ -109,19 +109,20 @@ function closeCard(){
 }
 
 function retrieveFieldFromDB(input){
-  var field = input.id;
-  if (field == "academic-dept") return {{grad.get_acad_dept()}};
-  else if (field == "years-worked") return {{grad.get_years_worked()}};
-  else if (field == "undergrad-institution") return {{grad.get_undergrad_university()}};
-  else if (field == "masters-institution") return {{grad.get_masters_university()}};
-  else if (field == "email") return {{grad.get_contact()}};
-  else if (field == "phone-number") return {{grad.get_contact()}};
-  else if (field == "research-focus") return {{grad.get_research_focus()}};
-  else if (field == "industries") return {{grad.get_industries()}};
+//  var field = input.id;
+//  if (field == "academic-dept") return {{grad.get_acad_dept()}};
+//  else if (field == "years-worked") return {{grad.get_years_worked()}};
+//  else if (field == "undergrad-institution") return {{grad.get_undergrad_university()}};
+//  else if (field == "masters-institution") return {{grad.get_masters_university()}};
+//  else if (field == "email") return {{grad.get_contact()}};
+//  else if (field == "phone-number") return {{grad.get_contact()}};
+//  else if (field == "research-focus") return {{grad.get_research_focus()}};
+//  else if (field == "industries") return {{grad.get_industries()}};
   return ""
 }
 
 function changeName(input){
+
   var elementValue = input.value;
   console.log(input.id);
   if (elementValue == "") {
