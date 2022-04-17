@@ -59,10 +59,7 @@ def filter_grads():
     else:
         netid = "testingadmin"
 
-    print(netid)
     is_admin = pu.is_administrator(netid)
-    print("Is Admin:")
-    print(is_admin)
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
@@ -143,10 +140,9 @@ def form():
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
     else:
-        netid = "test"
+        netid = "aminerva"
 
     current_grad = ep.get_grad_information(netid)
-    print(current_grad)
     uploaded_image = request.args.get('image_link')
     try:
         html = render_template('form_page.html',

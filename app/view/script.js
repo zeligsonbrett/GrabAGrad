@@ -108,10 +108,26 @@ function closeCard(){
   document.getElementById("mockup-btn").style.color = "white";
 }
 
+function retrieveFieldFromDB(input){
+  var field = input.id;
+  if (field == "academic-dept") return {{grad.get_acad_dept()}};
+  else if (field == "years-worked") return {{grad.get_years_worked()}};
+  else if (field == "undergrad-institution") return {{grad.get_undergrad_university()}};
+  else if (field == "masters-institution") return {{grad.get_masters_university()}};
+  else if (field == "email") return {{grad.get_contact()}};
+  else if (field == "phone-number") return {{grad.get_contact()}};
+  else if (field == "research-focus") return {{grad.get_research_focus()}};
+  else if (field == "industries") return {{grad.get_industries()}};
+  return ""
+}
+
 function changeName(input){
   var elementValue = input.value;
   console.log(input.id);
-  if (elementValue == "") elementValue = '...';
+  if (elementValue == "") {
+    elementValue = retrieveFieldFromDB(input);
+    console.log(elementValue)
+  }
   else if (elementValue.length > 15 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
   //else if (elementValue.length > 100 && input.id == "research-focus") elementValue = elementValue.substring(0, 100) + "...";
   else if (elementValue.length > 20) elementValue = elementValue.substring(0, 20) + "...";
