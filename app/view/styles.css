@@ -560,10 +560,16 @@ img{
     margin-left: 20px;
 }
 
+#thanks-title{
+    padding: 10px; 
+    margin-left: -20px; 
+    text-align: center; 
+}
+
 .thanks h1{
    color: black;
     font-weight: bolder;
-    font-size: 50px;
+    font-size: 2vw;
     text-align: center;
 }
  
@@ -571,7 +577,7 @@ img{
 .thanks h2 {
     color: black;
     font-weight: bolder;
-    font-size: 40px;
+    font-size: 3vw;
     color: white;
  }
 
@@ -599,7 +605,7 @@ img{
 
  .thanks ul{
     list-style: none;
-    font-size: 20px;
+    font-size: 2.5vw;
     color: black;
     float: left;
     text-align: left;
@@ -616,8 +622,11 @@ img{
     margin-left: -20px;
     border-radius: 0 12px 12px 0;
     margin-right: 10px;
+    width: 50%;
 }
-
+.thanks span{
+    width: 50%; 
+}
 .textarea-label{
     color: black;
     background-color: rgb(238, 148, 64);
@@ -693,6 +702,8 @@ img{
 
 .about-card h1{
     margin-top: 20px;
+    font-size: 3vw;
+    width: 100%;
     color:rgb(238, 148, 64)
 }
 
@@ -702,7 +713,7 @@ img{
 }
 
 .thanks p{
-    font-size: 30px;
+    font-size: 3vw;
     font-weight: bolder;
     padding-top: 20px;
 }
@@ -756,7 +767,7 @@ img{
     text-align: right; 
     bottom: 10px; 
     font-style: italic; 
-    font-size: 2vw; 
+    font-size: 1.75vw; 
     margin: 0;
 }
 
@@ -872,10 +883,32 @@ img{
         font-size: 8vw;
         margin-bottom: -20px;
     }
-
-
 }
 
+@media screen and (max-width: 1000px){
+    .details-img{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px){
+    .thanks p{
+        font-size: 3vw;
+    }
+
+    #thanks-title{
+        font-size: 6vw;
+    }
+
+    .thanks h2,
+    .thanks h2::first-letter{
+        font-size: 4vw;
+    }
+
+    .thanks ul{
+        font-size: 2.5vw;
+    }
+}
 @media screen and (max-width: 500px){
     .labelStyle{
         text-align: left;
