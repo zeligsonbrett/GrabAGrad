@@ -108,7 +108,7 @@ function closeCard(){
   document.getElementById("mockup-btn").style.color = "white";
 }
 
-function retrieveFieldFromDB(input){
+function save_placeholders(input){
 //  var field = input.id;
 //  if (field == "academic-dept") return {{grad.get_acad_dept()}};
 //  else if (field == "years-worked") return {{grad.get_years_worked()}};
