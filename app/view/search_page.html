@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <!-- usually this can just be the headline -->
@@ -19,6 +18,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
 
+    <input type="hidden" id="admin" name="admin" value = {{is_admin}}>
 
     <body onload="reportWindowSize()" style="font-family: 'Lato', sans-serif;">
         <div class="header">
@@ -26,6 +26,7 @@
             <a style="text-decoration: none" href="/">Home</a>
             <!--<a style="text-decoration: none" href="/form">Create a Profile</a>-->
             <a style="text-decoration: none" href="/about">About GrabAGrad</a>
+            <a id="admin_link" style="text-decoration: none; display: none" href="/admin">Administrator View</a>
             <span class="title">GrabAGrad</span>
         </div>
         <span id="top"></span>
@@ -135,6 +136,19 @@
                 );
             }
 
+
+            function check_admin(){
+                let admin = $('#admin').val();
+                if (admin == 'True') {
+                    console.log('Current user is an admin');
+                    document.getElementById("admin_link").style.display = "inline";
+                }
+                else if (admin == 'False'){
+                    console.log('Current user is not an admin')
+                }
+            }
+
+
             function setup()
             {
                 $('#name').on('input', filterResults);
@@ -143,8 +157,8 @@
                 $('#years-worked').on('input', filterResults);
                 $('#un-uni').on('input', filterResults);
                 $('#sortby').on('change', filterResults);
-
                 filterResults();
+                check_admin();
             }
 
             $('document').ready(setup);

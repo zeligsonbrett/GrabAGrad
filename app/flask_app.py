@@ -124,8 +124,12 @@ def see_grads():
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
         is_graduate = pu.is_graduate(netid)
+    else:
+        netid = "testingadmin"
 
-    html = render_template('search_page.html')
+    is_admin = pu.is_administrator(netid)
+
+    html = render_template('search_page.html', is_admin=is_admin)
     response = make_response(html)
     return response
 
