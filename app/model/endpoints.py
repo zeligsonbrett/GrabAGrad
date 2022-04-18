@@ -69,6 +69,12 @@ def __prepare_argument(user_input):
     prepped_arg = '%' + user_input + '%'
     return prepped_arg
 
+def get_grad_by_row(row_param):
+    command = sqla.text("""SELECT netid FROM public.graduates LIMIT 1 OFFSET :row;""")
+    params = {'row': row_param}
+    output = db.execute_command(command, params)
+    ids = [x['netid'] for x in output]
+    return get_grad_information(ids[0])
 
 def __create_graduates_list(id_list):
     """

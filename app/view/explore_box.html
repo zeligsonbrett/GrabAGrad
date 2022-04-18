@@ -1,0 +1,13 @@
+<h1 style="font-size: 40px; color: white"><span id='name'>{{grad.get_name()}}</span></h1>
+<div id="uploaded_image" class="uploaded_image">
+        <img id="img-placeholder" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="display: inline-block; width:25%; height:auto; object-fit:contain; position: absolute;" >
+</div>
+<ul style="font-size: 20px; color: white">
+    <li><b>Academic Department: </b>{{grad.get_acad_dept()}}</li><br>
+    <li><b>Years of Work Experience: </b>{{grad.get_years_worked()}}</li><br>
+    <li><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li><br>
+    <li><b>Masters Institution: </b>{{grad.get_masters_university()}}</li><br>
+    <li><b>Preferred Contact Email: </b>{{grad.get_email()}}</li><br>
+    <li><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li><br>
+    <li><b>Industries Worked In: </b>{{grad.get_industries_str()}}</li><br>
+</ul>

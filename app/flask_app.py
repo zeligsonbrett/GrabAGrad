@@ -138,7 +138,7 @@ def see_grads():
 @app.route('/header_tabs')
 def header_tabs_results():
     current_page = request.args.get('page')
-    is_grad = True;
+    is_grad = False;
     has_profile = True;
     html = '<a style="text-decoration: none" href="/">Home</a>'
     if current_page == 'search_page' or current_page == 'about':
@@ -149,11 +149,27 @@ def header_tabs_results():
                 html += '<a style="text-decoration: none" href="/form">Create A Profile</a>'
     if current_page == 'form' or current_page == 'about':
         html += '<a style="text-decoration: none" href="/see_grads">Search Graduates</a>'
+    if not is_grad:
+        html += '<a style="text-decoration: none" href="/explore">Explore</a>'
     if current_page != 'about':
         html += '<a style="text-decoration: none" href="/about">About GrabAGrad</a>'
     response = make_response(html)
     return response
 
+@app.route('/explore')
+def explore_page():
+    html = render_template('explore_page.html')
+    response = make_response(html)
+    return response
+
+@app.route('/explorebox')
+def explore_page_box():
+    num = int(request.args.get('grad'))
+    max_num = 20
+    grad = ep.get_grad_by_row(num % max_num)
+    html = render_template('explore_box.html', grad=grad)
+    response = make_response(html)
+    return response
 
 @app.route('/popup')
 def popup_results():

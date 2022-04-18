@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- usually this can just be the headline -->
+        <title>GrabAGrad</title>
+
+    <!-- HTML Meta Tags -->
+        <title>GrabAGrad</title>
+        <meta name="description" content="A form to upload graduates.">
+        <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+    </head>
+
+<body style="font-family: 'Lato', sans-serif;">
+    
+    <div class="header">
+        <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
+        <a style="text-decoration: none" href="/form">Update My Profile</a>
+        <a style="text-decoration: none" href="/about">About GrabAGrad</a>
+        <span class="title">GrabAGrad</span>
+    </div>
+    <div style="height: 80px"></div>
+
+    <div id="explore_popup" class="explore-card">
+    </div>
+    <div style="margin-top: calc(100vh - 150px); position:fixed">
+        <input id="previous" class="submit-button" type="submit" value="Previous">
+        <input id="next" class="submit-button" type="submit" value="Next">
+    </div>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
+        </script>
+
+            <script>
+
+            'use strict';
+
+            let request = null;
+            let grad = 0;
+
+            function render_grad_info(response) {
+                $('#explore_popup').html(response);
+            }
+
+            function load_in_grad() {
+                let url = '/explorebox?grad=' + grad;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: render_grad_info
+                   }
+                );
+            }
+
+            function next_grad() {
+                grad += 1;
+                load_in_grad();
+            }
+
+            function previous_grad() {
+                grad -= 1;
+                load_in_grad();
+            }
+
+            function key_pressed() {
+                console.log("Key pressed");
+            }
+
+            function setup()
+            {
+                $('#next').click(next_grad);
+                $('#previous').click(previous_grad);
+                $(document).keyup(function(e) {
+                    var key = e.keyCode;
+                    if (key == 37) {
+                        previous_grad();
+                    } else if (key == 39) {
+                        next_grad();
+                    }});
+                load_in_grad();
+            }
+
+            $('document').ready(setup);
+
+            </script>
+    </body>
+</html>
