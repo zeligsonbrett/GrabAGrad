@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
+from model.graduate import Graduate
 import controller.search as search
 import os
 import controller.pustatus.pustatus as pu
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
+is_graduate = False
 
 try:
     app.secret_key = os.environ['APP_SECRET_KEY']
@@ -129,6 +131,25 @@ def see_grads():
     response = make_response(html)
     return response
 
+@app.route('/header_tabs')
+def header_tabs_results():
+    current_page = request.args.get('page')
+    is_grad = True;
+    has_profile = True;
+    html = '<a style="text-decoration: none" href="/">Home</a>'
+    if current_page == 'search_page' or current_page == 'about':
+        if is_grad:
+            if has_profile:
+                html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
+            else:
+                html += '<a style="text-decoration: none" href="/form">Create A Profile</a>'
+    if current_page == 'form' or current_page == 'about':
+        html += '<a style="text-decoration: none" href="/see_grads">Search Graduates</a>'
+    if current_page != 'about':
+        html += '<a style="text-decoration: none" href="/about">About GrabAGrad</a>'
+    response = make_response(html)
+    return response
+
 
 @app.route('/popup')
 def popup_results():
@@ -153,22 +174,27 @@ def delete_grad():
 
 @app.route('/form')
 def form():
+    global is_graduate
+    is_graduate = True
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
         netid = netid.strip()
     else:
         netid = "testingadmin"
-
     current_grad = ep.get_grad_information(netid)
-    uploaded_image = request.args.get('image_link')
+    #uploaded_image = request.args.get('image_link')
+    page = 'update_page.html'
+    if not current_grad:
+        page = 'form_page.html'
+        current_grad = Graduate()
     try:
-        html = render_template('form_page.html',
+        html = render_template(page,
                                cloud_name=os.environ['CLOUD_NAME'],
                                grad=current_grad)
     except:
         from controller.keys import CLOUD_NAME
-        html = render_template('form_page.html',
+        html = render_template(page,
                                cloud_name=CLOUD_NAME, grad=current_grad)
     return make_response(html)
 
@@ -199,25 +225,44 @@ def submit():
     industries = request.args.get('industries')
     industries = [x.strip() for x in industries.split(',')];
 
-    try:
-        ep.add_a_grad(netid=netid, name=name, dept=dept, bio=None,
-                      un_uni=undergrad, ma_uni=masters,
-                      research_focus=research, expected_grad_date=None,
-                      years_worked=years_worked, photo_link=photo,
-                      website_link=None, experiences=None,
-                      industries=industries,
-                      interests=None, email=email, phone=phone_number)
-    except Exception as ex:
-        print("Error from function ep.add_a_grad()")
-        print(ex)
-        html = render_template('error.html', error=str(ex))
-        return make_response(html)
+    current_grad = ep.get_grad_information(netid)
+    #uploaded_image = request.args.get('image_link')
+    if not current_grad:
+        try:
+            ep.add_a_grad(netid=netid, name=name, dept=dept, bio=None,
+                          un_uni=undergrad, ma_uni=masters,
+                          research_focus=research, expected_grad_date=None,
+                          years_worked=years_worked, photo_link=photo,
+                          website_link=None, experiences=None,
+                          industries=industries,
+                          interests=None, email=email, phone=phone_number)
+        except Exception as ex:
+            print("Error from function ep.add_a_grad()")
+            print(ex)
+            html = render_template('error.html', error=str(ex))
+            return make_response(html)
+    else:
+        try:
+            ep.update_grad(netid=netid, name=name, dept=dept, bio=None,
+                          un_uni=undergrad, ma_uni=masters,
+                          research_focus=research, expected_grad_date=None,
+                          years_worked=years_worked, photo_link=photo,
+                          website_link=None, experiences=None,
+                          industries=industries,
+                          interests=None, email=email, phone=phone_number)
+        except Exception as ex:
+            print("Error from function ep.update_grad()")
+            print(ex)
+            html = render_template('error.html', error=str(ex))
+            return make_response(html)
 
     # Search thanks displays None otherwise
     if years_worked is None:
         years_worked = ""
     if phone_number is None:
         phone_number = ""
+    if photo is None or photo == '':
+        photo = current_grad.get_photo_link()
 
     html = render_template('submission_thanks.html',
                            name=name, dept=dept, bio=None,
@@ -226,7 +271,7 @@ def submit():
                            expected_grad_date=None,
                            years_worked=years_worked, photo_link=photo,
                            website_link=None, experiences=None,
-                           industries=None,
+                           industries=str.join(', ', industries),
                            interests=None, email=email,
                            phone=phone_number)
     response = make_response(html)

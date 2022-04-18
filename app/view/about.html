@@ -20,9 +20,7 @@
 <body style="font-family: 'Lato', sans-serif;">
     
     <div class="header">
-        <a style="text-decoration: none" href="/">Home</a>
-        <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
-        <a style="text-decoration: none" href="/form">Create a Profile</a>
+        <div style="display: inline" id='header_tabs'></div>
         <span class="title">GrabAGrad</span>
     </div>
     <div style="height: 80px"></div>
@@ -75,7 +73,29 @@
             </div>    
         </div>
     </main>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
+    </script>
+        <script>
+            'use strict';
 
+            let request = null;
 
-</body>
-</html>
+            function render_header_tabs(response) {
+                $('#header_tabs').html(response);
+            }
+
+            function get_header_tabs() {
+                let url = '/header_tabs?page=about';
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: render_header_tabs
+                   }
+                );
+            }
+
+            $('document').ready(get_header_tabs());
+            </script>
+    </body>
+    </html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- usually this can just be the headline -->
+        <title>GrabAGrad</title>
+
+    <!-- HTML Meta Tags -->
+        <title>GrabAGrad</title>
+        <meta name="description" content="A form to upload graduates.">
+        <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+    </head>
+
+<body style="font-family: 'Lato', sans-serif;">
+    <div class="header">
+        <a style="text-decoration: none" href="/">Home</a>
+        <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
+        <a style="text-decoration: none" href="/about">About GrabAGrad</a>
+        <span class="title">GrabAGrad</span>
+    </div>
+    <div style="height: 80px"></div>
+
+    <div style="width: 100%"><h1 class="form-title">Update Your Information</h1></div>
+    <form class="form-input" action="submit" style="margin-left:0" method="get">
+        <div class="next-to-card" style="display: inline-block">
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="name">Name</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="name" name="name" type="text" value="{{grad.get_name()}}"></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="academic-dept">Academic Department</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="academic-dept" name="academic-dept" type="text" value="{{grad.get_acad_dept()}}"></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="years-worked">Years of Work Experience</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="text" value="{{grad.get_years_worked()}}"></div>
+                        
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="undergrad-institution">Undergraduate Institution</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="undergrad-institution" name="undergrad-institution" type="text" value="{{grad.get_undergrad_university()}}"></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="masters-institution">Masters Institution</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="masters-institution" name="masters-institution" type="text" value="{{grad.get_masters_university()}}"></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="email">Preferred Contact Email</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="email" name="email" type="text" value="{{grad.get_email()}}"></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="phone-number">Preferred Phone Number</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="phone-number" name="phone-number" type="text" value="{{grad.get_phone()}}"></div>
+                    </div>
+                </div>
+
+                <div id="profile_photo" class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="cloudinary_upload">Profile Photo</label></div>
+                        <div class="inputStyle" style="text-align: center;"><button id="cloudinary_upload" class="submit-button photo" style="margin: 0; outline: none;" type="button"> Choose New Photo </button></div>
+                    </div>
+                </div>
+                <input type="hidden" id="image_link" name ="image_link" value = "">
+
+                <!--<label for="industries">Industries Worked In (Please separate by commas)</label>
+                <textarea id="industries" name="industries" rows="0" cols="0"></textarea>
+
+                <br>-->
+                <br>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="research-focus">Current Research Focus</label></div>
+                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="research-focus" name="research-focus" rows="0" cols="0">{{grad.get_research_focus()}}</textarea></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="industries">Industries Worked In (Separated by commas)</label></div>
+                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0">{{grad.get_industries_str()}}</textarea></div>
+                    </div>
+                </div>
+        </div>
+
+        <div id="card-mockup" style="overflow-y:auto;">
+            <span style="margin-top: -20px; font-weight: bolder; font-size: 30px;">More About</span><p style="font-weight: bolder; font-size: 30px;" id="nameCard"></p><br>
+            <div id="uploaded_image" class="uploaded_image">
+                <img id="img-placeholder" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="display: inline-block; width:25%; height:auto; object-fit:contain; position: absolute;" >
+            </div>
+            <br>
+            <!--<div style="height: 190px;"></div>-->
+            <span>Academic Department:</span><p id="academic-deptCard">{{grad.get_acad_dept()}}</p><br>
+            <span>Years of Work Experience:</span><p id="years-workedCard">{{grad.get_years_worked()}}</p><br>
+            <span>Undergraduate Institution:</span><p id="undergrad-institutionCard">{{grad.get_undergrad_university()}}</p><br>
+            <span>Master's Institution:</span><p id="masters-institutionCard">{{grad.get_masters_university()}}</p><br>
+            <span>Preferred Contact Email:</span><p id="emailCard">{{grad.get_email()}}</p><br>
+            <span>Preferred Phone Number:</span><p id="phone-numberCard">{{grad.get_phone()}}</p><br>
+            <span>Current Research Focus:</span><p id="research-focusCard">{{grad.get_research_focus()}}</p><br>
+            <span>Industries Worked In:</span><p id="industriesCard">{{grad.get_industries_str()}}</p><br> 
+            <span class="mockup-note">Mockup of Your Profile Card</span>
+        </div>        
+        <br>
+        <div style="text-align: right;">
+            <input class="submit-button" type="submit" value="Update">
+        </div>
+    </form>
+
+    <button id="mockup-btn" class="backToTop" onclick=showCard()>See Your Profile Card</button>
+
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+    function cloudinary_upload(){
+        var upload_widget = cloudinary.createUploadWidget({
+            cloudName: '{{cloud_name}}',
+            maxFiles: 1,
+            resourceType: 'image',
+            cropping: 'true',
+            showSkipCropButton: false,
+            sources: ['local', 'camera', 'instagram'],
+            croppingAspectRatio: 0.8514,
+            singleUploadAutoClose: false,
+            uploadPreset: 'GrabAGrad'}, (error, result) => {
+                if (!error && result && result.event === "success") {
+                    imageUrl = result.info.url;
+                    console.log("The image url is: " + imageUrl);
+                    let image_link = $('#image_link').val(imageUrl);
+                    $('#img-placeholder').attr("src", imageUrl);
+                    document.getElementById("uploaded_image").style.display = "block";
+                }
+
+                if (error){
+                    console.log("There was an error while uploading.");
+                }
+            }
+
+        )
+
+        document.getElementById("cloudinary_upload").addEventListener("click",
+            function(){upload_widget.open(); }, false);
+    }
+
+    function setup(){
+        cloudinary_upload();
+    }
+
+    $('#document').ready(setup);
+</script>
+
+
+</body>
+</html>

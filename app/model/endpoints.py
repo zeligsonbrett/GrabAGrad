@@ -222,7 +222,7 @@ def get_grad_information(netid):
 
     # Returns if no graduate was found for the netid
     if len(all_details) == 0:
-        return Graduate()
+        return None
 
     contact = [[x['email'], x['phone']] for x in contact_output]
     industries = [x['industry'] for x in output2]
@@ -253,6 +253,13 @@ def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
     output = db.execute_command(remove_experiences, params)
     output = db.execute_command(remove_interests, params)
     output = db.execute_command(remove_contact, params)
+
+    if photo_link is not None and photo_link != '':
+         command = sqla.text(
+            """UPDATE graduates SET 
+            photo_link = :photo WHERE graduates.netid = :netid;""")
+         params = {'netid': netid, 'photo': photo_link}
+         output = db.execute_command(command, params)
 
     if experiences is not None:
         if experiences != '':
