@@ -21,7 +21,7 @@
    
     </head>
 
-<body style="font-family: 'Lato', sans-serif;">
+<body onload="saveData()" style="font-family: 'Lato', sans-serif;">
     <div class="header">
         <a style="text-decoration: none" href="/">Home</a>
         <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
@@ -102,10 +102,15 @@
                         <div class="inputStyle"><textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0">{{grad.get_industries_str()}}</textarea></div>
                     </div>
                 </div>
+
         </div>
 
         <div id="card-mockup" style="overflow-y:auto;">
+<<<<<<< HEAD
             <span style="margin-top: -20px; font-weight: bolder; font-size: 30px;">More About</span><p style="font-weight: bolder; font-size: 30px;" id="nameCard">{{grad.get_first_name()}}</p><br>
+=======
+            <span style="margin-top: -20px; font-weight: bolder; font-size: 30px;">More About</span><p style="font-weight: bolder; font-size: 30px;" id="nameCard">{{grad.get_name()}}</p><br>
+>>>>>>> fbadc9a53ed812b0c5b7f9c7c2b361adb61f004f
             <div id="uploaded_image" class="uploaded_image">
                 <img id="img-placeholder" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="display: inline-block; width:25%; height:auto; object-fit:contain; position: absolute;" >
             </div>
