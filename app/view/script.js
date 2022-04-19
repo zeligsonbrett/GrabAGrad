@@ -142,7 +142,7 @@ function changeName(input){
   var elementValue = input.value;
   if (input.id == "name") elementValue = elementValue.split(" ")[0];
   if (elementValue.length == 0) {
-    elementValue = "...";
+    elementValue = '';
   }
   else if (elementValue.length > 15 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
   //else if (elementValue.length > 100 && input.id == "research-focus") elementValue = elementValue.substring(0, 100) + "...";
