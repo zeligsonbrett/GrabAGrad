@@ -193,8 +193,7 @@ def header_tabs_results():
     html = '<a style="text-decoration: none" href="/">Home</a>'
     if current_page != 'search_page':
         html += '<a style="text-decoration: none" href="/see_grads">Search Graduates</a>'
-    if is_graduate:
-        if current_page == 'search_page' or current_page == 'about':
+    if is_graduate and (current_page == 'search_page' or current_page == 'about'):
             if has_profile:
                 html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
             else:
