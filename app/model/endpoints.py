@@ -76,6 +76,12 @@ def get_grad_by_row(row_param):
     ids = [x['netid'] for x in output]
     return get_grad_information(ids[0])
 
+def num_graduates():
+    command = sqla.text("""SELECT COUNT(*) FROM public.graduates;""")
+    output = db.execute_command(command)
+    count = [x for x in output]
+    return int(count[0][0])
+
 def __create_graduates_list(id_list):
     """
     Creates and returns a list of graduates that have ids from id_list.

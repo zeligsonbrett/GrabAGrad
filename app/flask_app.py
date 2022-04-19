@@ -217,7 +217,7 @@ def explore_page():
 @app.route('/explorebox')
 def explore_page_box():
     num = int(request.args.get('grad'))
-    max_num = 20
+    max_num = ep.num_graduates()
     grad = ep.get_grad_by_row(num % max_num)
     html = render_template('explore_box.html', grad=grad)
     response = make_response(html)
