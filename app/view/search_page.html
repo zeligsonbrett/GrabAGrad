@@ -87,6 +87,9 @@
 
             function get_header_tabs() {
                 let url = '/header_tabs?page=search_page';
+                {% if is_admin %}
+                    url = '/header_tabs?page=admin';
+                {% endif %}
                 request = $.ajax(
                    {
                       type: 'GET',
@@ -131,7 +134,12 @@
                 un_uni = encodeURIComponent(un_uni);
                 sortby = encodeURIComponent(sortby);
 
-                let url = '/filter_grads?name=' + name + '&dept=' + dept +
+                let administrator = false;
+                {% if is_admin %}
+                    administrator = true;
+                {% endif %}
+                console.log(administrator);
+                let url = '/filter_grads?is_admin=' + administrator + '&name=' + name + '&dept=' + dept +
                           '&industry=' + industry + '&years_worked=' + 
                           years_worked + '&un_uni=' + un_uni + '&sortby=' + sortby
 
@@ -148,18 +156,6 @@
             }
 
 
-            function check_admin(){
-                let admin = $('#admin').val();
-                if (admin == 'True') {
-                    console.log('Current user is an admin');
-                    document.getElementById("admin_link").style.display = "inline";
-                }
-                else if (admin == 'False'){
-                    console.log('Current user is not an admin')
-                }
-            }
-
-
             function setup()
             {
                 $('#name').on('input', filterResults);
@@ -170,7 +166,7 @@
                 $('#sortby').on('change', filterResults);
                 filterResults();
                 get_header_tabs();
-                check_admin();
+                //check_admin();
             }
 
             $('document').ready(setup);

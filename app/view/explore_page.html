@@ -20,9 +20,7 @@
 <body style="font-family: 'Lato', sans-serif;">
     
     <div class="header">
-        <a style="text-decoration: none" href="/see_grads">Search Graduates</a>
-        <a style="text-decoration: none" href="/form">Update My Profile</a>
-        <a style="text-decoration: none" href="/about">About GrabAGrad</a>
+        <div style="display: inline" id='header_tabs'></div>
         <span class="title">GrabAGrad</span>
     </div>
     <div style="height: 80px"></div>
@@ -58,6 +56,21 @@
                 );
             }
 
+            function render_header_tabs(response) {
+                $('#header_tabs').html(response);
+            }
+
+            function get_header_tabs() {
+                let url = '/header_tabs?page=explore';
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: render_header_tabs
+                   }
+                );
+            }
+
             function next_grad() {
                 grad += 1;
                 load_in_grad();
@@ -84,6 +97,7 @@
                         next_grad();
                     }});
                 load_in_grad();
+                get_header_tabs();
             }
 
             $('document').ready(setup);
