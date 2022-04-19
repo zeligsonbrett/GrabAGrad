@@ -93,9 +93,11 @@ input{
     font-size: 20px;
     border-radius: 8px;
     background-color:rgb(248, 159, 57);
+    color: black;
 }
 
-.submit-button:hover{
+.submit-button:hover,
+.submit-button:focus{
     color:rgb(255, 248, 241);
     border-width: 0px;
     transition: 0.3s ease-out;
@@ -818,6 +820,10 @@ img{
         width: 100vw;
         height: 525px;
         margin-bottom: -40px;
+    }
+
+    .title{
+        display: none;
     }
 
     #main{
