@@ -95,7 +95,8 @@ input{
     background-color:rgb(248, 159, 57);
 }
 
-.submit-button:hover{
+.submit-button:hover,
+.submit-button:focus{
     color:rgb(255, 248, 241);
     border-width: 0px;
     transition: 0.3s ease-out;
