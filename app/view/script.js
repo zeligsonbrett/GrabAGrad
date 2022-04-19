@@ -1,6 +1,6 @@
 const heightOutput = document.querySelector('#height');
 const widthOutput = document.querySelector('#width');
-let saved_n = ""
+/*let saved_n = ""
 let saved_a = ""
 let saved_y = ""
 let saved_u = ""
@@ -9,7 +9,7 @@ let saved_e = ""
 let saved_p = ""
 let saved_r = "" 
 let saved_i = ""
-
+*/
 function reportWindowSize() {
   if(window.innerWidth >= 780){
     if(document.getElementById("mySidenav").style.width != "40px"){
@@ -116,7 +116,7 @@ function closeCard(){
   document.getElementById("mockup-btn").style.backgroundColor = "black";
   document.getElementById("mockup-btn").style.color = "white";
 }
-
+/*
 function saveData(){
   saved_n = document.getElementById("name").value;
   saved_a = document.getElementById("academic-dept").value;
@@ -136,13 +136,13 @@ function saveData(){
 //  else if (field == "phone-number") return {{grad.get_contact()}};
 //  else if (field == "research-focus") return {{grad.get_research_focus()}};
 //  else if (field == "industries") return {{grad.get_industries()}};
-}
+} */
 
 function changeName(input){
   var elementValue = input.value;
   if (input.id == "name") elementValue = elementValue.split(" ")[0];
   if (elementValue == "") {
-    elementValue = eval("saved_" + input.id.substring(0,1));
+    elementValue = "";
   }
   else if (elementValue.length > 15 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
   //else if (elementValue.length > 100 && input.id == "research-focus") elementValue = elementValue.substring(0, 100) + "...";
