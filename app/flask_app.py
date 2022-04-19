@@ -82,46 +82,69 @@ def filter_grads():
         graduates = sorted(graduates, key=lambda x: (
             x._details is None, x._details[1]), reverse=False)
 
-    if success_msg != "Success":
-        html = '<p style="margin: 23px">%s</p>' % success_msg
-    elif len(graduates) == 0:
-        html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
-    else:
-        html = ""
-        print("Are they an admin?")
-        print(is_admin)
-        if is_admin:
-            grad_card = """
+    html = ""
+    grad_card_admin_me = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        {}<button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
+                        <button class="me-button">Me</button>
+                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
                         <br>
                         <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
                         </div>"""
+    grad_card_admin = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        </div>"""
+    grad_card_me = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <button class="me-button">Me</button>
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        </div>"""
+    grad_card = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        </div>"""
+
+    if success_msg != "Success":
+        html = '<p style="margin: 23px">%s</p>' % success_msg
+    elif len(graduates) == 0:
+        html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
+    else:
+        if is_admin:
             for grad in graduates:
                 grad_id = grad.get_grad_id()
                 grad_card_info = (
                     grad.get_photo_link(), grad_id,
                     grad.get_first_name(),
                     grad.get_acad_dept(), grad_id)
-                html += grad_card % grad_card_info
+                if grad.get_grad_id() == netid:
+                    html += grad_card_admin_me % grad_card_info
+                else:
+                    html += grad_card_admin % grad_card_info
         else:
-            html = ""
-            grad_card = """
-                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <h2>%s</h2>
-                        <p><b></b>%s</p>
-                        <br>
-                        <br>
-                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
-                        </div>"""
             for grad in graduates:
                 grad_card_info = (
                     grad.get_photo_link(), grad.get_first_name(),
                     grad.get_acad_dept(), grad.get_grad_id())
-                html += grad_card % grad_card_info
+                if grad.get_grad_id() == netid:
+                    html += grad_card_me % grad_card_info
+                else:
+                    html += grad_card % grad_card_info
     response = make_response(html)
     return response
 
