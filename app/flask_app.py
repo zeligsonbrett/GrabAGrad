@@ -64,9 +64,9 @@ def filter_grads():
         netid = "testingadmin"
 
     is_admin_param = request.args.get('is_admin')
-    is_admin = False;
+    is_admin = False
     if is_admin_param == "true":
-        is_admin = True;
+        is_admin = True
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
