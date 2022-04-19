@@ -1,5 +1,14 @@
 const heightOutput = document.querySelector('#height');
 const widthOutput = document.querySelector('#width');
+let saved_n = ""
+let saved_a = ""
+let saved_y = ""
+let saved_u = ""
+let saved_m = ""
+let saved_e = ""
+let saved_p = ""
+let saved_r = "" 
+let saved_i = ""
 
 function reportWindowSize() {
   if(window.innerWidth >= 780){
@@ -108,8 +117,17 @@ function closeCard(){
   document.getElementById("mockup-btn").style.color = "white";
 }
 
-function save_placeholders(input){
-//  var field = input.id;
+function saveData(){
+  saved_n = document.getElementById("name").value;
+  saved_a = document.getElementById("academic-dept").value;
+  saved_y = document.getElementById("years-worked").value;
+  saved_u = document.getElementById("undergrad-institution").value;
+  saved_m = document.getElementById("masters-institution").value;
+  saved_e = document.getElementById("email").value;
+  saved_p = document.getElementById("phone-number").value;
+  saved_r = document.getElementById("research-focus").value;
+  saved_i = document.getElementById("industries").value;
+//    var field = input.id;
 //  if (field == "academic-dept") return {{grad.get_acad_dept()}};
 //  else if (field == "years-worked") return {{grad.get_years_worked()}};
 //  else if (field == "undergrad-institution") return {{grad.get_undergrad_university()}};
@@ -118,16 +136,13 @@ function save_placeholders(input){
 //  else if (field == "phone-number") return {{grad.get_contact()}};
 //  else if (field == "research-focus") return {{grad.get_research_focus()}};
 //  else if (field == "industries") return {{grad.get_industries()}};
-  return ""
 }
 
 function changeName(input){
-
   var elementValue = input.value;
-  console.log(input.id);
+
   if (elementValue == "") {
-    elementValue = retrieveFieldFromDB(input);
-    console.log(elementValue)
+    elementValue = eval("saved_" + input.id.substring(0,1));
   }
   else if (elementValue.length > 15 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
   //else if (elementValue.length > 100 && input.id == "research-focus") elementValue = elementValue.substring(0, 100) + "...";
