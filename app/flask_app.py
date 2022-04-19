@@ -9,6 +9,7 @@ import controller.pustatus.pustatus as pu
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
 is_graduate = False
+chosen_graduate_or_undergraduate = False
 
 try:
     app.secret_key = os.environ['APP_SECRET_KEY']
@@ -25,9 +26,10 @@ except:
 
 @app.route('/')
 def index():
+    global chosen_graduate_or_undergraduate
+    chosen_graduate_or_undergraduate = False
     html = render_template('index.html')
     return make_response(html)
-
 
 @app.route('/about')
 def about():
@@ -61,7 +63,10 @@ def filter_grads():
     else:
         netid = "testingadmin"
 
-    is_admin = pu.is_administrator(netid)
+    is_admin_param = request.args.get('is_admin')
+    is_admin = False;
+    if is_admin_param == "true":
+        is_admin = True;
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
@@ -83,10 +88,12 @@ def filter_grads():
         html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
     else:
         html = ""
-        if (is_admin):
+        print("Are they an admin?")
+        print(is_admin)
+        if is_admin:
             grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
+                        {}<button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
@@ -118,9 +125,19 @@ def filter_grads():
     response = make_response(html)
     return response
 
+@app.route('/admin_see_grads')
+def admin_see_grads():
+    html = render_template('search_page.html', is_admin=True)
+    response = make_response(html)
+    return response
 
 @app.route('/see_grads')
 def see_grads():
+    global chosen_graduate_or_undergraduate, is_graduate
+    if not chosen_graduate_or_undergraduate:
+        is_graduate = False
+    chosen_graduate_or_undergraduate = True
+
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -129,30 +146,42 @@ def see_grads():
     else:
         netid = "testingadmin"
 
-    is_admin = pu.is_administrator(netid)
-
-    html = render_template('search_page.html', is_admin=is_admin)
+    html = render_template('search_page.html', is_admin=False)
     response = make_response(html)
     return response
 
 @app.route('/header_tabs')
 def header_tabs_results():
+    global is_graduate
     current_page = request.args.get('page')
-    is_grad = False;
-    has_profile = True;
+
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+    else:
+        netid = "testingadmin"
+
+    has_profile = False
+    if ep.get_grad_information(netid):
+        has_profile = True
+
+    is_admin = pu.is_administrator(netid)
     html = '<a style="text-decoration: none" href="/">Home</a>'
-    if current_page == 'search_page' or current_page == 'about':
-        if is_grad:
+    if current_page != 'search_page':
+        html += '<a style="text-decoration: none" href="/see_grads">Search Graduates</a>'
+    if is_graduate:
+        if current_page == 'search_page' or current_page == 'about':
             if has_profile:
                 html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
             else:
                 html += '<a style="text-decoration: none" href="/form">Create A Profile</a>'
-    if current_page == 'form' or current_page == 'about':
-        html += '<a style="text-decoration: none" href="/see_grads">Search Graduates</a>'
-    if not is_grad:
+    if not is_graduate and current_page != 'explore':
         html += '<a style="text-decoration: none" href="/explore">Explore</a>'
     if current_page != 'about':
         html += '<a style="text-decoration: none" href="/about">About GrabAGrad</a>'
+    if is_admin and current_page != 'admin':
+        html += '<a style="text-decoration: none" href="/admin_see_grads">Admin Page</a>'
     response = make_response(html)
     return response
 
@@ -194,8 +223,11 @@ def delete_grad():
 
 @app.route('/form')
 def form():
-    global is_graduate
-    is_graduate = True
+    global chosen_graduate_or_undergraduate, is_graduate
+    if not chosen_graduate_or_undergraduate:
+        is_graduate = True
+        chosen_graduate_or_undergraduate = True
+
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -281,7 +313,7 @@ def submit():
         years_worked = ""
     if phone_number is None:
         phone_number = ""
-    if photo is None or photo == '':
+    if photo is None or photo == '' and current_grad:
         photo = current_grad.get_photo_link()
 
     html = render_template('submission_thanks.html',

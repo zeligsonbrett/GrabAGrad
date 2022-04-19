@@ -1,5 +1,6 @@
 from controller.pustatus.req_lib import ReqLib
-
+import model.database_connection as db
+import sqlalchemy as sqla
 
 def _request_users_endpoint(netid):
     """
@@ -58,4 +59,8 @@ def is_administrator(netid):
              netid doesn't correspond to the admin or there was an
              error within the database.
     """
-    return netid == 'taknoll' or netid == 'zeligson' or netid == 'hknoll' or netid == 'testingadmin'
+    command = sqla.text("""SELECT netid FROM public.administrators WHERE netid=:netid""")
+    params = {'netid': netid}
+    output = db.execute_command(command, params)
+    ids = [x['netid'] for x in output]
+    return len(ids) != 0
