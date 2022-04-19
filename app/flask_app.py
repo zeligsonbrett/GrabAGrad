@@ -249,7 +249,8 @@ def form():
     global chosen_graduate_or_undergraduate, is_graduate
     if not chosen_graduate_or_undergraduate:
         is_graduate = True
-        chosen_graduate_or_undergraduate = True
+    chosen_graduate_or_undergraduate = True
+    print(chosen_graduate_or_undergraduate)
 
     if cas_enabled:
         netid = auth.authenticate()
