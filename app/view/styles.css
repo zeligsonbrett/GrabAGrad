@@ -822,6 +822,10 @@ img{
         margin-bottom: -40px;
     }
 
+    .title{
+        content: G;
+    }
+
     #main{
         margin-left: 0;
     }
