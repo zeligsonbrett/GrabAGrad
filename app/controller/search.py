@@ -10,7 +10,8 @@ def search(search_input):
     try:
         return "Success", search_grads(
             parse_search_bar_input(search_input))
-    except:
+    except Exception as ex:
+        print(ex)
         return "Error occurred when searching, make sure search input is valid", []
 
 
@@ -32,7 +33,8 @@ def filter_search(name, dept, industry, years_worked, un_uni):
                                     years_worked=years_worked)
 
         return "Success", grad_list
-    except:
+    except Exception as ex:
+        print(ex)
         return "Error occurred when searching, make sure filter input is valid", []
 
 
