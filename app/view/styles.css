@@ -823,7 +823,7 @@ img{
     }
 
     .title{
-        content: 'G';
+        display: none;
     }
 
     #main{
