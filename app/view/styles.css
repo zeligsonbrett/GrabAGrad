@@ -93,6 +93,7 @@ input{
     font-size: 20px;
     border-radius: 8px;
     background-color:rgb(248, 159, 57);
+    color: black;
 }
 
 .submit-button:hover,
