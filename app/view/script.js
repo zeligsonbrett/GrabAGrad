@@ -141,7 +141,7 @@ function saveData(){
 function changeName(input){
   var elementValue = input.value;
   if (input.id == "name") elementValue = elementValue.split(" ")[0];
-  if (length(elementValue) == 0) {
+  if (elementValue.length == 0) {
     elementValue = "...";
   }
   else if (elementValue.length > 15 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
