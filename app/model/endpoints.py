@@ -82,6 +82,36 @@ def num_graduates():
     count = [x for x in output]
     return int(count[0][0])
 
+def add_favorite(user_id, fav_id):
+    command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
+    params = {'netid': user_id, 'favoriteid': fav_id}
+    output = db.execute_command(command, params)
+    command = sqla.text("""INSERT INTO public.undergrad_favorites VALUES (:netid, :favoriteid);""")
+    output = db.execute_command(command, params)
+
+def get_favorites(netid):
+    command = sqla.text("""SELECT favorite_netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
+    params = {'netid': netid}
+    output = db.execute_command(command, params)
+    ids = [x['favorite_netid'] for x in output]
+    favorites = __create_graduates_list(ids)
+    return favorites
+
+def find_favorites_from_list(netid, listids):
+    if netid:
+        command = sqla.text("""SELECT favorite_netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
+        params = {'netid': netid}
+        output = db.execute_command(command, params)
+        favorites = [x['favorite_netid'] for x in output]
+        return list(set.intersection(set(favorites), set(listids)))
+    else:
+        return listids
+
+def remove_favorite(user_id, fav_id):
+    command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
+    params = {'netid': user_id, 'favoriteid': fav_id}
+    output = db.execute_command(command, params)
+
 def __create_graduates_list(id_list):
     """
     Creates and returns a list of graduates that have ids from id_list.
@@ -154,7 +184,7 @@ def __create_graduates_list(id_list):
 
 def search_grads(name=None, dept=None, research=None, grad_year=None,
                  undergrad_uni=None, masters_uni=None, years_worked=None,
-                 industry=None):
+                 industry=None, favorites_on=False, mynetid=None):
     """
     Search all grads for matches based on search criteria
     :return: Graduate object for all matching graduates
@@ -188,6 +218,8 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
                   'industry': industry}
         output = db.execute_command(command, params)
         ids = [x['netid'] for x in output]
+        if favorites_on:
+            ids = find_favorites_from_list(mynetid, ids)
         grad_list = __create_graduates_list(ids)
     else:
         command = sqla.text(
@@ -201,6 +233,8 @@ def search_grads(name=None, dept=None, research=None, grad_year=None,
                   'masters_uni': masters_uni, 'years_worked': years_worked}
         output = db.execute_command(command, params)
         ids = [x['netid'] for x in output]
+        if favorites_on:
+            ids = find_favorites_from_list(mynetid, ids)
         grad_list = __create_graduates_list(ids)
     return grad_list
 

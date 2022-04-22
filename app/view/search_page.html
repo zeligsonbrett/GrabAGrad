@@ -37,6 +37,8 @@
                     <input class="search-filter" id="industry" name="industry" type="text" placeholder="Industry"></intput>
                     <input class="search-filter" id="years-worked" name="years-worked" type="text" placeholder="Years Worked"></intput>
                     <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></intput>
+                    <label for="favorites_checkbox"> Only My Favorites</label>
+                    <input type="checkbox" id="favorites_on" name="favorites_checkbox">
                 </form>
                 <div class="small-screen">
                     <br>
@@ -136,6 +138,7 @@
                 let years_worked = $('#years-worked').val();
                 let un_uni = $('#un-uni').val();
                 let sortby = $('#sortby').val();
+                let favorites_only = $('#favorites_on').prop('checked');
 
                 name = encodeURIComponent(name);
                 dept = encodeURIComponent(dept);
@@ -151,7 +154,7 @@
                 console.log(administrator);
                 let url = '/filter_grads?is_admin=' + administrator + '&name=' + name + '&dept=' + dept +
                           '&industry=' + industry + '&years_worked=' + 
-                          years_worked + '&un_uni=' + un_uni + '&sortby=' + sortby
+                          years_worked + '&un_uni=' + un_uni + '&sortby=' + sortby + '&favorites_on=' + favorites_only
 
                 if (request !== null)
                    request.abort();
@@ -174,6 +177,7 @@
                 $('#years-worked').on('input', filterResults);
                 $('#un-uni').on('input', filterResults);
                 $('#sortby').on('change', filterResults);
+                $('#favorites_on').on('change', filterResults);
                 filterResults();
                 get_header_tabs();
                 //check_admin();

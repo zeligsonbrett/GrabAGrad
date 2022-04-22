@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- usually this can just be the headline -->
+        <title>GrabAGrad</title>
+
+    <!-- HTML Meta Tags -->
+        <title>GrabAGrad</title>
+        <meta name="description" content="Displays all of the graduate members of GrabAGrad">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+
+    <input type="hidden" id="admin" name="admin" value = {{is_admin}}>
+
+    <body onload="reportWindowSize()" style="font-family: 'Lato', sans-serif;">
+        <div class="header">
+            <div style="display: inline" id='header_tabs'></div>
+            <span class="title">GrabAGrad</span>
+        </div>
+        <span id="top"></span>
+        <a class="backToTop" style="transition: height 250ms ease-in;" href="#top">Back To Top</a>
+
+        <div id="details" class="details details-closed" style="visibility: hidden; transition: ease .3s;">
+            <div onclick="details()" class="close"></div>
+            <div id='popup_details'></div>
+        </div>
+    
+        <div id="main">
+            <div id="grad_cards" class="flexer"></div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
+        </script>
+
+            <script>
+
+            'use strict';
+
+            let request = null;
+
+
+            function render_popup(response) {
+                console.log("Popup rendered");
+                $('#popup_details').html(response);
+                details();
+            }
+
+            function render_header_tabs(response) {
+                $('#header_tabs').html(response);
+            }
+
+            function view_popup(grad_id) {
+                console.log('Popup opened');
+                console.log(grad_id);
+
+                let url = '/popup?id=' + grad_id;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: render_popup
+                   }
+                );
+            }
+
+            function render_header_tabs(response) {
+                $('#header_tabs').html(response);
+            }
+
+            function get_header_tabs() {
+                let url = '/header_tabs?user=undergrad&page=favorites';
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: render_header_tabs
+                   }
+                );
+            }
+
+            function exploreCards(response)
+            {
+                 $('#grad_cards').html(response);
+            }
+
+            function loadFavorites() {
+                let url = "/load_favorites";
+
+                if (request !== null)
+                   request.abort();
+
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: exploreCards
+                   }
+                );
+            }
+
+
+            function setup()
+            {
+                loadFavorites();
+                get_header_tabs();
+            }
+
+            $('document').ready(setup);
+            </script>
+    </body>
+    </html>

@@ -15,7 +15,7 @@ def search(search_input):
         return "Error occurred when searching, make sure search input is valid", []
 
 
-def filter_search(name, dept, industry, years_worked, un_uni):
+def filter_search(name, dept, industry, years_worked, un_uni, favorites_on, mynetid):
     """
     Search function for if the filter by options are used.
     """
@@ -30,7 +30,9 @@ def filter_search(name, dept, industry, years_worked, un_uni):
         grad_list = ep.search_grads(name=name, dept=dept,
                                     industry=industry,
                                     undergrad_uni=un_uni,
-                                    years_worked=years_worked)
+                                    years_worked=years_worked,
+                                    favorites_on=favorites_on,
+                                    mynetid=mynetid)
 
         return "Success", grad_list
     except Exception as ex:

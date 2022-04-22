@@ -10,32 +10,39 @@ let saved_p = ""
 let saved_r = "" 
 let saved_i = ""
 */
-function reportWindowSize() {
-  if(window.innerWidth >= 780){
-    if(document.getElementById("mySidenav").style.width != "40px"){
-      document.getElementById("mySidenav").style.width = "330px";
-      document.getElementById("mySidenav").style.height = "calc(100vh - 50px)";
-      document.getElementById("details").style.width = "calc(100vw - 400px)";
-      document.getElementById("details").style.height = "calc(100vh - 90px)";
-      document.getElementById("main").style.marginLeft = "315px";
-      document.getElementById("mySidenav").classList.add("menu-open");
-      document.getElementById("filter").style.visibility = "visible";
-    }
-  }
 
-  else{
-    if(document.getElementById("mySidenav").style.height != "90px"){
-      document.getElementById("mySidenav").style.height = "470px";
-      document.getElementById("mySidenav").style.boxShadow = "none";
-      document.getElementById("mySidenav").style.width = "100vw";
-      document.getElementById("main").style.marginLeft= "0px";
-      document.getElementById("mySidenav").classList.add("menu-open");
-      document.getElementById("filter").style.visibility = "visible";
-      document.getElementById("details").style.width = "90vw";
-      document.getElementById("details").style.height = "calc(100vh - 150px)";
+function reportWindowSize() {
+  if(document.getElementById("mySidenav") != null) {
+    if(window.innerWidth >= 780){
+      if(document.getElementById("mySidenav").style.width != "40px"){
+        document.getElementById("mySidenav").style.width = "330px";
+        document.getElementById("mySidenav").style.height = "calc(100vh - 50px)";
+        document.getElementById("details").style.width = "calc(100vw - 400px)";
+        document.getElementById("details").style.height = "calc(100vh - 90px)";
+        document.getElementById("main").style.marginLeft = "315px";
+        document.getElementById("mySidenav").classList.add("menu-open");
+        document.getElementById("filter").style.visibility = "visible";
+      }
     }
+
+    else{
+      if(document.getElementById("mySidenav").style.height != "90px"){
+        document.getElementById("mySidenav").style.height = "470px";
+        document.getElementById("mySidenav").style.boxShadow = "none";
+        document.getElementById("mySidenav").style.width = "100vw";
+        document.getElementById("main").style.marginLeft= "0px";
+        document.getElementById("mySidenav").classList.add("menu-open");
+        document.getElementById("filter").style.visibility = "visible";
+        document.getElementById("details").style.width = "90vw";
+        document.getElementById("details").style.height = "calc(100vh - 150px)";
+      }
+    }
+    document.getElementById("sortby").style.height="40px";
   }
-  document.getElementById("sortby").style.height="40px";
+  else{
+    document.getElementById("details").style.width = "95vw";
+    document.getElementById("details").style.height = "calc(100vh - 100px)";
+  }
 }
 
 window.onresize = reportWindowSize;

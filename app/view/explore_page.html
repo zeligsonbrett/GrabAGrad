@@ -30,6 +30,7 @@
     <div style="margin-top: calc(100vh - 150px); position:fixed">
         <input id="previous" class="submit-button" type="submit" value="Previous">
         <input id="next" class="submit-button" type="submit" value="Next">
+        <input id="favorite" class="submit-button" type="submit" value="Favorite">
     </div>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
         </script>
@@ -43,6 +44,16 @@
 
             function render_grad_info(response) {
                 $('#explore_popup').html(response);
+            }
+
+            function favorite_grad() {
+                let url = '/explorefavorite?grad=' + grad;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                   }
+                );
             }
 
             function load_in_grad() {
@@ -89,6 +100,7 @@
             {
                 $('#next').click(next_grad);
                 $('#previous').click(previous_grad);
+                $('#favorite').click(favorite_grad);
                 $(document).keyup(function(e) {
                     var key = e.keyCode;
                     if (key == 37) {
