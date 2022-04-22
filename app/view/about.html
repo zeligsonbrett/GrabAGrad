@@ -86,6 +86,13 @@
 
             function get_header_tabs() {
                 let url = '/header_tabs?page=about';
+
+                {% if 'undergrad' == user %}
+                    url += '&user=undergrad';
+                {% else %}
+                    url += '&user=graduate';
+                {% endif %}
+
                 request = $.ajax(
                    {
                       type: 'GET',

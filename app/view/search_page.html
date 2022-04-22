@@ -86,10 +86,20 @@
             }
 
             function get_header_tabs() {
-                let url = '/header_tabs?page=search_page';
-                {% if is_admin %}
-                    url = '/header_tabs?page=admin';
+                console.log("Working");
+                let url = '/header_tabs?';
+                {% if 'undergrad' == user %}
+                    url += '&user=undergrad';
+                {% else %}
+                    url += '&user=graduate';
                 {% endif %}
+
+                {% if is_admin %}
+                    url += '&page=admin';
+                {% else %}
+                    url += '&page=search_page';
+                {% endif %}
+                console.log(url);
                 request = $.ajax(
                    {
                       type: 'GET',
