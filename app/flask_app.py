@@ -190,6 +190,9 @@ def see_grads():
 
     except Exception as ex:
         print("Error occurred querying all the grads")
+        print(ex)
+        pass
+
     html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names)
     response = make_response(html)
     return response
