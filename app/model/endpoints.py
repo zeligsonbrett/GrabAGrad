@@ -107,6 +107,13 @@ def find_favorites_from_list(netid, listids):
     else:
         return listids
 
+def is_favorite(netid, fav_id):
+    command = sqla.text("""SELECT * FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
+    params = {'netid': netid, 'favoriteid': fav_id}
+    output = db.execute_command(command, params)
+    exists = [x for x in output]
+    return len(exists) != 0
+    
 def remove_favorite(user_id, fav_id):
     command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
     params = {'netid': user_id, 'favoriteid': fav_id}

@@ -95,7 +95,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
                         </div>"""
     grad_card_admin = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -104,7 +104,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
                         </div>"""
     grad_card_me = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -113,7 +113,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
                         </div>"""
     grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -121,7 +121,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
                         </div>"""
 
     if success_msg != "Success":
@@ -135,7 +135,7 @@ def filter_grads():
                 grad_card_info = (
                     grad.get_photo_link(), grad_id,
                     grad.get_first_name(),
-                    grad.get_acad_dept(), grad_id)
+                    grad.get_acad_dept(), grad_id, ep.is_favorite(netid, grad_id))
                 if grad.get_grad_id() == netid:
                     html += grad_card_admin_me % grad_card_info
                 else:
@@ -144,7 +144,7 @@ def filter_grads():
             for grad in graduates:
                 grad_card_info = (
                     grad.get_photo_link(), grad.get_first_name(),
-                    grad.get_acad_dept(), grad.get_grad_id())
+                    grad.get_acad_dept(), grad.get_grad_id(), ep.is_favorite(netid, grad.get_grad_id()))
                 if grad.get_grad_id() == netid:
                     html += grad_card_me % grad_card_info
                 else:
@@ -200,6 +200,38 @@ def see_favorites():
     response = make_response(html)
     return response
 
+@app.route('/searchfavorite')
+def search_favorite():
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+        is_graduate = pu.is_graduate(netid)
+    else:
+        netid = "testingadmin"
+
+    grad_id = request.args.get('grad')
+    print(grad_id)
+    print("adding grad")
+    ep.add_favorite(netid, grad_id)
+    return ('', 204)
+
+@app.route('/searchunfavorite')
+def search_unfavorite():
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+        is_graduate = pu.is_graduate(netid)
+    else:
+        netid = "testingadmin"
+
+    grad_id = request.args.get('grad')
+    print(grad_id)
+    print("being removed")
+    ep.remove_favorite(netid, grad_id)
+    return ('', 204)
+
 @app.route('/remove_favorite')
 def remove_favorite():
     if cas_enabled:
@@ -234,7 +266,7 @@ def load_favorites():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s')" class="learn-more">Learn More</button>
+                        <button onclick="view_popup('%s', 'True')" class="learn-more">Learn More</button>
                         </div>"""
 
     if len(favorites) == 0:
@@ -330,8 +362,12 @@ def explore_page_box():
 @app.route('/popup')
 def popup_results():
     grad_id = request.args.get('id')
+    favorite = request.args.get('favorite')
+    is_favorite = False
+    if favorite == 'True':
+        is_favorite = True
     graduate = ep.get_grad_information(grad_id)
-    html = render_template('popup_box.html', grad=graduate)
+    html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
     response = make_response(html)
     return response
 

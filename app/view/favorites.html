@@ -48,6 +48,27 @@
 
             let request = null;
 
+            function favorite_grad(netid) {
+                console.log("Favoriting grad");
+                let url = '/searchfavorite?grad=' + netid;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                   }
+                );
+            }
+
+            function unfavorite_grad(netid) {
+                console.log("Unfavoriting grad");
+                let url = '/searchunfavorite?grad=' + netid;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                   }
+                );
+            }
 
             function render_popup(response) {
                 console.log("Popup rendered");
@@ -59,11 +80,10 @@
                 $('#header_tabs').html(response);
             }
 
-            function view_popup(grad_id) {
+            function view_popup(grad_id, favorite) {
                 console.log('Popup opened');
-                console.log(grad_id);
 
-                let url = '/popup?id=' + grad_id;
+                let url = '/popup?id=' + grad_id + '&favorite=' + favorite;
                 request = $.ajax(
                    {
                       type: 'GET',
@@ -112,6 +132,15 @@
             function setup()
             {
                 loadFavorites();
+                $(document).on('click','[id^=favorite]',function(){
+                    let type = $('#favorite').attr('value');
+                    let id = $('#favorite').attr('name');
+                    if (type == "Favorite") {
+                        favorite_grad(id);
+                    } else {
+                        unfavorite_grad(id);
+                    }      
+                });
                 get_header_tabs();
             }
 

@@ -9,4 +9,9 @@
     <li><b>Preferred Contact Email: </b>{{grad.get_email()}}</li><br>
     <li><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li><br>
     <li><b>Industries Worked In: </b>{{grad.get_industries_str()}}</li><br>
+    {% if favorite %}
+        <input id="favorite" class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
+    {% else %}
+        <input id="favorite" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
+    {% endif %}
 </ul>
