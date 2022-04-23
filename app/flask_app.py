@@ -4,6 +4,7 @@ import model.endpoints as ep
 from model.graduate import Graduate
 import controller.search as search
 import os
+import json
 import controller.pustatus.pustatus as pu
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
@@ -170,7 +171,17 @@ def see_grads():
         netid = "testingadmin"
 
     user = request.args.get('user')
-    html = render_template('search_page.html', user=user, is_admin=False)
+    try:
+        all_grads = ep.query_all_grads()
+        all_grad_names = [grad.get_first_name() for grad in all_grads]
+        # Something to get departments
+        # Something to get industries
+        # Something to get years worked
+        # Something to get undergrad university
+
+    except Exception as ex:
+        print("Error occurred querying all the grads")
+    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names)
     response = make_response(html)
     return response
 
