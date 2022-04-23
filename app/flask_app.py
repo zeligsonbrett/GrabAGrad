@@ -165,6 +165,7 @@ def admin_see_grads():
 
     except Exception as ex:
         print("Error occurred querying all the grads")
+        print(ex)
     html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names)
     response = make_response(html)
     return response
@@ -214,8 +215,7 @@ def search_favorite():
         netid = "testingadmin"
 
     grad_id = request.args.get('grad')
-    print(grad_id)
-    print("adding grad")
+    print(grad_id, "ie being added as a favorite")
     ep.add_favorite(netid, grad_id)
     return ('', 204)
 
@@ -230,10 +230,9 @@ def search_unfavorite():
         netid = "testingadmin"
 
     grad_id = request.args.get('grad')
-    print(grad_id)
-    print("being removed")
+    print(grad_id, "is being removed as a favorite")
     ep.remove_favorite(netid, grad_id)
-    return ('', 204)
+    return '', 204
 
 @app.route('/remove_favorite')
 def remove_favorite():
