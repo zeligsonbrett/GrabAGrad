@@ -21,9 +21,9 @@
 
     <div class="header">
         <a style="text-decoration: none" href="/">Home</a>
-        <a style="text-decoration: none" href="/see_grads?user=" + {{ user }}>Search Graduates</a>
-        <a style="text-decoration: none" href="/about?user=" + {{ user }}>About GrabAGrad</a>
-        <span class="title">GrabAGrad</span>
+
+        <a style="text-decoration: none" href="{{ /see_grads?user=/%s'%user }}">Search</a>
+        <a class="title" style="text-decoration: none" href="/about?user=graduate">GrabAGrad</a>
     </div>
     <div style="height: 80px"></div>
 

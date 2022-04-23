@@ -155,8 +155,17 @@ def filter_grads():
 @app.route('/admin_see_grads')
 def admin_see_grads():
     user = request.args.get('user')
-    print("User: " + user)
-    html = render_template('search_page.html', user=user, is_admin=True)
+    try:
+        all_grads = ep.query_all_grads()
+        all_grad_names = [grad.get_first_name() for grad in all_grads]
+        # Something to get departments
+        # Something to get industries
+        # Something to get years worked
+        # Something to get undergrad university
+
+    except Exception as ex:
+        print("Error occurred querying all the grads")
+    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names)
     response = make_response(html)
     return response
 
@@ -277,7 +286,9 @@ def header_tabs_results():
     user_param = 'user=' + user
     html = '<a style="text-decoration: none" href="/">Home</a>'
     if current_page != 'search_page':
-        html += '<a style="text-decoration: none" href="/see_grads?{}">Search Graduates</a>'.format(user_param)
+        html += '<a style="text-decoration: none" href="/see_grads?{}">Search</a>'.format(user_param)
+    else:
+        html += '<a style="text-decoration: none; background-color: #EE9440; padding:3px" href="/see_grads?{}">Search</a>'.format(user_param)
     if user == 'graduate':
         if has_profile:
             html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
@@ -286,12 +297,18 @@ def header_tabs_results():
     else:
         if current_page != 'explore':
             html += '<a style="text-decoration: none" href="/explore">Explore</a>'
+        else:
+            html += '<a style="text-decoration: none; background-color: #EE9440; padding: 3px" href="/explore">Explore</a>'
         if current_page != 'favorites':
             html += '<a style="text-decoration: none" href="/favorites">Favorites</a>'
-    if current_page != 'about':
-        html += '<a style="text-decoration: none" href="/about?{}">About GrabAGrad</a>'.format(user_param)
-    if is_admin and current_page != 'admin':
-        html += '<a style="text-decoration: none" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
+        else:
+            html += '<a style="text-decoration: none; background-color: #EE9440; padding:3px" href="/favorites">Favorites</a>'
+    if is_admin:
+        if current_page != 'admin':
+            html += '<a style="text-decoration: none" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
+        else:
+            html += '<a style="text-decoration: none; background-color: #EE9440; padding:3px" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
+    html += '<a class="title" style="text-decoration: none" href="/about?{}">GrabAGrad</a>'.format(user_param)
     response = make_response(html)
     return response
 
