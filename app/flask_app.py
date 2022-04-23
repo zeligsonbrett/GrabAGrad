@@ -6,6 +6,7 @@ import controller.search as search
 import os
 import json
 import controller.pustatus.pustatus as pu
+import model.departments as dept
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
@@ -152,21 +153,33 @@ def filter_grads():
     response = make_response(html)
     return response
 
-@app.route('/admin_see_grads')
-def admin_see_grads():
-    user = request.args.get('user')
+def _filter_suggestion_info():
+    """
+    Creates lists that are needed for the dropdown suggestions feature on the search page
+    :return: [graduate_names, departments, ]
+    """
     try:
         all_grads = ep.query_all_grads()
         all_grad_names = [grad.get_first_name() for grad in all_grads]
-        # Something to get departments
         # Something to get industries
         # Something to get years worked
         # Something to get undergrad university
-
     except Exception as ex:
         print("Error occurred querying all the grads")
         print(ex)
-    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names)
+        pass
+
+    dept_list = dept.dept_list()
+    return all_grad_names, dept_list
+
+@app.route('/admin_see_grads')
+def admin_see_grads():
+    user = request.args.get('user')
+    info = _filter_suggestion_info()
+    all_grad_names = info[0]
+    depts = info[1]
+
+    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts)
     response = make_response(html)
     return response
 
@@ -181,20 +194,12 @@ def see_grads():
         netid = "testingadmin"
 
     user = request.args.get('user')
-    try:
-        all_grads = ep.query_all_grads()
-        all_grad_names = [grad.get_first_name() for grad in all_grads]
-        # Something to get departments
-        # Something to get industries
-        # Something to get years worked
-        # Something to get undergrad university
 
-    except Exception as ex:
-        print("Error occurred querying all the grads")
-        print(ex)
-        pass
+    info = _filter_suggestion_info()
+    all_grad_names = info[0]
+    depts = info[1]
 
-    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names)
+    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts)
     response = make_response(html)
     return response
 

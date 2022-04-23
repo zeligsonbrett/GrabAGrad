@@ -76,8 +76,8 @@
 
             let request = null;
 
-            function suggest_names(){
-                console.log("Names suggested");
+            function suggestions(){
+                console.log("Suggestions list rendered");
                 let names = {{grad_names|tojson}};
                 $('#name').autocomplete({
                 select: function (e, ui) {
@@ -85,6 +85,15 @@
                     filterResults();
                 },
                 source: names
+                });
+
+                let departments = {{depts|tojson}};
+                $('#dept').autocomplete({
+                select: function (e, ui) {
+                    $('#dept').val(ui['item']['value']);
+                    filterResults();
+                },
+                source: departments
                 });
             }
 
@@ -220,7 +229,7 @@
                 });
                 filterResults();
                 get_header_tabs();
-                suggest_names();
+                suggestions();
             }
 
             $('document').ready(setup);
