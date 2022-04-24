@@ -104,6 +104,18 @@
                 },
                 source: industries
                 });
+
+                let universities = {{unis|tojson}};
+                $('#un-uni').autocomplete({
+                minLength: 2,
+                select: function (e, ui) {
+                    $('#un-uni').val(ui['item']['value']);
+                    filterResults();
+                },
+                source: function(request, response) {
+                    let results = $.ui.autocomplete.filter(universities, request.term);
+                    response(results.slice(0, 15)); }
+                });
             }
 
             function favorite_grad(netid) {

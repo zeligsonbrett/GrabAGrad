@@ -20,4 +20,4 @@ def get_universities(name):
 
 
 if __name__ == "__main__":
-    get_universities("")
+    print(get_universities(""))

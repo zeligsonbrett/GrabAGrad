@@ -7,6 +7,7 @@ import os
 import json
 import controller.pustatus.pustatus as pu
 import model.departments as dept
+import model.universities as uni
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
@@ -167,6 +168,7 @@ def _filter_suggestion_info():
             all_industries.extend(industries)
         all_industries = [word.capitalize() for word in all_industries]
         all_industries.sort()
+        unis = uni.get_universities("")
         # Something to get industries
         # Something to get years worked
         # Something to get undergrad university
@@ -176,7 +178,7 @@ def _filter_suggestion_info():
         pass
 
     dept_list = dept.dept_list()
-    return all_grad_names, dept_list, all_industries
+    return all_grad_names, dept_list, all_industries, unis
 
 @app.route('/admin_see_grads')
 def admin_see_grads():
@@ -185,8 +187,9 @@ def admin_see_grads():
     all_grad_names = info[0]
     depts = info[1]
     industries = info[2]
+    unis = info[3]
 
-    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, industries=industries)
+    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, industries=industries, unis=unis)
     response = make_response(html)
     return response
 
@@ -206,9 +209,8 @@ def see_grads():
     all_grad_names = info[0]
     depts = info[1]
     industries = info[2]
-    print(industries)
-
-    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, industries=industries)
+    unis = info[3]
+    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, industries=industries, unis=unis)
     response = make_response(html)
     return response
 
