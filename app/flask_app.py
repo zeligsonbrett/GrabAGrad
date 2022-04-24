@@ -159,8 +159,14 @@ def _filter_suggestion_info():
     :return: [graduate_names, departments, ]
     """
     try:
-        all_grads = ep.query_all_grads()
+        all_grads = ep.search_grads()
         all_grad_names = [grad.get_first_name() for grad in all_grads]
+        all_industries = []
+        for grad in all_grads:
+            industries = grad.get_industries()
+            all_industries.extend(industries)
+        all_industries = [word.capitalize() for word in all_industries]
+        all_industries.sort()
         # Something to get industries
         # Something to get years worked
         # Something to get undergrad university
@@ -170,7 +176,7 @@ def _filter_suggestion_info():
         pass
 
     dept_list = dept.dept_list()
-    return all_grad_names, dept_list
+    return all_grad_names, dept_list, all_industries
 
 @app.route('/admin_see_grads')
 def admin_see_grads():
@@ -178,8 +184,9 @@ def admin_see_grads():
     info = _filter_suggestion_info()
     all_grad_names = info[0]
     depts = info[1]
+    industries = info[2]
 
-    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts)
+    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, industries=industries)
     response = make_response(html)
     return response
 
@@ -198,8 +205,10 @@ def see_grads():
     info = _filter_suggestion_info()
     all_grad_names = info[0]
     depts = info[1]
+    industries = info[2]
+    print(industries)
 
-    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts)
+    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, industries=industries)
     response = make_response(html)
     return response
 
