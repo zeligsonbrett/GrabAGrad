@@ -128,6 +128,7 @@
                    {
                       type: 'GET',
                       url: url,
+                      success: render_kept_popup
                    }
                 );
             }
@@ -139,6 +140,7 @@
                    {
                       type: 'GET',
                       url: url,
+                      success: render_kept_popup
                    }
                 );
             }
@@ -147,6 +149,10 @@
                 console.log("Popup rendered");
                 $('#popup_details').html(response);
                 details();
+            }
+
+            function render_kept_popup(response) {
+                $('#popup_details').html(response);
             }
 
             function render_header_tabs(response) {

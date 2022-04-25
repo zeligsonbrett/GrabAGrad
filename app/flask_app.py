@@ -233,7 +233,7 @@ def search_favorite():
     grad_id = request.args.get('grad')
     print(grad_id, "ie being added as a favorite")
     ep.add_favorite(netid, grad_id)
-    return ('', 204)
+    return popup_results(grad_id=grad_id, favorite=True)
 
 @app.route('/searchunfavorite')
 def search_unfavorite():
@@ -248,7 +248,7 @@ def search_unfavorite():
     grad_id = request.args.get('grad')
     print(grad_id, "is being removed as a favorite")
     ep.remove_favorite(netid, grad_id)
-    return '', 204
+    return popup_results(grad_id=grad_id, favorite=False)
 
 @app.route('/remove_favorite')
 def remove_favorite():
@@ -378,13 +378,19 @@ def explore_page_box():
     return response
 
 @app.route('/popup')
-def popup_results():
-    grad_id = request.args.get('id')
-    favorite = request.args.get('favorite')
-    is_favorite = False
-    if favorite == 'True':
-        is_favorite = True
+def popup_results(grad_id=None, favorite=None):
+    if grad_id == None:
+        grad_id = request.args.get('id')
+    if favorite == None:
+        favorite = request.args.get('favorite')
+        is_favorite = False
+        if favorite == 'True':
+            is_favorite = True
+    else:
+        is_favorite = favorite
     graduate = ep.get_grad_information(grad_id)
+    print("CHECKING FAVORITE")
+    print(is_favorite)
     html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
     response = make_response(html)
     return response
