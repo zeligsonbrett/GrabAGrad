@@ -32,6 +32,20 @@ def _request_users_endpoint(netid):
         return {"pustatus": "unknown"}
 
 
+def get_department(netid):
+    result = _request_users_endpoint(netid)
+    try:
+        if result['pustatus'] == 'graduate':
+            return result['department']
+        else:
+            # User is an undergrad so we don't want to return their department
+            return ''
+    except Exception as ex:
+        print("Exception discovered while determining department:\n", ex)
+        return ''
+
+
+
 def is_graduate(netid):
     """
     Sends request to Princeton's ActiveDirectory API to determine if

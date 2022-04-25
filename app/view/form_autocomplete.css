@@ -1,0 +1,40 @@
+.ui-autocomplete {
+    position: inherit;
+    overflow-y: scroll;
+    z-index: 2;
+    cursor: default;
+    padding: 0;
+    margin-top: 2px;
+    list-style: none;
+    max-width: 100%;
+    /*#ee9440*/
+    background-color: #FFB98B;
+    /* background-color: #ffffff;*/
+    /* background-color: #ee9440; */
+    border-radius: 5px;
+    color: black;
+}
+
+.ui-autocomplete > li {
+  padding: 3px 20px;
+  border-top: 1px #ffd099 solid;
+
+}
+
+.ui-widget.ui-widget-content {
+	border: 2px solid #fcbb6f;
+}
+
+
+.ui-menu .ui-menu-item:hover, .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus {
+    background-color: #EE9440;
+    border-radius: 5px;
+}
+
+/*.ui-state-active {
+  background-color: #DDD;
+}*/
+
+.ui-helper-hidden-accessible {
+  display: none;
+}

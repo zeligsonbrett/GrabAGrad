@@ -4,10 +4,10 @@ import model.endpoints as ep
 from model.graduate import Graduate
 import controller.search as search
 import os
-import json
 import controller.pustatus.pustatus as pu
 import model.departments as dept
 import model.universities as uni
+import model.industries as ind
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
@@ -413,17 +413,23 @@ def form():
     current_grad = ep.get_grad_information(netid)
     #uploaded_image = request.args.get('image_link')
     page = 'update_page.html'
+    industries = ind.get_industries()
+    unis = uni.get_universities("")
+    dept_list = dept.dept_list()
     if not current_grad:
         page = 'form_page.html'
         current_grad = Graduate()
     try:
         html = render_template(page,
                                cloud_name=os.environ['CLOUD_NAME'],
-                               grad=current_grad)
+                               grad=current_grad, dept=dept_list,
+                               industries=industries, unis=unis)
     except:
         from controller.keys import CLOUD_NAME
         html = render_template(page,
-                               cloud_name=CLOUD_NAME, grad=current_grad)
+                               cloud_name=CLOUD_NAME, grad=current_grad,
+                               dept=dept_list, industries=industries,
+                               unis=unis)
     return make_response(html)
 
 
