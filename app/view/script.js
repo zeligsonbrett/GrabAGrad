@@ -27,7 +27,7 @@ function reportWindowSize() {
 
     else{
       if(document.getElementById("mySidenav").style.height != "90px"){
-        document.getElementById("mySidenav").style.height = "470px";
+        document.getElementById("mySidenav").style.height = "490px";
         document.getElementById("mySidenav").style.boxShadow = "none";
         document.getElementById("mySidenav").style.width = "100vw";
         document.getElementById("main").style.marginLeft= "0px";
@@ -38,6 +38,7 @@ function reportWindowSize() {
       }
     }
     document.getElementById("sortby").style.height="40px";
+    document.getElementById("form-id").style.height="100%";
   }
   else{
     document.getElementById("details").style.width = "95vw";
@@ -53,6 +54,7 @@ function openNav() {
       document.getElementById("mySidenav").classList.add("menu-open");
       document.getElementById("mySidenav").classList.remove("menu-closed");
       document.getElementById("sortby").style.height="40px";
+      document.getElementById("form-id").style.height="100%";
       
       if (window.innerWidth > 780){
         document.getElementById("mySidenav").style.width = "330px";
@@ -62,7 +64,7 @@ function openNav() {
         document.getElementById("mySidenav").style.height = "calc(100vh - 50px)";
       }
       else{
-        document.getElementById("mySidenav").style.height = "470px";
+        document.getElementById("mySidenav").style.height = "490px";
         document.getElementById("mySidenav").style.width = "100vw";
         document.getElementById("details").style.width = "90vw";
         document.getElementById("details").style.height = "calc(100vh - 150px)";
@@ -76,6 +78,7 @@ function openNav() {
       document.getElementById("mySidenav").classList.add("menu-closed");  
       document.getElementById("filter").style.visibility = "hidden";
       document.getElementById("sortby").style.height="0";
+      document.getElementById("form-id").style.height="0";
       document.getElementById("mySidenav").style.boxShadow = "none";
 
       if (window.innerWidth > 780){

@@ -1,17 +1,21 @@
-<h1>More About {{grad.get_first_name()}}</h1>
-<ul>
+<ul style="margin-bottom: -40px">
     <li><img src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate"
-    class="details-img" style="border-radius: 10px; position:absolute; height: 42%; width: auto; right: 80px; top: 30px; object-fit: contain;"><br></li>
-    <li><b>Academic Department: </b>{{grad.get_acad_dept()}}</li><br>
-    <li><b>Years of Work Experience: </b>{{grad.get_years_worked()}}</li><br>
-    <li><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li><br>
-    <li><b>Masters Institution: </b>{{grad.get_masters_university()}}</li><br>
-    <li><b>Preferred Contact Email: </b>{{grad.get_email()}}</li><br>
-    <li><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li><br>
-    <li><b>Industries Worked In: </b>{{grad.get_industries_str()}}</li><br>
-    {% if favorite %}
-        <input id="favorite" class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
-    {% else %}
-        <input id="favorite" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
-    {% endif %}
+    class="details-img" style="border-radius: 10px; position:absolute; height: auto; width: 27%; right: 80px; top: 30px; object-fit: contain;"><br></li>
+    <div class="details-text">
+        <h1>More About <span style="color: #FFB98B">{{grad.get_first_name()}}</span></h1>
+        <li><b>Academic Department: </b>{{grad.get_acad_dept()}}</li>
+        <li><b>Years of Work Experience: </b>{{grad.get_years_worked()}}</li>
+        <li><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li>
+        <li><b>Masters Institution: </b>{{grad.get_masters_university()}}</li>
+        <li><b>Preferred Contact Email: </b>{{grad.get_email()}}</li>
+        <li><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li>
+        <li><b>Industries Worked In: </b>{{grad.get_industries_str()}}</li>
+    </div>
 </ul>
+<div style="margin-top:-50px; width: 100%; text-align: right;">
+    {% if favorite %}
+        <input id="favorite" style="position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;"  class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
+    {% else %}
+        <input id="favorite" style="position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
+    {% endif %}
+</div>

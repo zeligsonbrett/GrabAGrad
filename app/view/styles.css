@@ -268,6 +268,17 @@ textarea:hover {
  outline: black solid 2px;
 }
 
+.details-text{
+    width: 60%;
+}
+
+.details-text h1{
+    font-size: 60px;
+    padding: 15px;
+    padding-right: 5px;
+    font-weight: bolder;
+    padding-left: 0;
+}
 
 .details ul{
     list-style: none;
@@ -275,8 +286,13 @@ textarea:hover {
     color: white;
     float: left;
     text-align: left;
-    margin-top: 10px;
     padding: 0;   
+}
+
+.details ul b{
+    color: #FFB98B;
+    font-size: 22px;
+    line-height: 170%;
 }
 
 .close:after {
@@ -837,17 +853,19 @@ img{
 }
 
 .explore-card{
-    height: calc(100vh - 150px);
-    width: 90vw;
+    height: calc(100vh - 180px);
+    width: calc(100vw - 40%);
     position: fixed;
     text-align: left;
     z-index: 1;
-    bottom: 40px;
-    right: 20px;
-    left: 20px;
-    top: 70px;
+    left: 20%;
+    right: 20%;
+    box-shadow: 0 0 20px 8px gray;
     border-radius: 8px;
-    background-color: rgb(66, 33, 1, 0.9);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-style: solid;
+    border-width: 5px;
+    border-color:rgb(248, 159, 57);
     overflow-x: hidden;
     transition: ease;
     padding-left: 20px;
@@ -855,8 +873,47 @@ img{
     margin-top: 10px;
     padding: 0; 
     text-align: left;
-    float: left;
+}
+
+.explore-card ul li{
+    color: rgb(0, 0, 0);
+    font-size: 1.4vw;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+.explore-card img #img-placeholder{
+    top: 0px;
+    border-radius: 0;
+}
+
+.explore-card ul li b{
+    color: rgb(248, 159, 57);
+}
+
+.explore-card h1{
+    width: 75%;
+    padding: 10px;
+    text-align: left;
+    color: black;
+}
+
+.explore-card span{
+    color:rgb(238, 148, 64);
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+#favorite{
+    background-color: #55371a; 
     color: white;
+}
+
+#favorite:hover{
+    background-color: #FFB98B;
+    color: black;
 }
 
 @media screen and (max-width: 780px) {
@@ -866,6 +923,7 @@ img{
         width: 100vw;
         height: 525px;
         margin-bottom: -40px;
+        font-size: 2vw;
     }
 
     .title{
@@ -976,6 +1034,10 @@ img{
 @media screen and (max-width: 1000px){
     .details-img{
         display: none;
+    }
+
+    .details-text{
+        width: 100%;
     }
 }
 
