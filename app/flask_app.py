@@ -38,17 +38,17 @@ def about():
     html = render_template('about.html', user=user)
     return make_response(html)
 
-def get_grads_by_filter(name, dept, industry, years_worked, un_uni, favorites_on, mynetid):
+def get_grads_by_filter(name, dept, industry, years_worked, un_uni, ma_uni, favorites_on, mynetid):
     """
     Takes in the filter parameters and returns a list of graduates.
     """
     graduates = None
     success_msg = "Success"
-    if name or dept or industry or years_worked or un_uni or favorites_on:
+    if name or dept or industry or years_worked or un_uni or ma_uni or favorites_on:
         success_msg, graduates = search.filter_search(name, dept,
                                                       industry,
                                                       years_worked,
-                                                      un_uni, favorites_on, mynetid)
+                                                      un_uni, ma_uni, favorites_on, mynetid)
     else:
         graduates = ep.query_all_grads()
     return success_msg, graduates
@@ -74,13 +74,14 @@ def filter_grads():
     industry = request.args.get('industry')
     years_worked = request.args.get('years_worked')
     un_uni = request.args.get('un_uni')
+    ma_uni = request.args.get('ma_uni')
     type_sort = request.args.get('sortby')
     favorites_only = request.args.get('favorites_on')
     favorites_on = False
     if favorites_only == 'true':
         favorites_on = True
     success_msg, graduates = get_grads_by_filter(name, dept, industry,
-                                                 years_worked, un_uni, favorites_on, netid)
+                                                 years_worked, un_uni, ma_uni, favorites_on, netid)
     if type_sort == "First Name: Z-A":
         graduates = sorted(graduates, key=lambda x: (
             x._details is None, x._details[1]), reverse=True)
@@ -233,7 +234,7 @@ def search_favorite():
     grad_id = request.args.get('grad')
     print(grad_id, "ie being added as a favorite")
     ep.add_favorite(netid, grad_id)
-    return ('', 204)
+    return popup_results(grad_id=grad_id, favorite=True)
 
 @app.route('/searchunfavorite')
 def search_unfavorite():
@@ -248,7 +249,7 @@ def search_unfavorite():
     grad_id = request.args.get('grad')
     print(grad_id, "is being removed as a favorite")
     ep.remove_favorite(netid, grad_id)
-    return '', 204
+    return popup_results(grad_id=grad_id, favorite=False)
 
 @app.route('/remove_favorite')
 def remove_favorite():
@@ -378,13 +379,19 @@ def explore_page_box():
     return response
 
 @app.route('/popup')
-def popup_results():
-    grad_id = request.args.get('id')
-    favorite = request.args.get('favorite')
-    is_favorite = False
-    if favorite == 'True':
-        is_favorite = True
+def popup_results(grad_id=None, favorite=None):
+    if grad_id == None:
+        grad_id = request.args.get('id')
+    if favorite == None:
+        favorite = request.args.get('favorite')
+        is_favorite = False
+        if favorite == 'True':
+            is_favorite = True
+    else:
+        is_favorite = favorite
     graduate = ep.get_grad_information(grad_id)
+    print("CHECKING FAVORITE")
+    print(is_favorite)
     html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
     response = make_response(html)
     return response

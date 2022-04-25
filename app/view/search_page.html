@@ -36,7 +36,7 @@
                     <input class="search-filter" id="industry" name="industry" type="text" placeholder="Industry"></input>
                     <input class="search-filter" id="years-worked" name="years-worked" type="text" placeholder="Years Worked"></input>
                     <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></input>
-                    
+                    <input class="search-filter" id="ma-uni" name="ma-uni" type="text" placeholder="Masters University"></input>
                     <div style="margin-top: 15px;" class="custom-control custom-switch">
                         <input class="custom-control-input" type="checkbox" id="favorites_on" name="favorites_checkbox">
                         <label class="custom-control-label" style="font-size: 22px" for="favorites_on"> Only My Favorites</label>
@@ -119,6 +119,17 @@
                     let results = $.ui.autocomplete.filter(universities, request.term);
                     response(results.slice(0, 15)); }
                 });
+
+                $('#ma-uni').autocomplete({
+                minLength: 2,
+                select: function (e, ui) {
+                    $('#ma-uni').val(ui['item']['value']);
+                    filterResults();
+                },
+                source: function(request, response) {
+                    let results = $.ui.autocomplete.filter(universities, request.term);
+                    response(results.slice(0, 15)); }
+                });
             }
 
             function favorite_grad(netid) {
@@ -128,6 +139,7 @@
                    {
                       type: 'GET',
                       url: url,
+                      success: render_kept_popup
                    }
                 );
             }
@@ -139,6 +151,7 @@
                    {
                       type: 'GET',
                       url: url,
+                      success: render_kept_popup
                    }
                 );
             }
@@ -147,6 +160,10 @@
                 console.log("Popup rendered");
                 $('#popup_details').html(response);
                 details();
+            }
+
+            function render_kept_popup(response) {
+                $('#popup_details').html(response);
             }
 
             function render_header_tabs(response) {
@@ -201,6 +218,7 @@
                 let industry = $('#industry').val();
                 let years_worked = $('#years-worked').val();
                 let un_uni = $('#un-uni').val();
+                let ma_uni = $('#ma-uni').val();
                 let sortby = $('#sortby').val();
                 let favorites_only = $('#favorites_on').prop('checked');
 
@@ -209,6 +227,7 @@
                 industry = encodeURIComponent(industry);
                 years_worked = encodeURIComponent(years_worked);
                 un_uni = encodeURIComponent(un_uni);
+                ma_uni = encodeURIComponent(ma_uni);
                 sortby = encodeURIComponent(sortby);
 
                 let administrator = false;
@@ -218,7 +237,7 @@
 
                 let url = '/filter_grads?is_admin=' + administrator + '&name=' + name + '&dept=' + dept +
                           '&industry=' + industry + '&years_worked=' + 
-                          years_worked + '&un_uni=' + un_uni + '&sortby=' + sortby + '&favorites_on=' + favorites_only
+                          years_worked + '&un_uni=' + un_uni + '&ma_uni=' + ma_uni + '&sortby=' + sortby + '&favorites_on=' + favorites_only
 
                 if (request !== null)
                    request.abort();
@@ -240,6 +259,7 @@
                 $('#industry').on('input', filterResults);
                 $('#years-worked').on('input', filterResults);
                 $('#un-uni').on('input', filterResults);
+                $('#ma-uni').on('input', filterResults);
                 $('#sortby').on('change', filterResults);
                 $('#favorites_on').on('change', filterResults);
                 $(document).on('click','[id^=favorite]',function(){
