@@ -669,28 +669,25 @@ img{
 
  .thanks ul{
     list-style: none;
-    font-size: 2.5vw;
     color: black;
     float: left;
     text-align: left;
-    margin-top: 10px;
     padding: 0;
     width: 100%;
  }
 
+ .thanks ul li p{
+     font-size: 1.7vw;
+     color: black;
+     margin-bottom: -10px;
+ }
+
  .thanks b{
-    color: black;
-    background-color: rgb(238, 148, 64);
+    color: rgb(238, 148, 64);
     padding: 10px;
-    padding-left: 30%;
-    margin-left: -20px;
-    border-radius: 0 12px 12px 0;
     margin-right: 10px;
-    width: 50%;
 }
-.thanks span{
-    width: 50%; 
-}
+
 .textarea-label{
     color: black;
     background-color: rgb(238, 148, 64);
@@ -853,7 +850,7 @@ img{
 }
 
 .explore-card{
-    height: calc(100vh - 180px);
+    height: calc(100vh - 200px);
     width: calc(100vw - 40%);
     position: fixed;
     text-align: left;

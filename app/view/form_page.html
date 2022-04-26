@@ -97,7 +97,7 @@
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
-                        <div class="labelStyle"><label for="industries">Industries Worked In (Separated by commas)</label></div>
+                        <div class="labelStyle"><label for="industries">Industries Worked In</label></div>
                         <div class="inputStyle"><textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0"></textarea></div>
                     </div>
                 </div>
@@ -185,16 +185,6 @@
         },
         source: depts
         });
-
-        let industries = {{industries|tojson}};
-        $('#industries').autocomplete({
-        select: function (e, ui) {
-            $('#industries').val(ui['item']['value']);
-            changeName(this);
-        },
-        source: industries
-        });
-
 
         let universities = {{unis|tojson}};
         $('#undergrad-institution').autocomplete({
