@@ -850,7 +850,7 @@ img{
 }
 
 .explore-card{
-    height: calc(100vh - 180px);
+    height: calc(100vh - 200px);
     width: calc(100vw - 40%);
     position: fixed;
     text-align: left;
