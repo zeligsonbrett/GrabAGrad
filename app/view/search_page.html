@@ -99,14 +99,7 @@
                 source: departments
                 });
 
-                let industries = {{industries|tojson}};
-                $('#industry').autocomplete({
-                select: function (e, ui) {
-                    $('#industry').val(ui['item']['value']);
-                    filterResults();
-                },
-                source: industries
-                });
+
 
                 let universities = {{unis|tojson}};
                 $('#un-uni').autocomplete({
