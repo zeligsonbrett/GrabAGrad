@@ -167,13 +167,16 @@ def _filter_suggestion_info():
         for grad in all_grads:
             industries = grad.get_industries()
             all_industries.extend(industries)
-        all_industries = [word.capitalize() for word in all_industries]
-        all_industries.sort()
+        # all_industries = [word.capitalize() for word in all_industries]
+        # all_industries.sort()
         unis = uni.get_universities("")
         # Something to get industries
         # Something to get years worked
         # Something to get undergrad university
     except Exception as ex:
+        all_grad_names = []
+        all_industries = []
+        unis = []
         print("Error occurred querying all the grads")
         print(ex)
         pass
@@ -187,10 +190,10 @@ def admin_see_grads():
     info = _filter_suggestion_info()
     all_grad_names = info[0]
     depts = info[1]
-    industries = info[2]
+    # industries = info[2]
     unis = info[3]
 
-    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, industries=industries, unis=unis)
+    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, unis=unis)
     response = make_response(html)
     return response
 
@@ -209,9 +212,9 @@ def see_grads():
     info = _filter_suggestion_info()
     all_grad_names = info[0]
     depts = info[1]
-    industries = info[2]
+    # industries = info[2]
     unis = info[3]
-    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, industries=industries, unis=unis)
+    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, unis=unis)
     response = make_response(html)
     return response
 
@@ -420,7 +423,7 @@ def form():
     current_grad = ep.get_grad_information(netid)
     #uploaded_image = request.args.get('image_link')
     page = 'update_page.html'
-    industries = ind.get_industries()
+    # industries = ind.get_industries()
     unis = uni.get_universities("")
     dept_list = dept.dept_list()
     if not current_grad:
@@ -430,13 +433,12 @@ def form():
         html = render_template(page,
                                cloud_name=os.environ['CLOUD_NAME'],
                                grad=current_grad, dept=dept_list,
-                               industries=industries, unis=unis)
+                               unis=unis)
     except:
         from controller.keys import CLOUD_NAME
         html = render_template(page,
                                cloud_name=CLOUD_NAME, grad=current_grad,
-                               dept=dept_list, industries=industries,
-                               unis=unis)
+                               dept=dept_list, unis=unis)
     return make_response(html)
 
 
