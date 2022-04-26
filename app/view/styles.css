@@ -649,7 +649,7 @@ img{
     padding: 20px;
     background-color: black;
     color: white;
-    width: 450px;
+    width: 40%;
     margin-left: -21px;
     border-radius: 0 12px 12px 0;
  }
@@ -690,6 +690,7 @@ img{
     margin-left: -20px;
     border-radius: 0 12px 12px 0;
     margin-right: 10px;
+
 }
 .thanks span{
     width: 50%; 
@@ -856,7 +857,7 @@ img{
 }
 
 .explore-card{
-    height: calc(100vh - 200px);
+    height: calc(100vh - 180px);
     width: calc(100vw - 40%);
     position: fixed;
     text-align: left;
