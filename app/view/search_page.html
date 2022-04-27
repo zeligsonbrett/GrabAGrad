@@ -101,26 +101,25 @@
 
 
 
-                let universities = {{unis|tojson}};
+                let un_universities = {{un_unis|tojson}};
                 $('#un-uni').autocomplete({
-                minLength: 2,
                 select: function (e, ui) {
                     $('#un-uni').val(ui['item']['value']);
                     filterResults();
                 },
                 source: function(request, response) {
-                    let results = $.ui.autocomplete.filter(universities, request.term);
+                    let results = $.ui.autocomplete.filter(un_universities, request.term);
                     response(results.slice(0, 15)); }
                 });
 
+                let ma_universities = {{ma_unis|tojson}};
                 $('#ma-uni').autocomplete({
-                minLength: 2,
                 select: function (e, ui) {
                     $('#ma-uni').val(ui['item']['value']);
                     filterResults();
                 },
                 source: function(request, response) {
-                    let results = $.ui.autocomplete.filter(universities, request.term);
+                    let results = $.ui.autocomplete.filter(ma_universities, request.term);
                     response(results.slice(0, 15)); }
                 });
             }
