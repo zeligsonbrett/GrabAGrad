@@ -8,6 +8,7 @@ import controller.pustatus.pustatus as pu
 import model.departments as dept
 import model.universities as uni
 import model.industries as ind
+import random
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
@@ -372,7 +373,7 @@ def header_tabs_results():
 
 @app.route('/explore')
 def explore_page():
-    html = render_template('explore_page.html')
+    html = render_template('explore_page.html', grad=str(random.randint(0, ep.num_graduates())))
     response = make_response(html)
     return response
 
@@ -405,8 +406,6 @@ def popup_results(grad_id=None, favorite=None):
     else:
         is_favorite = favorite
     graduate = ep.get_grad_information(grad_id)
-    print("CHECKING FAVORITE")
-    print(is_favorite)
     html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
     response = make_response(html)
     return response
