@@ -47,7 +47,7 @@
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="years-worked">Years of Work Experience</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="text"></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="number" min=0 oninput="validity.valid||(value='');"></div>
                         
                     </div>
                 </div>

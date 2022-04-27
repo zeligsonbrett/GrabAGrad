@@ -291,10 +291,10 @@ def update_grad(netid, name=None, dept=None, bio=None, un_uni=None, ma_uni=None,
     """
     command = sqla.text(
             """UPDATE graduates SET 
-            name = :name, acad_dept = :dept, research_focus = :research, 
+            name = :name, acad_dept = :dept, years_worked = :years_worked, research_focus = :research, 
             undergrad_university = :undergrad_uni, masters_university
             = :masters_uni WHERE graduates.netid = :netid;""")
-    params = {'netid': netid, 'name': name, 'dept': dept, 'research': research_focus, 'undergrad_uni': un_uni, 'masters_uni': ma_uni}
+    params = {'netid': netid, 'name': name, 'dept': dept, 'years_worked': years_worked, 'research': research_focus, 'undergrad_uni': un_uni, 'masters_uni': ma_uni}
     output = db.execute_command(command, params)
 
     params = {'netid': netid}
