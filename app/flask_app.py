@@ -314,10 +314,14 @@ def favorite_a_grad():
         netid = "testingadmin"
 
     num = int(request.args.get('grad'))
+    favorite = request.args.get('favorite')
     max_num = ep.num_graduates()
     grad = ep.get_grad_by_row(num % max_num)
-    ep.add_favorite(netid, grad.get_grad_id())
-    print("Worked")
+    if favorite == "Favorite":
+        ep.add_favorite(netid, grad.get_grad_id())
+    else:
+        ep.remove_favorite(netid, grad.get_grad_id())
+    return explore_page_box(grad);
 
 @app.route('/header_tabs')
 def header_tabs_results():
@@ -373,11 +377,19 @@ def explore_page():
     return response
 
 @app.route('/explorebox')
-def explore_page_box():
-    num = int(request.args.get('grad'))
-    max_num = ep.num_graduates()
-    grad = ep.get_grad_by_row(num % max_num)
-    html = render_template('explore_box.html', grad=grad)
+def explore_page_box(grad=None):
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+    else:
+        netid = "testingadmin"
+
+    if grad == None:
+        num = int(request.args.get('grad'))
+        max_num = ep.num_graduates()
+        grad = ep.get_grad_by_row(num % max_num)
+    html = render_template('explore_box.html', grad=grad, favorite=ep.is_favorite(netid, grad.get_grad_id()))
     response = make_response(html)
     return response
 

@@ -24,15 +24,8 @@
     </div>
     <div style="height: 80px"></div>
 
-    <div>
-        <div id="explore_popup" class="explore-card">
-    </div>
-</div>
-    <div style="width: 100%; margin-top: calc(100vh - 150px); position:fixed">
-        <input id="previous" class="submit-button" type="submit" value="Previous">
-        <input id="next" class="submit-button" type="submit" value="Next">
-        <input style="float: right;" id="favorite" class="submit-button" type="submit" value="Favorite">
-    </div>
+    <div id="explore_popup"></div>
+
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
         </script>
 
@@ -47,12 +40,14 @@
                 $('#explore_popup').html(response);
             }
 
-            function favorite_grad() {
-                let url = '/explorefavorite?grad=' + grad;
+            function favorite_grad(favorite) {
+
+                let url = '/explorefavorite?grad=' + grad + '&favorite=' + favorite;
                 request = $.ajax(
                    {
                       type: 'GET',
                       url: url,
+                      success: render_grad_info
                    }
                 );
             }
@@ -93,15 +88,10 @@
                 load_in_grad();
             }
 
-            function key_pressed() {
-                console.log("Key pressed");
-            }
-
             function setup()
             {
                 $('#next').click(next_grad);
                 $('#previous').click(previous_grad);
-                $('#favorite').click(favorite_grad);
                 $(document).keyup(function(e) {
                     var key = e.keyCode;
                     if (key == 37) {
@@ -109,6 +99,10 @@
                     } else if (key == 39) {
                         next_grad();
                     }});
+                $(document).on('click','[id^=favorite]',function(){
+                    let type = $('#favorite').attr('value');
+                    favorite_grad(type);
+                });
                 load_in_grad();
                 get_header_tabs();
             }
