@@ -12,8 +12,14 @@
         {% if grad.get_undergrad_university()|length %}
         <li style="width: 100%; display: inline-block;"><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li>
         {% endif %}
+        {% if grad.get_undergrad_major()|length %}
+        <li style="width: 100%; display: inline-block;"><b>Undergraduate Major: </b>{{grad.get_undergrad_major()}}</li>
+        {% endif %}
         {% if grad.get_masters_university()|length %}
         <li style="width: 100%; display: inline-block;"><b>Masters Institution: </b>{{grad.get_masters_university()}}</li>
+        {% endif %}
+        {% if grad.get_masters_field()|length %}
+        <li style="width: 100%; display: inline-block;"><b>Masters Degree: </b>{{grad.get_masters_field()}}</li>
         {% endif %}
         {% if grad.get_email()|length %}
         <li style="width: 100%; display: inline-block;"><b>Preferred Contact Email: </b>{{grad.get_email()}}</li>
@@ -27,9 +33,11 @@
     </div>
 </ul>
 <div style="margin-top:-50px; width: 100%; text-align: right;">
-    {% if favorite %}
-        <input id="favorite" style="background-color: #ee9440; position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;"  class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
-    {% else %}
-        <input id="favorite" style="background-color: #ee9440; position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
+    {% if 'undergrad' == user %}
+        {% if favorite %}
+            <input id="favorite" style="background-color: #ee9440; position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;"  class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
+        {% else %}
+            <input id="favorite" style="background-color: #ee9440; position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
+        {% endif %}
     {% endif %}
 </div>

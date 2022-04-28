@@ -36,9 +36,11 @@
             <li><p><b>Last Name</b> {{last_name}}</p></li>
             <li><p><b>Academic Department</b> {{dept}}</p></li>
             <li><p><b>Years of Work Experience</b> {{years_worked}}</p></li>
-            <li><p><b>Undergraduate Institution</b> {{un_uni}}</p></li>
-            <li><p><b>Master's Institution</b> {{ma_uni}}</p></li>
-            <li><p><b>Preferred Contact Email</b> {{email}}</p></li>
+            <li><p><b>Undergraduate Institution</b> {{grad.get_undergrad_university()}}</p></li>
+            <li><p><b>Undergraduate Major</b> {{grad.get_undergrad_major()}}</p></li>
+            <li><p><b>Master's Institution</b> {{grad.get_masters_university()}}</p></li>
+            <li><p><b>Master's Degree</b> {{grad.get_masters_field()}}</p></li>
+            <li><p><b>Preferred Contact Email</b> {{grad.get_email()}}</p></li>
             <li><p><b>Preferred Phone Number</b> {{phone}}</p></li>
             <li><p><b>Profile Photo</b> <img style="width: 300px; height: auto" src="{{photo_link}}"></p></li>
             <li><p><b>Current Research Focus</b> {{research_focus}}</p></li>

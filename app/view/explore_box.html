@@ -14,8 +14,14 @@
             {% if grad.get_undergrad_university()|length %}
             <li><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li><br>
             {% endif %}
+            {% if grad.get_undergrad_major()|length %}
+            <li><b>Undergraduate Major: </b>{{grad.get_undergrad_major()}}</li><br>
+            {% endif %}
             {% if grad.get_masters_university()|length %}
             <li><b>Masters Institution: </b>{{grad.get_masters_university()}}</li><br>
+            {% endif %}
+            {% if grad.get_masters_field()|length %}
+            <li><b>Masters Degree: </b>{{grad.get_masters_field()}}</li><br>
             {% endif %}
             {% if grad.get_email()|length %}
             <li><b>Preferred Contact Email: </b>{{grad.get_email()}}</li><br>

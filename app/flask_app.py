@@ -250,7 +250,7 @@ def search_favorite():
     grad_id = request.args.get('grad')
     print(grad_id, "ie being added as a favorite")
     ep.add_favorite(netid, grad_id)
-    return popup_results(grad_id=grad_id, favorite=True)
+    return popup_results(grad_id=grad_id, favorite=True, user='undergrad')
 
 @app.route('/searchunfavorite')
 def search_unfavorite():
@@ -265,7 +265,7 @@ def search_unfavorite():
     grad_id = request.args.get('grad')
     print(grad_id, "is being removed as a favorite")
     ep.remove_favorite(netid, grad_id)
-    return popup_results(grad_id=grad_id, favorite=False)
+    return popup_results(grad_id=grad_id, favorite=False, user='undergrad')
 
 @app.route('/remove_favorite')
 def remove_favorite():
@@ -407,7 +407,7 @@ def explore_page_box(grad=None):
     return response
 
 @app.route('/popup')
-def popup_results(grad_id=None, favorite=None):
+def popup_results(grad_id=None, favorite=None, user=None):
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -421,9 +421,13 @@ def popup_results(grad_id=None, favorite=None):
         is_favorite = ep.is_favorite(netid, grad_id)
     else:
         is_favorite = favorite
+    
+    if user == None:
+        user = request.args.get('user')
 
+    print(user)
     graduate = ep.get_grad_information(grad_id)
-    html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
+    html = render_template('popup_box.html', user=user, grad=graduate, favorite=is_favorite)
     response = make_response(html)
     return response
 

@@ -189,7 +189,12 @@
             function view_popup(grad_id) {
                 console.log('Popup opened');
 
-                let url = '/popup?id=' + grad_id;
+                let url = '/popup?id=' + grad_id + '&user=';
+                {% if 'undergrad' == user %}
+                    url += 'undergrad';
+                {% else %}
+                    url += 'graduate';
+                {% endif %}
                 request = $.ajax(
                    {
                       type: 'GET',
