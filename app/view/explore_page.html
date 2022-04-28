@@ -89,8 +89,12 @@
 
             function setup()
             {
-                $('#next').click(next_grad);
-                $('#previous').click(previous_grad);
+                $(document).on('click','[id^=next]',function(){
+                    next_grad();
+                });
+                $(document).on('click','[id^=previous]',function(){
+                    previous_grad();
+                });
                 $(document).keyup(function(e) {
                     var key = e.keyCode;
                     if (key == 37) {
