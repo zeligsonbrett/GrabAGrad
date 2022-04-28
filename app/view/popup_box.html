@@ -3,13 +3,27 @@
     class="details-img" style="border-radius: 10px; position:absolute; height: auto; width: 27%; right: 80px; top: 30px; object-fit: contain;"><br></li>
     <div style="width: 60%;" class="details-text">
         <h1 style="width: 100%">More About <span style="color: #FFB98B">{{grad.get_first_name()}}</span></h1>
-        <li style="width: 100%; display: inline-block;"><b>Academic Department: </b>{{grad.get_acad_dept()}}</li>
+        {% if grad.get_acad_dept()|length %}
+            <li style="width: 100%; display: inline-block;"><b>Academic Department: </b>{{grad.get_acad_dept()}}</li>
+        {% endif %}
+        {% if grad.get_years_worked()|int %}
         <li style="width: 100%; display: inline-block;"><b>Years of Work Experience: </b>{{grad.get_years_worked()}}</li>
+        {% endif %}
+        {% if grad.get_undergrad_university()|length %}
         <li style="width: 100%; display: inline-block;"><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li>
+        {% endif %}
+        {% if grad.get_masters_university()|length %}
         <li style="width: 100%; display: inline-block;"><b>Masters Institution: </b>{{grad.get_masters_university()}}</li>
+        {% endif %}
+        {% if grad.get_email()|length %}
         <li style="width: 100%; display: inline-block;"><b>Preferred Contact Email: </b>{{grad.get_email()}}</li>
+        {% endif %}
+        {% if grad.get_research_focus()|length %}
         <li style="width: 100%; display: inline-block;"><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li>
+        {% endif %}
+        {% if grad.get_industry_experience()|length %}
         <li style="padding-bottom: 20px; width: 100%; display: inline-block;"><b>Industry Experience: </b>{{grad.get_industry_experience()}}</li>
+        {% endif %}
     </div>
 </ul>
 <div style="margin-top:-50px; width: 100%; text-align: right;">

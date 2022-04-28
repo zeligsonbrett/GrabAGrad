@@ -5,13 +5,27 @@
     </div>
     <div style="overflow-y:auto; width:70%;">
         <ul style="font-size: 30px; color: white">
+            {% if grad.get_acad_dept()|length %}
             <li><b>Academic Department: </b>{{grad.get_acad_dept()}}</li><br>
+            {% endif %}
+            {% if grad.get_years_worked()|int %}
             <li><b>Years of Work Experience: </b>{{grad.get_years_worked()}}</li><br>
+            {% endif %}
+            {% if grad.get_undergrad_university()|length %}
             <li><b>Undergraduate Institution: </b>{{grad.get_undergrad_university()}}</li><br>
+            {% endif %}
+            {% if grad.get_masters_university()|length %}
             <li><b>Masters Institution: </b>{{grad.get_masters_university()}}</li><br>
+            {% endif %}
+            {% if grad.get_email()|length %}
             <li><b>Preferred Contact Email: </b>{{grad.get_email()}}</li><br>
+            {% endif %}
+            {% if grad.get_research_focus()|length %}
             <li><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li><br>
+            {% endif %}
+            {% if grad.get_industry_experience()|length %}
             <li><b>Industries Worked In: </b>{{grad.get_industry_experience()}}</li><br>
+            {% endif %}
         </ul>
     </div>
 </div>
