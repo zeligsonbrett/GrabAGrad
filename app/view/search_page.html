@@ -37,11 +37,12 @@
                     <input class="search-filter" id="years-worked" name="years-worked" placeholder="Years Worked" type="number" min=0 oninput="validity.valid||(value='');"></input>
                     <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></input>
                     <input class="search-filter" id="ma-uni" name="ma-uni" type="text" placeholder="Masters University"></input>
+                    {% if 'undergrad' == user %}
                     <div style="margin-top: 15px;" class="custom-control custom-switch">
                         <input class="custom-control-input" type="checkbox" id="favorites_on" name="favorites_checkbox">
                         <label class="custom-control-label" style="font-size: 22px" for="favorites_on"> Only My Favorites</label>
-                        
                     </div>
+                    {% endif %}
                 </form>
                 <div class="small-screen">
                     <br>

@@ -57,12 +57,10 @@ def get_grads_by_filter(name, dept, industry, years_worked, un_uni, ma_uni, favo
 
 @app.route('/filter_grads')
 def filter_grads():
-    print("Filtering...")
     if cas_enabled:
-        netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
+        netid = auth.authenticate()
         netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
     else:
         netid = "testingadmin"
 
@@ -70,6 +68,7 @@ def filter_grads():
     is_admin = False
     if is_admin_param == "true":
         is_admin = True
+
     name = request.args.get('name')
     dept = request.args.get('dept')
     industry = request.args.get('industry')
@@ -189,7 +188,7 @@ def _filter_suggestion_info():
         un_unis = []
         ma_unis = []
         dept_list = []
-        print("Error occurred querying all the grads")
+        print("Error occurred querying all the grads:")
         print(ex)
         pass
 
@@ -427,9 +426,7 @@ def popup_results(grad_id=None, favorite=None):
 @app.route('/delete_grad')
 def delete_grad():
     grad_id = request.args.get('id')
-    print(grad_id)
     graduate = ep.get_grad_information(grad_id)
-    print(graduate.get_name())
     ep.delete_grad(grad_id)
     html = render_template('grad_deleted_page.html', grad=graduate)
     response = make_response(html)
@@ -475,7 +472,8 @@ def submit():
     else:
         netid = "testingadmin"
 
-    name = request.args.get('name')
+    first_name = request.args.get('first-name')
+    last_name = request.args.get('last-name')
     dept = request.args.get('academic-dept')
     undergrad = request.args.get('undergrad-institution')
     masters = request.args.get('masters-institution')
@@ -489,20 +487,17 @@ def submit():
 
     photo = request.args.get('image_link')
     research = request.args.get('research-focus')
-    industries = request.args.get('industries')
-    industries = [x.strip() for x in industries.split(',')];
+    industry_experience = request.args.get('industry-experience')
 
     current_grad = ep.get_grad_information(netid)
     #uploaded_image = request.args.get('image_link')
     if not current_grad:
         try:
-            ep.add_a_grad(netid=netid, name=name, dept=dept, bio=None,
+            ep.add_a_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept, industry_experience=industry_experience,
                           un_uni=undergrad, ma_uni=masters,
                           research_focus=research, expected_grad_date=None,
                           years_worked=years_worked, photo_link=photo,
-                          website_link=None, experiences=None,
-                          industries=industries,
-                          interests=None, email=email, phone=phone_number)
+                          website_link=None, email=email, phone=phone_number)
         except Exception as ex:
             print("Error from function ep.add_a_grad()")
             print(ex)
@@ -510,13 +505,10 @@ def submit():
             return make_response(html)
     else:
         try:
-            ep.update_grad(netid=netid, name=name, dept=dept, bio=None,
+            ep.update_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept,
                           un_uni=undergrad, ma_uni=masters,
-                          research_focus=research, expected_grad_date=None,
-                          years_worked=years_worked, photo_link=photo,
-                          website_link=None, experiences=None,
-                          industries=industries,
-                          interests=None, email=email, phone=phone_number)
+                          research_focus=research, years_worked=years_worked, photo_link=photo,
+                          website_link=None, industry=industry_experience, email=email, phone=phone_number)
         except Exception as ex:
             print("Error from function ep.update_grad()")
             print(ex)
@@ -528,18 +520,18 @@ def submit():
         years_worked = ""
     if phone_number is None:
         phone_number = ""
+    if industry_experience is None:
+        industry_experience = ""
     if photo is None or photo == '' and current_grad:
         photo = current_grad.get_photo_link()
 
     html = render_template('submission_thanks.html',
-                           name=name, dept=dept, bio=None,
+                           first_name=first_name, last_name=last_name, dept=dept,
                            un_uni=undergrad, ma_uni=masters,
                            research_focus=research,
                            expected_grad_date=None,
                            years_worked=years_worked, photo_link=photo,
-                           website_link=None, experiences=None,
-                           industries=str.join(', ', industries),
-                           interests=None, email=email,
+                           website_link=None, industry_experience=industry_experience, email=email,
                            phone=phone_number)
     response = make_response(html)
     return response

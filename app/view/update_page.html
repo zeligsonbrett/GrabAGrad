@@ -35,8 +35,14 @@
         <div class="next-to-card" style="display: inline-block">
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
-                        <div class="labelStyle"><label for="name">Name</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="name" name="name" type="text" value="{{grad.get_name()}}"></div>
+                        <div class="labelStyle"><label for="first-name">First Name</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="first-name" name="first-name" type="text" value="{{grad.get_first_name()}}"></div>
+                    </div>
+                </div>
+                <div class="input-label">
+                    <div style="text-align: right" class="newClass?">
+                        <div class="labelStyle"><label for="last-name">Last Name</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="last-name" name="last-name" type="text" value="{{grad.get_last_name()}}"></div>
                     </div>
                 </div>
                 <div class="input-label">
@@ -98,15 +104,15 @@
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
-                        <div class="labelStyle"><label for="industries">Industries Worked In</label></div>
-                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="industries" name="industries" rows="0" cols="0">{{grad.get_industries_str()}}</textarea></div>
+                        <div class="labelStyle"><label for="industries">Industry Experience</label></div>
+                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="industry-experience" name="industry-experience" rows="0" cols="0">{{grad.get_industry_experience()}}</textarea></div>
                     </div>
                 </div>
 
         </div>
 
         <div id="card-mockup" style="overflow-y:auto;">
-            <span style="margin-top: -20px; font-weight: bolder; font-size: 30px;">More About</span><p style="font-weight: bolder; font-size: 30px;" id="nameCard">{{grad.get_first_name()}}</p><br>
+            <span style="margin-top: -20px; font-weight: bolder; font-size: 30px;">More About</span><p style="font-weight: bolder; font-size: 30px;" id="first-nameCard">{{grad.get_first_name()}}</p><br>
             <div id="uploaded_image" class="uploaded_image">
                 <img id="img-placeholder" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="display: inline-block; width:25%; height:auto; object-fit:contain; position: absolute;" >
             </div>
@@ -119,7 +125,7 @@
             <span>Preferred Contact Email:</span><p id="emailCard">{{grad.get_email()}}</p><br>
             <span>Preferred Phone Number:</span><p id="phone-numberCard">{{grad.get_phone()}}</p><br>
             <span>Current Research Focus:</span><p id="research-focusCard">{{grad.get_research_focus()}}</p><br>
-            <span>Industries Worked In:</span><p id="industriesCard">{{grad.get_industries_str()}}</p><br> 
+            <span>Industry Experience:</span><p id="industry-experienceCard">{{grad.get_industry_experience()}}</p><br>
             <span class="mockup-note">Mockup of Your Profile Card</span>
         </div>        
         <br>

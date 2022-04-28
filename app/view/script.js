@@ -150,12 +150,11 @@ function saveData(){
 
 function changeName(input){
   var elementValue = input.value;
-  if (input.id == "name") elementValue = elementValue.split(" ")[0];
   if (elementValue.length == 0) {
     elementValue = '';
   }
-  else if (elementValue.length > 15 && input.id == "name") elementValue = elementValue.substring(0, 10) + "...";
+  else if (elementValue.length > 8 && input.id == "first-name") elementValue = elementValue.substring(0, 6) + "...";
   //else if (elementValue.length > 100 && input.id == "research-focus") elementValue = elementValue.substring(0, 100) + "...";
   else if (elementValue.length > 20) elementValue = elementValue.substring(0, 20) + "...";
-  document.getElementById(input.id + "Card").innerHTML = elementValue;
+	document.getElementById(input.id + "Card").innerHTML = elementValue;
 }

@@ -1,11 +1,12 @@
 import model.endpoints as ep
 
 # sample_search_bar_input = 'name:"Austin Wang,  Cedrick Argueta,Henry Knoll   " name:"Henry Knoll" department:"Computer Science" undergraduate_university:"Princeton, Stanford"'
+'''
 VALID_SEARCH_FIELDS = ['name', 'department', 'research', 'grad_year',
                        'industry', 'undergraduate_university',
                        'masters_university', 'years_worked']
-
-
+'''
+'''
 def search(search_input):
     try:
         return "Success", search_grads(
@@ -13,19 +14,12 @@ def search(search_input):
     except Exception as ex:
         print(ex)
         return "Error occurred when searching, make sure search input is valid", []
-
+'''
 
 def filter_search(name, dept, industry, years_worked, un_uni, ma_uni, favorites_on, mynetid):
     """
     Search function for if the filter by options are used.
     """
-    try:
-        if years_worked is not None:
-            if not years_worked.isdigit() and years_worked != '':
-                return "Please ensure Years Worked filter is a valid integer", []
-    except:
-        pass
-
     try:
         grad_list = ep.search_grads(name=name, dept=dept,
                                     industry=industry,
@@ -34,13 +28,12 @@ def filter_search(name, dept, industry, years_worked, un_uni, ma_uni, favorites_
                                     years_worked=years_worked,
                                     favorites_on=favorites_on,
                                     mynetid=mynetid)
-
         return "Success", grad_list
     except Exception as ex:
         print(ex)
         return "Error occurred when searching, make sure filter input is valid", []
 
-
+'''
 def parse_search_bar_input(search_input):
     query = {}
     input_fields = search_input.split('" ')
@@ -131,3 +124,4 @@ def search_grads_complex(query):
                         masters_uni=masters_university,
                         years_worked=years_worked))
     return grad_list
+'''
