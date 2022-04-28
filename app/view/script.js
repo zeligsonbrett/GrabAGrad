@@ -12,6 +12,16 @@ let saved_i = ""
 */
 
 function reportWindowSize() {
+  if(window.innerWidth >= 780){
+    document.getElementById("top-right-img").src = "/view/expandedLogo.png";
+    document.getElementById("top-right-img").style.width = "180px";
+  }
+
+  else{
+    document.getElementById("top-right-img").src = "/view/favicon.ico";
+    document.getElementById("top-right-img").style.width = "35px";
+  }
+  
   if(document.getElementById("mySidenav") != null) {
     if(window.innerWidth >= 780){
       if(document.getElementById("mySidenav").style.width != "40px"){

@@ -25,10 +25,10 @@
             <div style="display: inline" id='header_tabs'></div>
         </div>
         <span id="top"></span>
-        <div id="mySidenav" style="transition: ease .3s; width: 360px" class="sidenav">
+        <div id="mySidenav" style="transition: ease .3s; width: 330px" class="sidenav">
             <div id="filter">
                 <br>
-                <p style="margin-bottom: 15px;">Filter By:</p>
+                <p style="margin-bottom: 15px; white-space: nowrap;">Filter By:</p>
 
                 <form id="form-id" style="text-align: left;">
                     <input class="search-filter" id="name" name="name" type="text" placeholder="Name"></input>
@@ -38,7 +38,7 @@
                     <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></input>
                     <input class="search-filter" id="ma-uni" name="ma-uni" type="text" placeholder="Masters University"></input>
                     {% if 'undergrad' == user %}
-                    <div style="margin-top: 15px;" class="custom-control custom-switch">
+                    <div style="margin-top: 15px; white-space: nowrap;" class="custom-control custom-switch">
                         <input class="custom-control-input" type="checkbox" id="favorites_on" name="favorites_checkbox">
                         <label class="custom-control-label" style="font-size: 22px" for="favorites_on"> Only My Favorites</label>
                     </div>
@@ -48,9 +48,9 @@
                     <br>
                 </div>
 
-                <div class="sorter">
+                <div style="margin-top: -15px; white-space: nowrap;" class="sorter">
                     <p class="sortby">Sort By:</p>
-                        <select id="sortby" name="sortby">
+                        <select  id="sortby" name="sortby">
                             <option value="First Name: A-Z">First Name: A-Z</option>
                             <option value="First Name: Z-A">First Name: Z-A</option>
                         </select>

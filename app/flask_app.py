@@ -359,7 +359,7 @@ def header_tabs_results():
     if current_page != 'search_page':
         html += '<a style="text-decoration: none" href="/see_grads?{}">Search</a>'.format(user_param)
     else:
-        html += '<a style="text-decoration: none; background-color: #EE9440; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/see_grads?{}">Search</a>'.format(user_param)
+        html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px;" href="/see_grads?{}">Search</a>'.format(user_param)
     if user == 'graduate':
         if has_profile:
             html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
@@ -369,17 +369,17 @@ def header_tabs_results():
         if current_page != 'explore':
             html += '<a style="text-decoration: none" href="/explore">Explore</a>'
         else:
-            html += '<a style="text-decoration: none; background-color: #EE9440; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/explore">Explore</a>'
+            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/explore">Explore</a>'
         if current_page != 'favorites':
             html += '<a style="text-decoration: none" href="/favorites">Favorites</a>'
         else:
-            html += '<a style="text-decoration: none; background-color: #EE9440; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/favorites">Favorites</a>'
+            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/favorites">Favorites</a>'
     if is_admin:
         if current_page != 'admin':
             html += '<a style="text-decoration: none" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
         else:
-            html += '<a style="text-decoration: none; background-color: #EE9440; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
-    html += '<a class="title" style="text-decoration: none" href="/about?{}">GrabAGrad</a>'.format(user_param)
+            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
+    html += '<a href="/about?{}"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>'.format(user_param)
     response = make_response(html)
     return response
 
