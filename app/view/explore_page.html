@@ -44,7 +44,7 @@
                 let url = '/explorefavorite?grad=' + grad + '&favorite=' + favorite;
                 request = $.ajax(
                    {
-                      type: 'GET',
+                      type: 'POST',
                       url: url,
                       success: render_grad_info
                    }

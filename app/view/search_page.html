@@ -139,7 +139,7 @@
                 let url = '/searchfavorite?grad=' + netid;
                 request = $.ajax(
                    {
-                      type: 'GET',
+                      type: 'POST',
                       url: url,
                       success: render_kept_popup
                    }
@@ -151,7 +151,7 @@
                 let url = '/searchunfavorite?grad=' + netid;
                 request = $.ajax(
                    {
-                      type: 'GET',
+                      type: 'POST',
                       url: url,
                       success: render_kept_popup
                    }
