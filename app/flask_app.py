@@ -8,6 +8,7 @@ import controller.pustatus.pustatus as pu
 import model.departments as dept
 import model.universities as uni
 import model.industries as ind
+import random
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
 import auth
@@ -164,25 +165,35 @@ def _filter_suggestion_info():
         all_grads = ep.search_grads()
         all_grad_names = [grad.get_first_name() for grad in all_grads]
         all_industries = []
-        for grad in all_grads:
-            industries = grad.get_industries()
-            all_industries.extend(industries)
+        dept_list = dept.dept_list()
+        un_unis = [grad.get_undergrad_university() for grad in all_grads]
+        ma_unis = [grad.get_masters_university() for grad in all_grads]
+
+        # Decided we didn't need information about industries in dropdown
+        # for grad in all_grads:
+        #     industries = grad.get_industries()
+        #     all_industries.extend(industries)
+        #
         # all_industries = [word.capitalize() for word in all_industries]
         # all_industries.sort()
-        unis = uni.get_universities("")
+
+        # gets all universities
+        # unis = uni.get_universities("")
+
         # Something to get industries
         # Something to get years worked
         # Something to get undergrad university
     except Exception as ex:
         all_grad_names = []
         all_industries = []
-        unis = []
+        un_unis = []
+        ma_unis = []
+        dept_list = []
         print("Error occurred querying all the grads")
         print(ex)
         pass
 
-    dept_list = dept.dept_list()
-    return all_grad_names, dept_list, all_industries, unis
+    return all_grad_names, dept_list, all_industries, un_unis, ma_unis
 
 @app.route('/admin_see_grads')
 def admin_see_grads():
@@ -191,9 +202,10 @@ def admin_see_grads():
     all_grad_names = info[0]
     depts = info[1]
     # industries = info[2]
-    unis = info[3]
+    un_unis = info[3]
+    ma_unis = info[4]
 
-    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, unis=unis)
+    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, un_unis=un_unis, ma_unis=ma_unis)
     response = make_response(html)
     return response
 
@@ -213,8 +225,10 @@ def see_grads():
     all_grad_names = info[0]
     depts = info[1]
     # industries = info[2]
-    unis = info[3]
-    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, unis=unis)
+    un_unis = info[3]
+    ma_unis = info[4]
+
+    html = render_template('search_page.html', user=user, is_admin=False, grad_names=all_grad_names, depts=depts, un_unis=un_unis, ma_unis=ma_unis)
     response = make_response(html)
     return response
 
@@ -314,10 +328,14 @@ def favorite_a_grad():
         netid = "testingadmin"
 
     num = int(request.args.get('grad'))
+    favorite = request.args.get('favorite')
     max_num = ep.num_graduates()
     grad = ep.get_grad_by_row(num % max_num)
-    ep.add_favorite(netid, grad.get_grad_id())
-    print("Worked")
+    if favorite == "Favorite":
+        ep.add_favorite(netid, grad.get_grad_id())
+    else:
+        ep.remove_favorite(netid, grad.get_grad_id())
+    return explore_page_box(grad);
 
 @app.route('/header_tabs')
 def header_tabs_results():
@@ -368,16 +386,24 @@ def header_tabs_results():
 
 @app.route('/explore')
 def explore_page():
-    html = render_template('explore_page.html')
+    html = render_template('explore_page.html', grad=str(random.randint(0, ep.num_graduates())))
     response = make_response(html)
     return response
 
 @app.route('/explorebox')
-def explore_page_box():
-    num = int(request.args.get('grad'))
-    max_num = ep.num_graduates()
-    grad = ep.get_grad_by_row(num % max_num)
-    html = render_template('explore_box.html', grad=grad)
+def explore_page_box(grad=None):
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+    else:
+        netid = "testingadmin"
+
+    if grad == None:
+        num = int(request.args.get('grad'))
+        max_num = ep.num_graduates()
+        grad = ep.get_grad_by_row(num % max_num)
+    html = render_template('explore_box.html', grad=grad, favorite=ep.is_favorite(netid, grad.get_grad_id()))
     response = make_response(html)
     return response
 
@@ -393,8 +419,6 @@ def popup_results(grad_id=None, favorite=None):
     else:
         is_favorite = favorite
     graduate = ep.get_grad_information(grad_id)
-    print("CHECKING FAVORITE")
-    print(is_favorite)
     html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
     response = make_response(html)
     return response

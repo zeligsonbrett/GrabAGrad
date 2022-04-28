@@ -34,7 +34,7 @@
                     <input class="search-filter" id="name" name="name" type="text" placeholder="Name"></input>
                     <input class="search-filter" id="dept" name="dept" type="text" placeholder="Department"></input>
                     <input class="search-filter" id="industry" name="industry" type="text" placeholder="Industry"></input>
-                    <input class="search-filter" id="years-worked" name="years-worked" type="text" placeholder="Years Worked"></input>
+                    <input class="search-filter" id="years-worked" name="years-worked" placeholder="Years Worked" type="number" min=0 oninput="validity.valid||(value='');"></input>
                     <input class="search-filter" id="un-uni" name="un-uni" type="text" placeholder="Undergraduate University"></input>
                     <input class="search-filter" id="ma-uni" name="ma-uni" type="text" placeholder="Masters University"></input>
                     <div style="margin-top: 5px; white-space: nowrap;" class="custom-control custom-switch">
@@ -100,26 +100,25 @@
 
 
 
-                let universities = {{unis|tojson}};
+                let un_universities = {{un_unis|tojson}};
                 $('#un-uni').autocomplete({
-                minLength: 2,
                 select: function (e, ui) {
                     $('#un-uni').val(ui['item']['value']);
                     filterResults();
                 },
                 source: function(request, response) {
-                    let results = $.ui.autocomplete.filter(universities, request.term);
+                    let results = $.ui.autocomplete.filter(un_universities, request.term);
                     response(results.slice(0, 15)); }
                 });
 
+                let ma_universities = {{ma_unis|tojson}};
                 $('#ma-uni').autocomplete({
-                minLength: 2,
                 select: function (e, ui) {
                     $('#ma-uni').val(ui['item']['value']);
                     filterResults();
                 },
                 source: function(request, response) {
-                    let results = $.ui.autocomplete.filter(universities, request.term);
+                    let results = $.ui.autocomplete.filter(ma_universities, request.term);
                     response(results.slice(0, 15)); }
                 });
             }
