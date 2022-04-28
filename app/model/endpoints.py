@@ -218,18 +218,22 @@ def get_grad_information(netid):
     contact = [[x['email'], x['phone']] for x in contact_output]
     return Graduate(details=all_details[0], contact=contact)
 
-def update_grad(netid, first_name=None, last_name=None, dept=None, un_uni=None, ma_uni=None, 
-                research_focus=None, years_worked=None, photo_link=None,
-                website_link=None, industry=None, email=None, phone=None):
+def update_grad(netid, first_name, last_name, dept=None, un_uni=None, 
+               undergrad_major=None, ma_uni=None, masters_field=None,
+               research_focus=None, expected_grad_date=None,
+               years_worked=None, photo_link=None,
+               website_link=None, industry_experience=None, email=None, phone=None):
     """
     Initial update function for updating fields for certain graduates
     """
     command = sqla.text(
             """UPDATE graduates SET 
-            first_name = :firstname, last_name = :lastname, acad_dept = :dept, years_worked = :years_worked, research_focus = :research, 
-            undergrad_university = :undergrad_uni, masters_university = :masters_uni, industry_experience = :industryexperience WHERE graduates.netid = :netid;""")
+            first_name = :firstname, last_name = :lastname, acad_dept = :dept, years_worked = :years_worked,
+            undergrad_university = :undergrad_uni, undergrad_major = :undergrad_major, masters_university = :masters_uni, masters_field = :masters_field, 
+            research_focus = :research_focus, industry_experience = :industryexperience WHERE graduates.netid = :netid;""")
     params = {'netid': netid, 'firstname': first_name, 'lastname': last_name, 'dept': dept, 'years_worked': years_worked, 
-              'research': research_focus, 'undergrad_uni': un_uni, 'masters_uni': ma_uni, 'industryexperience': industry}
+              'research_focus': research_focus, 'undergrad_uni': un_uni, 'undergrad_major': undergrad_major, 'masters_uni': ma_uni, 
+              'masters_field': masters_field, 'industryexperience': industry_experience}
     output = db.execute_command(command, params)
 
     params = {'netid': netid}
@@ -251,7 +255,7 @@ def update_grad(netid, first_name=None, last_name=None, dept=None, un_uni=None, 
                 :email, :phone)""")
             output = db.execute_command(statement, contact_info)
 
-def add_a_grad(netid, first_name, last_name, dept=None, bio=None, un_uni=None, 
+def add_a_grad(netid, first_name, last_name, dept=None, un_uni=None, 
                undergrad_major=None, ma_uni=None, masters_field=None,
                research_focus=None, expected_grad_date=None,
                years_worked=None, photo_link=None,

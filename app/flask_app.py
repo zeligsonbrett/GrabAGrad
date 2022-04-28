@@ -485,7 +485,9 @@ def submit():
     last_name = request.args.get('last-name')
     dept = request.args.get('academic-dept')
     undergrad = request.args.get('undergrad-institution')
+    undergrad_major = request.args.get('undergrad-major')
     masters = request.args.get('masters-institution')
+    masters_field = request.args.get('masters-degree')
     email = request.args.get('email')
     phone_number = request.args.get('phone-number')
     years_worked = request.args.get('years-worked')
@@ -503,7 +505,7 @@ def submit():
     if not current_grad:
         try:
             ep.add_a_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept, industry_experience=industry_experience,
-                          un_uni=undergrad, ma_uni=masters,
+                          un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
                           research_focus=research, expected_grad_date=None,
                           years_worked=years_worked, photo_link=photo,
                           website_link=None, email=email, phone=phone_number)
@@ -515,9 +517,9 @@ def submit():
     else:
         try:
             ep.update_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept,
-                          un_uni=undergrad, ma_uni=masters,
+                          un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
                           research_focus=research, years_worked=years_worked, photo_link=photo,
-                          website_link=None, industry=industry_experience, email=email, phone=phone_number)
+                          website_link=None, industry_experience=industry_experience, email=email, phone=phone_number)
         except Exception as ex:
             print("Error from function ep.update_grad()")
             print(ex)
@@ -536,7 +538,7 @@ def submit():
 
     html = render_template('submission_thanks.html',
                            first_name=first_name, last_name=last_name, dept=dept,
-                           un_uni=undergrad, ma_uni=masters,
+                           un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
                            research_focus=research,
                            expected_grad_date=None,
                            years_worked=years_worked, photo_link=photo,
