@@ -80,6 +80,7 @@ def filter_grads():
     favorites_on = False
     if favorites_only == 'true':
         favorites_on = True
+    print("Updating")
     success_msg, graduates = get_grads_by_filter(name, dept, industry,
                                                  years_worked, un_uni, ma_uni, favorites_on, netid)
     if type_sort == "First Name: Z-A":
@@ -481,13 +482,13 @@ def submit():
     else:
         netid = "testingadmin"
 
-    first_name = request.args.get('first-name')
-    last_name = request.args.get('last-name')
-    dept = request.args.get('academic-dept')
-    undergrad = request.args.get('undergrad-institution')
-    undergrad_major = request.args.get('undergrad-major')
-    masters = request.args.get('masters-institution')
-    masters_field = request.args.get('masters-degree')
+    first_name = request.args.get('first-name').strip()
+    last_name = request.args.get('last-name').strip()
+    dept = request.args.get('academic-dept').strip()
+    undergrad = request.args.get('undergrad-institution').strip()
+    undergrad_major = request.args.get('undergrad-major').strip()
+    masters = request.args.get('masters-institution').strip()
+    masters_field = request.args.get('masters-degree').strip()
     email = request.args.get('email')
     phone_number = request.args.get('phone-number')
     years_worked = request.args.get('years-worked')

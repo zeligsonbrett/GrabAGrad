@@ -159,7 +159,7 @@ function saveData(){
 } */
 
 function changeName(input){
-  var elementValue = input.value;
+  var elementValue = input.value.trim();
   if (elementValue.length == 0) {
     elementValue = '';
   }
