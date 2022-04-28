@@ -158,8 +158,11 @@
                     }      
                 });
                 $(document).on('click','[id^=delete-button]',function(){
+                    let text = 'Are you sure you want to remove this graduate as a favorite?';
                     let id = $(this).attr('name');
-                    remove_favorite(id);
+                    if (confirm(text) == true) {
+                        remove_favorite(id);
+                    }
                 });
                 $(document).on('click','[id^=learn-more]',function(){
                     let grad_id = $(this).attr('name');
