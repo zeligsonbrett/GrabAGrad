@@ -9,13 +9,14 @@
         <li style="width: 100%; display: inline-block;"><b>Masters Institution: </b>{{grad.get_masters_university()}}</li>
         <li style="width: 100%; display: inline-block;"><b>Preferred Contact Email: </b>{{grad.get_email()}}</li>
         <li style="width: 100%; display: inline-block;"><b>Current Research Focus: </b>{{grad.get_research_focus()}}</li>
-        <li style="width: 100%; display: inline-block;"><b>Industries Worked In: </b>{{grad.get_industries_str()}}</li>
+        <li style="padding-bottom: 20px; width: 100%; display: inline-block;"><b>Industries Worked In: </b>{{grad.get_industries_str()}}</li>
+        
     </div>
 </ul>
 <div style="margin-top:-50px; width: 100%; text-align: right;">
     {% if favorite %}
-        <input id="favorite" style="position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;"  class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
+        <input id="favorite" style="background-color: #ee9440; position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;"  class="submit-button" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
     {% else %}
-        <input id="favorite" style="position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
+        <input id="favorite" style="background-color: #ee9440; position: fixed; bottom: 20px; right: 35px; box-shadow: 0 0 10px 5px white;" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
     {% endif %}
 </div>
