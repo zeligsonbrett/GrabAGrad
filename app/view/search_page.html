@@ -125,6 +125,15 @@
                 });
             }
 
+            function delete_grad(netid) {
+                console.log("Popup displayed for deleting grad:");
+                let text = 'Are you sure you want to delete the graduate with netid:' + netid;
+                let delete_url = '/delete_grad?id=' + netid;
+                if (confirm(text) == true) {
+                    location.href = delete_url;
+                }
+            }
+
             function favorite_grad(netid) {
                 console.log("Favoriting grad");
                 let url = '/searchfavorite?grad=' + netid;

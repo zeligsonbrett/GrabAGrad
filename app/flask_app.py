@@ -94,7 +94,7 @@ def filter_grads():
     grad_card_admin_me = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
                         <button class="me-button">Me</button>
-                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
+                        <button onclick="delete_grad('%s')" class="delete-button">Delete Graduate</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
@@ -103,7 +103,7 @@ def filter_grads():
                         </div>"""
     grad_card_admin = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
+                        <button onclick="delete_grad('%s')" class="delete-button">Delete Graduate</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
