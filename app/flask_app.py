@@ -238,8 +238,9 @@ def see_favorites():
     response = make_response(html)
     return response
 
-@app.route('/searchfavorite')
+@app.route('/searchfavorite', methods=['POST'])
 def search_favorite():
+    # FAVORITING IN THE SEARCH PAGE OR FAVORITES PAGE
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -253,8 +254,9 @@ def search_favorite():
     ep.add_favorite(netid, grad_id)
     return popup_results(grad_id=grad_id, favorite=True, user='undergrad')
 
-@app.route('/searchunfavorite')
+@app.route('/searchunfavorite', methods=['POST'])
 def search_unfavorite():
+    # UNFAVORITING IN THE SEARCH PAGE OR FAVORITES PAGE
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -268,8 +270,9 @@ def search_unfavorite():
     ep.remove_favorite(netid, grad_id)
     return popup_results(grad_id=grad_id, favorite=False, user='undergrad')
 
-@app.route('/remove_favorite')
+@app.route('/remove_favorite', methods=['POST'])
 def remove_favorite():
+    # REMOVING A FAVORITE USING THE DELETE BUTTON
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -317,8 +320,9 @@ def load_favorites():
     response = make_response(html)
     return response
 
-@app.route('/explorefavorite')
+@app.route('/explorefavorite', methods=['POST'])
 def favorite_a_grad():
+    # FAVORITING A GRAD FROM THE EXPLORE PAGE
     if cas_enabled:
         netid = auth.authenticate()
         # Ensures netid is just the name, with no extra spaces.
@@ -473,7 +477,7 @@ def form():
     return make_response(html)
 
 
-@app.route('/submit')
+@app.route('/submit', methods=['POST'])
 def submit():
     if cas_enabled:
         netid = auth.authenticate()
@@ -482,24 +486,38 @@ def submit():
     else:
         netid = "testingadmin"
 
-    first_name = request.args.get('first-name').strip()
-    last_name = request.args.get('last-name').strip()
-    dept = request.args.get('academic-dept').strip()
-    undergrad = request.args.get('undergrad-institution').strip()
-    undergrad_major = request.args.get('undergrad-major').strip()
-    masters = request.args.get('masters-institution').strip()
-    masters_field = request.args.get('masters-degree').strip()
-    email = request.args.get('email')
-    phone_number = request.args.get('phone-number')
-    years_worked = request.args.get('years-worked')
+    first_name = request.form['first-name']
+    last_name = request.form['last-name']
+    dept = request.form['academic-dept']
+    undergrad = request.form['undergrad-institution']
+    undergrad_major = request.form['undergrad-major']
+    masters = request.form['masters-institution']
+    masters_field = request.form['masters-degree']
+    email = request.form['email']
+    phone_number = request.form['phone-number']
+    years_worked = request.form['years-worked']
+    photo = request.form['image_link']
+    research = request.form['research-focus']
+    industry_experience = request.form['industry-experience']
+
+    if first_name: first_name = first_name.strip()
+    if last_name: last_name = last_name.strip()
+    if dept: dept = dept.strip()
+    if undergrad: undergrad = undergrad.strip()
+    if undergrad_major: undergrad_major = undergrad_major.strip()
+    if masters: masters = masters.strip()
+    if masters_field: masters_field = masters_field.strip()
+    if email: email = email.strip()
+    if phone_number: phone_number = phone_number.strip()
+    if years_worked: years_worked = years_worked.strip()
+    if research: research = research.strip()
+    if industry_experience: industry_experience = industry_experience.strip()
+
     try:
         years_worked = int(years_worked)
     except:
         years_worked = None
 
-    photo = request.args.get('image_link')
-    research = request.args.get('research-focus')
-    industry_experience = request.args.get('industry-experience')
 
     current_grad = ep.get_grad_information(netid)
     #uploaded_image = request.args.get('image_link')
