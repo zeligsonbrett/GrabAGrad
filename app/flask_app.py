@@ -93,12 +93,12 @@ def filter_grads():
     grad_card_admin_me = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
                         <button class="me-button">Me</button>
-                        <button onclick="location.href='/delete_grad?id=%s'" class="delete-button">Delete Graduate</button>
+                        <button id= class="delete-button">Delete Graduate</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
                         </div>"""
     grad_card_admin = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -107,7 +107,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
                         </div>"""
     grad_card_me = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -116,7 +116,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
                         </div>"""
     grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -124,7 +124,7 @@ def filter_grads():
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s', '%s')" class="learn-more">Learn More</button>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
                         </div>"""
 
     if success_msg != "Success":
@@ -138,7 +138,7 @@ def filter_grads():
                 grad_card_info = (
                     grad.get_photo_link(), grad_id,
                     grad.get_first_name(),
-                    grad.get_acad_dept(), grad_id, ep.is_favorite(netid, grad_id))
+                    grad.get_acad_dept(), grad_id)
                 if grad.get_grad_id() == netid:
                     html += grad_card_admin_me % grad_card_info
                 else:
@@ -147,7 +147,7 @@ def filter_grads():
             for grad in graduates:
                 grad_card_info = (
                     grad.get_photo_link(), grad.get_first_name(),
-                    grad.get_acad_dept(), grad.get_grad_id(), ep.is_favorite(netid, grad.get_grad_id()))
+                    grad.get_acad_dept(), grad.get_grad_id())
                 if grad.get_grad_id() == netid:
                     html += grad_card_me % grad_card_info
                 else:
@@ -279,7 +279,7 @@ def remove_favorite():
 
     favorite_id = request.args.get('id')
     ep.remove_favorite(netid, favorite_id)
-    return load_favorites()
+    return '', 204
 
 @app.route('/load_favorites')
 def load_favorites():
@@ -296,12 +296,12 @@ def load_favorites():
     html = ""
     grad_card = """
                         <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button onclick="location.href='/remove_favorite?id=%s'" class="delete-button">Remove</button>
+                        <button id="delete-button" name="%s" class="delete-button">Remove</button>
                         <h2>%s</h2>
                         <p><b></b>%s</p>
                         <br>
                         <br>
-                        <button onclick="view_popup('%s', 'True')" class="learn-more">Learn More</button>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
                         </div>"""
 
     if len(favorites) == 0:
@@ -408,15 +408,20 @@ def explore_page_box(grad=None):
 
 @app.route('/popup')
 def popup_results(grad_id=None, favorite=None):
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+    else:
+        netid = "testingadmin"
+
     if grad_id == None:
         grad_id = request.args.get('id')
     if favorite == None:
-        favorite = request.args.get('favorite')
-        is_favorite = False
-        if favorite == 'True':
-            is_favorite = True
+        is_favorite = ep.is_favorite(netid, grad_id)
     else:
         is_favorite = favorite
+
     graduate = ep.get_grad_information(grad_id)
     html = render_template('popup_box.html', grad=graduate, favorite=is_favorite)
     response = make_response(html)

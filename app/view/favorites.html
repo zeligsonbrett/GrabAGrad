@@ -27,8 +27,8 @@
         <span id="top"></span>
         <a class="backToTop" style="transition: height 250ms ease-in;" href="#top">Back To Top</a>
 
-        <div id="details" class="details details-closed" style="visibility: hidden; transition: ease .3s;">
-            <div onclick="details()" class="close"></div>
+        <div id="details" class="details details-closed" style="width: calc(95vw); visibility: hidden; transition: ease .3s;">
+            <div id='close-popup' onclick="details()" class="close"></div>
             <div id='popup_details'></div>
         </div>
     
@@ -72,16 +72,6 @@
                 );
             }
 
-            function remove_grad(netid) {
-                let url = '/searchunfavorite?grad=' + netid;
-                request = $.ajax(
-                   {
-                      type: 'GET',
-                      url: url
-                   }
-                );
-            }
-
             function render_popup(response) {
                 $('#popup_details').html(response);
                 details();
@@ -95,10 +85,21 @@
                 $('#header_tabs').html(response);
             }
 
-            function view_popup(grad_id, favorite) {
+            function remove_favorite(grad_id) {
+                let url = "/remove_favorite?id=" + grad_id;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: loadFavorites
+                   }
+                );
+            }
+
+            function view_popup(grad_id) {
                 console.log('Popup opened');
 
-                let url = '/popup?id=' + grad_id + '&favorite=' + favorite;
+                let url = '/popup?id=' + grad_id;
                 request = $.ajax(
                    {
                       type: 'GET',
@@ -141,14 +142,15 @@
                       success: exploreCards
                    }
                 );
-            } 
+            }
+
 
             function setup()
             {
                 loadFavorites();
                 $(document).on('click','[id^=favorite]',function(){
-                    let type = $('#favorite').attr('value');
-                    let id = $('#favorite').attr('name');
+                    let type = $(this).attr('value');
+                    let id = $(this).attr('name');
                     if (type == "Favorite") {
                         favorite_grad(id);
                     } else {
@@ -156,11 +158,17 @@
                     }      
                 });
                 $(document).on('click','[id^=delete-button]',function(){
-                    let id = $('#favorite').attr('name');
-                    remove_grad(id);
+                    let id = $(this).attr('name');
+                    remove_favorite(id);
                 });
+                $(document).on('click','[id^=learn-more]',function(){
+                    let grad_id = $(this).attr('name');
+                    view_popup(grad_id);
+                });
+                //$('#close-popup').click(loadFavorites);
                 get_header_tabs();
             }
+
             $('document').ready(setup);
             </script>
     </body>

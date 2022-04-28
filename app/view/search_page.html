@@ -59,7 +59,7 @@
         </div>
         <a class="backToTop" style="transition: height 250ms ease-in;" href="#top">Back To Top</a>
 
-        <div id="details" class="details details-closed" style="visibility: hidden; transition: ease .3s;">
+        <div id="details" class="details details-closed" style="width: calc(100vw - 425px); visibility: hidden; transition: ease .3s;">
             <div onclick="details()" class="close"></div>
             <div id='popup_details'></div>
         </div>
@@ -186,10 +186,10 @@
                 );
             }
 
-            function view_popup(grad_id, favorite) {
+            function view_popup(grad_id) {
                 console.log('Popup opened');
 
-                let url = '/popup?id=' + grad_id + '&favorite=' + favorite;
+                let url = '/popup?id=' + grad_id;
                 request = $.ajax(
                    {
                       type: 'GET',
@@ -256,13 +256,17 @@
                 $('#sortby').on('change', filterResults);
                 $('#favorites_on').on('change', filterResults);
                 $(document).on('click','[id^=favorite]',function(){
-                    let type = $('#favorite').attr('value');
-                    let id = $('#favorite').attr('name');
+                    let type = $(this).attr('value');
+                    let id = $(this).attr('name');
                     if (type == "Favorite") {
                         favorite_grad(id);
                     } else {
                         unfavorite_grad(id);
                     }      
+                });
+                $(document).on('click','[id^=learn-more]',function(){
+                    let grad_id = $(this).attr('name');
+                    view_popup(grad_id);
                 });
                 filterResults();
                 get_header_tabs();
