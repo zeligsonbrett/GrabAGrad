@@ -35,14 +35,14 @@
         <div class="next-to-card" style="display: inline-block">
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
-                        <div class="labelStyle"><label for="first-name">First Name</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="first-name" name="first-name" type="text" value="{{grad.get_first_name()}}"></div>
+                        <div class="labelStyle"><label for="first-name">First Name *</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="first-name" name="first-name" type="text" value="{{grad.get_first_name()}}" required></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
-                        <div class="labelStyle"><label for="last-name">Last Name</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="last-name" name="last-name" type="text" value="{{grad.get_last_name()}}"></div>
+                        <div class="labelStyle"><label for="last-name">Last Name *</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="last-name" name="last-name" type="text" value="{{grad.get_last_name()}}" required></div>
                     </div>
                 </div>
                 <div class="input-label">
@@ -72,14 +72,14 @@
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
-                        <div class="labelStyle"><label for="email">Preferred Contact Email</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="email" name="email" type="text" value="{{grad.get_email()}}"></div>
+                        <div class="labelStyle"><label for="email">Preferred Contact Email *</label></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="email" name="email" type="text" value="{{grad.get_email()}}" required></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="phone-number">Preferred Phone Number</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="phone-number" name="phone-number" type="text" value="{{grad.get_phone()}}"></div>
+                        <div class="inputStyle"><input onkeyup=changeName(this) id="phone-number" name="phone-number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" oninvalid="this.setCustomValidity('Phone number must be of form ###-###-####')" onchange="this.setCustomValidity('')" type="tel" value="{{grad.get_phone()}}"></div>
                     </div>
                 </div>
 
