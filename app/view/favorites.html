@@ -55,6 +55,7 @@
                    {
                       type: 'GET',
                       url: url,
+                      success: update_popup
                    }
                 );
             }
@@ -66,14 +67,28 @@
                    {
                       type: 'GET',
                       url: url,
+                      success: update_popup
+                   }
+                );
+            }
+
+            function remove_grad(netid) {
+                let url = '/searchunfavorite?grad=' + netid;
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url
                    }
                 );
             }
 
             function render_popup(response) {
-                console.log("Popup rendered");
                 $('#popup_details').html(response);
                 details();
+            }
+
+            function update_popup(response) {
+                $('#popup_details').html(response);
             }
 
             function render_header_tabs(response) {
@@ -126,8 +141,7 @@
                       success: exploreCards
                    }
                 );
-            }
-
+            } 
 
             function setup()
             {
@@ -141,9 +155,12 @@
                         unfavorite_grad(id);
                     }      
                 });
+                $(document).on('click','[id^=delete-button]',function(){
+                    let id = $('#favorite').attr('name');
+                    remove_grad(id);
+                });
                 get_header_tabs();
             }
-
             $('document').ready(setup);
             </script>
     </body>

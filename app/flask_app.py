@@ -162,7 +162,7 @@ def _filter_suggestion_info():
     """
     try:
         all_grads = ep.search_grads()
-        all_grad_names = [grad.get_first_name() for grad in all_grads]
+        all_grad_names = [grad.get_name() for grad in all_grads]
         all_industries = []
         dept_list = dept.dept_list()
         un_unis = [grad.get_undergrad_university() for grad in all_grads]
@@ -279,7 +279,7 @@ def remove_favorite():
 
     favorite_id = request.args.get('id')
     ep.remove_favorite(netid, favorite_id)
-    return see_favorites()
+    return load_favorites()
 
 @app.route('/load_favorites')
 def load_favorites():
