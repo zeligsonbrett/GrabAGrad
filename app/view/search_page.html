@@ -125,12 +125,47 @@
                 });
             }
 
+            function get_header_tabs() {
+                let url = '/header_tabs?';
+                {% if 'undergrad' == user %}
+                    url += '&user=undergrad';
+                {% else %}
+                    url += '&user=graduate';
+                {% endif %}
+
+                {% if is_admin %}
+                    url += '&page=admin';
+                {% else %}
+                    url += '&page=search_page';
+                {% endif %}
+                console.log(url);
+                request = $.ajax(
+                   {
+                      type: 'GET',
+                      url: url,
+                      success: render_header_tabs
+                   }
+                );
+            }
+
+            function reload_grads() {
+                filterResults();
+                get_header_tabs();
+            }
+
             function delete_grad(netid) {
+                console.log('Trying to delete');
                 console.log("Popup displayed for deleting grad:");
-                let text = 'Are you sure you want to delete the graduate with netid:' + netid;
-                let delete_url = '/delete_grad?id=' + netid;
+                let text = 'Are you sure you want to delete the graduate with netid: ' + netid;
+                let url = '/delete_grad?id=' + netid;
                 if (confirm(text) == true) {
-                    location.href = delete_url;
+                    request = $.ajax(
+                    {
+                        type: 'POST',
+                        url: url,
+                        success: reload_grads
+                    }
+                    );
                 }
             }
 
@@ -170,29 +205,6 @@
 
             function render_header_tabs(response) {
                 $('#header_tabs').html(response);
-            }
-
-            function get_header_tabs() {
-                let url = '/header_tabs?';
-                {% if 'undergrad' == user %}
-                    url += '&user=undergrad';
-                {% else %}
-                    url += '&user=graduate';
-                {% endif %}
-
-                {% if is_admin %}
-                    url += '&page=admin';
-                {% else %}
-                    url += '&page=search_page';
-                {% endif %}
-                console.log(url);
-                request = $.ajax(
-                   {
-                      type: 'GET',
-                      url: url,
-                      success: render_header_tabs
-                   }
-                );
             }
 
             function view_popup(grad_id) {

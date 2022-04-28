@@ -355,7 +355,10 @@ def header_tabs_results():
 
     has_profile = False
     if ep.get_grad_information(netid):
+        print("Is in the database!")
         has_profile = True
+    else:
+        print("Is not in database!")
 
     is_admin = pu.is_administrator(netid)
 
@@ -437,15 +440,11 @@ def popup_results(grad_id=None, favorite=None, user=None):
     return response
 
 
-@app.route('/delete_grad')
+@app.route('/delete_grad', methods=['POST'])
 def delete_grad():
     grad_id = request.args.get('id')
-    graduate = ep.get_grad_information(grad_id)
     ep.delete_grad(grad_id)
-    html = render_template('grad_deleted_page.html', grad=graduate)
-    response = make_response(html)
-    return response
-
+    return '', 204
 
 @app.route('/form')
 def form():
