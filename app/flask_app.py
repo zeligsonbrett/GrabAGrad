@@ -169,6 +169,10 @@ def _filter_suggestion_info():
         un_unis = [grad.get_undergrad_university() for grad in all_grads]
         ma_unis = [grad.get_masters_university() for grad in all_grads]
 
+        # Ensures all elements are unique
+        un_unis = list(dict.fromkeys(un_unis))
+        ma_unis = list(dict.fromkeys(ma_unis))
+
         # Decided we didn't need information about industries in dropdown
         # for grad in all_grads:
         #     industries = grad.get_industries()
