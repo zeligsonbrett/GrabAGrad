@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- usually this can just be the headline -->
-        <title>GrabAGrad</title>
-
-    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="description" content="A form to upload graduates.">
         <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -23,7 +19,7 @@
     <div class="header">
         <a style="text-decoration: none" href="/">Home</a>
 
-        <a style="text-decoration: none" href="{{ '/see_grads?user=%s' % user }}">Search</a>
+        <a style="text-decoration: none" href="{{ '/search_page?user=%s' % user }}">Search</a>
         <a class="title" style="text-decoration: none" href="/about?user=graduate">GrabAGrad</a>
     </div>
     <div style="height: 80px"></div>

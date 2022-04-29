@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""
+Henry Knoll, Theo Knoll, Brett Zeligson
+GrabAGrad
+"""
+
 class Graduate:
     """
     Graduate objects represent graduate students and their relevant

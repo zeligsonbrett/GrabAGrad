@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- usually this can just be the headline -->
-        <title>GrabAGrad</title>
-
-    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="description" content="A form to upload graduates.">
         <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -14,19 +10,19 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   
     </head>
 
-<body onload="reportWindowSize()" style="font-family: 'Lato', sans-serif;">
-    <a href="/"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
-    <div class="header">
-        <div style="display: inline" id='header_tabs'></div>
-    </div>
-    <div style="height: 80px"></div>
+    <body onload="reportWindowSize()" style="font-family: 'Lato', sans-serif;">
+        <a href="/"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
+        <div class="header">
+            <div style="display: inline" id='header_tabs'></div>
+        </div>
+        <div style="height: 80px"></div>
 
-    <div id="explore_popup"></div>
+        <div id="explore_popup"></div>
 
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'>
+
         </script>
 
             <script>
@@ -42,7 +38,7 @@
 
             function favorite_grad(favorite) {
 
-                let url = '/explorefavorite?grad=' + grad + '&favorite=' + favorite;
+                let url = '/exploretogglefavorite?grad=' + grad + '&favorite=' + favorite;
                 request = $.ajax(
                    {
                       type: 'POST',
@@ -68,7 +64,7 @@
             }
 
             function get_header_tabs() {
-                let url = '/header_tabs?user=undergrad&page=explore';
+                let url = '/load_header_tabs?user=undergrad&page=explore';
                 request = $.ajax(
                    {
                       type: 'GET',

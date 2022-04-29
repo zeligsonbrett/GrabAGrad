@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 
+"""
+Henry Knoll, Theo Knoll, Brett Zeligson
+GrabAGrad
+"""
+
 from dotenv import load_dotenv
 import os
 import sqlalchemy as sqla
 
 engine = None
-
 
 def get_uri():
     """
@@ -48,6 +52,9 @@ def query_all_from_table(table):
 
 
 def execute_command(command, params=None):
+    """
+    Executes a command with given parameters
+    """
     with engine.connect() as con:
         if params:
             output = con.execute(command, params)
@@ -57,6 +64,9 @@ def execute_command(command, params=None):
 
 
 def del_id_from_tables(tables, del_id):
+    """
+    Deletes the primary key del_id from each table in order of how they are listed in tables
+    """
     with engine.connect() as con:
         for table in tables:
             statement = "DELETE FROM {} WHERE netid = '{}'".format(table, str(del_id))
@@ -72,6 +82,6 @@ def __print_query(query_result):
     for row in query_result:
         print(row)
 
-
+# Creates the engine when the module is loaded
 engine = sqla.create_engine(get_uri())
 

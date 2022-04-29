@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 
+"""
+Henry Knoll, Theo Knoll, Brett Zeligson
+GrabAGrad
+"""
+
 import sqlalchemy as sqla
 import model.database_connection as db
 from model.graduate import Graduate
-
 
 def query_all_grads():
     """
@@ -19,6 +23,9 @@ def query_all_grads():
     return grad_list
 
 def __details_list(output):
+    """
+    Gets the relevant details for each graduate from a SQL query and assembles into a list
+    """
     return [[x['netid'], x['first_name'], x['last_name'], x['acad_dept'], x['industry_experience'],
          x['undergrad_university'], x['undergrad_major'], x['masters_university'], x['masters_field'],
          x['research_focus'], x['expected_grad_date'],
@@ -71,6 +78,9 @@ def __prepare_argument(user_input):
     return prepped_arg
 
 def get_grad_by_row(row_param):
+    """
+    Gets a certain grad by the row number in the database
+    """
     command = sqla.text("""SELECT netid FROM public.graduates LIMIT 1 OFFSET :row;""")
     params = {'row': row_param}
     output = db.execute_command(command, params)
@@ -78,12 +88,18 @@ def get_grad_by_row(row_param):
     return get_grad_information(ids[0])
 
 def num_graduates():
+    """
+    Gets total number of graduates in the database
+    """
     command = sqla.text("""SELECT COUNT(*) FROM public.graduates;""")
     output = db.execute_command(command)
     count = [x for x in output]
     return int(count[0][0])
 
 def add_favorite(user_id, fav_id):
+    """
+    Adds a favorite to the database when user_id favorites fav_id
+    """
     command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
     params = {'netid': user_id, 'favoriteid': fav_id}
     output = db.execute_command(command, params)
@@ -91,6 +107,9 @@ def add_favorite(user_id, fav_id):
     output = db.execute_command(command, params)
 
 def get_favorites(netid):
+    """
+    Gets a list of the favorited graduates for a certain netid
+    """
     command = sqla.text("""SELECT favorite_netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
     params = {'netid': netid}
     output = db.execute_command(command, params)
@@ -99,6 +118,9 @@ def get_favorites(netid):
     return favorites
 
 def find_favorites_from_list(netid, listids):
+    """
+    Finds the graduates in listids that the user netid has favorited
+    """
     if netid:
         command = sqla.text("""SELECT favorite_netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
         params = {'netid': netid}
@@ -109,6 +131,9 @@ def find_favorites_from_list(netid, listids):
         return listids
 
 def is_favorite(netid, fav_id):
+    """
+    Returns whether or not fav_id is a favorite of netid
+    """
     command = sqla.text("""SELECT * FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
     params = {'netid': netid, 'favoriteid': fav_id}
     output = db.execute_command(command, params)
@@ -116,6 +141,9 @@ def is_favorite(netid, fav_id):
     return len(exists) != 0
     
 def remove_favorite(user_id, fav_id):
+    """
+    Removes a favorite fav_id from the user user_id
+    """
     command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
     params = {'netid': user_id, 'favoriteid': fav_id}
     output = db.execute_command(command, params)
@@ -263,17 +291,6 @@ def add_a_grad(netid, first_name, last_name, dept=None, un_uni=None,
     """
     Adds a grad to the database in each respective table based on data
     inputted
-        netid VARCHAR(20) PRIMARY KEY,
-        name VARCHAR(255),
-        acad_dept VARCHAR(70),
-        bio TEXT,
-        undergrad_university TEXT,
-        masters_university TEXT,
-        research_focus TEXT,
-        expected_grad_date VARCHAR(10),
-        years_worked INTEGER,
-        photo_link TEXT,
-        website_link TEXT
     """
     graduates_info = {"netid": netid,
                       "first_name": first_name,
@@ -317,9 +334,3 @@ def delete_grad(net_id):
     db.del_id_from_tables(
         ['grad_contact', 'grad_experiences', 'grad_industries',
          'grad_interests', 'graduates'], net_id)
-
-
-#if __name__ == "__main__":
-    #print(search_grads())
-    # add_a_grad(name = "Henry", dept = "COS", experiences = [("Software Engineering Intern", "Cellanome")], interests = ['Football', 'Basketball'], email = "henryjknoll@gmail.com")
-    # del_a_grad(11)

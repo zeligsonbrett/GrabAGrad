@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- usually this can just be the headline -->
-        <title>GrabAGrad</title>
-
-    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="description" content="A form to upload graduates.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,7 +121,7 @@
             }
 
             function get_header_tabs() {
-                let url = '/header_tabs?page=about';
+                let url = '/load_header_tabs?page=about';
 
                 {% if 'undergrad' == user %}
                     url += '&user=undergrad';

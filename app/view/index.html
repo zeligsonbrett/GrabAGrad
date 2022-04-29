@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- usually this can just be the headline -->
-        <title>GrabAGrad</title>
-
-    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="User Selection" content="Page for GrabAGrad where users choose if they are graduate or undergraduate">
         <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -13,16 +9,14 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-      
     </head>
-
 
     <body>
         <a href="/"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
         <div class="flex-container">
             <p class="welcome-screen">I am a...</p>
                 <div style="text-align: center; transition: ease 2s;">
-                    <a style="transition: ease .6s;" href="/see_grads?user=undergrad">Undergraduate</a>
+                    <a style="transition: ease .6s;" href="/search_page?user=undergrad">Undergraduate</a>
                     <a style="transition: ease .6s;" href="/form?user=graduate">Graduate</a>    
             </div>
 

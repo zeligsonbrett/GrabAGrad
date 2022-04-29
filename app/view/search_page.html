@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- usually this can just be the headline -->
-        <title>GrabAGrad</title>
-
-    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="description" content="Displays all of the graduate members of GrabAGrad">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,7 +127,7 @@
             }
 
             function get_header_tabs() {
-                let url = '/header_tabs?';
+                let url = '/load_header_tabs?';
                 {% if 'undergrad' == user %}
                     url += '&user=undergrad';
                 {% else %}
@@ -162,7 +158,7 @@
                 console.log('Trying to delete');
                 console.log("Popup displayed for deleting grad:");
                 let text = 'Are you sure you want to delete the graduate with netid: ' + netid;
-                let url = '/delete_grad?id=' + netid;
+                let url = '/admin_delete_grad?id=' + netid;
                 if (confirm(text) == true) {
                     request = $.ajax(
                     {

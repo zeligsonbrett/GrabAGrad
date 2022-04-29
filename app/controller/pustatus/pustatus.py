@@ -1,3 +1,7 @@
+"""
+Henry Knoll, Theo Knoll, Brett Zeligson
+GrabAGrad
+"""
 from controller.pustatus.req_lib import ReqLib
 import model.database_connection as db
 import sqlalchemy as sqla
@@ -33,9 +37,17 @@ def _request_users_endpoint(netid):
 
 
 def get_department(netid):
+    """
+    Sends request to Princeton's ActiveDirectory API to determine the
+    department of the netid provided for a graduate student
+    :param netid: The netid of an authenticated user, for use in the
+                  API call.
+    :return: The department associated with the netid
+    """
     result = _request_users_endpoint(netid)
     try:
         if result['pustatus'] == 'graduate':
+            # Confirm that the user is in fact a graduate
             return result['department']
         else:
             # User is an undergrad so we don't want to return their department

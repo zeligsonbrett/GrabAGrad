@@ -1,8 +1,13 @@
+"""
+Henry Knoll, Theo Knoll, Brett Zeligson
+GrabAGrad
+"""
+
 import model.endpoints as ep
 
 def filter_search(name, dept, industry, years_worked, un_uni, ma_uni, favorites_on, mynetid):
     """
-    Search function for if the filter by options are used.
+    Search function for if the filter by options are used
     """
     try:
         grad_list = ep.search_grads(name=name, dept=dept,

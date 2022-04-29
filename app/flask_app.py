@@ -1,47 +1,58 @@
 #!/usr/bin/env python
+
+"""
+Henry Knoll, Theo Knoll, Brett Zeligson
+GrabAGrad
+"""
+
 from flask import Flask, request, make_response, render_template
 import model.endpoints as ep
 from model.graduate import Graduate
 import controller.search as search
 import os
-import controller.pustatus.pustatus as pu
 import model.departments as dept
 import model.universities as uni
-import model.industries as ind
 import random
 
 app = Flask(__name__, template_folder='./view', static_folder='./view')
-import auth
-is_graduate = False
-chosen_graduate_or_undergraduate = False
 
+import controller.pustatus.pustatus as pu
+import auth
+#-------------------------------------------------------------------------
+
+# Determines whether or not CAS authentification will be turned on
 try:
     app.secret_key = os.environ['APP_SECRET_KEY']
     # Note, CAS approved for our Heroku site, not for all sites,
     # meaning CAS doesn't work for our local tests.
     cas_enabled = True
 except:
-    # Note, this except clause is designed to function locally.
+    # Note, this except clause is designed to function locally
     from controller.keys import APP_SECRET_KEY
-
     app.secret_key = APP_SECRET_KEY
     cas_enabled = False
 
+#-------------------------------------------------------------------------
 
-@app.route('/')
-def index():
-    html = render_template('index.html')
-    return make_response(html)
+def get_netid(cas_enabled):
+    """
+    Gets the netid of the current user if CAS authentification is
+    on, if not then it must be a local instance and we can return
+    the designated testing netid 'testingadmin'
+    :param cas_enabled: True if CAS authentification is on, False
+                        otherwise
+    :return: The netid of the user or 'testingadmin'
+    """
+    netid = 'testingadmin'
+    if cas_enabled:
+        netid = auth.authenticate()
+        netid = netid.strip()
+    return netid
 
-@app.route('/about')
-def about():
-    user = request.args.get('user')
-    html = render_template('about.html', user=user)
-    return make_response(html)
-
-def get_grads_by_filter(name, dept, industry, years_worked, un_uni, ma_uni, favorites_on, mynetid):
+def __get_grads_by_filter(name, dept, industry, years_worked, un_uni, ma_uni, favorites_on, mynetid):
     """
     Takes in the filter parameters and returns a list of graduates.
+    :return: Successful search or not?, resulting graduates list
     """
     graduates = None
     success_msg = "Success"
@@ -54,110 +65,7 @@ def get_grads_by_filter(name, dept, industry, years_worked, un_uni, ma_uni, favo
         graduates = ep.query_all_grads()
     return success_msg, graduates
 
-
-@app.route('/filter_grads')
-def filter_grads():
-    if cas_enabled:
-        # Ensures netid is just the name, with no extra spaces.
-        netid = auth.authenticate()
-        netid = netid.strip()
-    else:
-        netid = "testingadmin"
-
-    is_admin_param = request.args.get('is_admin')
-    is_admin = False
-    if is_admin_param == "true":
-        if pu.is_administrator(netid):
-            is_admin = True
-
-    name = request.args.get('name')
-    dept = request.args.get('dept')
-    industry = request.args.get('industry')
-    years_worked = request.args.get('years_worked')
-    un_uni = request.args.get('un_uni')
-    ma_uni = request.args.get('ma_uni')
-    type_sort = request.args.get('sortby')
-    favorites_only = request.args.get('favorites_on')
-    favorites_on = False
-    if favorites_only == 'true':
-        favorites_on = True
-    print("Updating")
-    success_msg, graduates = get_grads_by_filter(name, dept, industry,
-                                                 years_worked, un_uni, ma_uni, favorites_on, netid)
-    if type_sort == "First Name: Z-A":
-        graduates = sorted(graduates, key=lambda x: (
-            x._details is None, x._details[1]), reverse=True)
-    else:
-        graduates = sorted(graduates, key=lambda x: (
-            x._details is None, x._details[1]), reverse=False)
-
-    html = ""
-    grad_card_admin_me = """
-                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button class="me-button">Me</button>
-                        <button onclick="delete_grad('%s')" class="delete-button">Delete Graduate</button>
-                        <h2>%s</h2>
-                        <p><b></b>%s</p>
-                        <br>
-                        <br>
-                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
-                        </div>"""
-    grad_card_admin = """
-                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button onclick="delete_grad('%s')" class="delete-button">Delete Graduate</button>
-                        <h2>%s</h2>
-                        <p><b></b>%s</p>
-                        <br>
-                        <br>
-                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
-                        </div>"""
-    grad_card_me = """
-                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button class="me-button">Me</button>
-                        <h2>%s</h2>
-                        <p><b></b>%s</p>
-                        <br>
-                        <br>
-                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
-                        </div>"""
-    grad_card = """
-                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <h2>%s</h2>
-                        <p><b></b>%s</p>
-                        <br>
-                        <br>
-                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
-                        </div>"""
-
-    if success_msg != "Success":
-        html = '<p style="margin: 23px">%s</p>' % success_msg
-    elif len(graduates) == 0:
-        html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
-    else:
-        if is_admin:
-            for grad in graduates:
-                grad_id = grad.get_grad_id()
-                grad_card_info = (
-                    grad.get_photo_link(), grad_id,
-                    grad.get_first_name(),
-                    grad.get_acad_dept(), grad_id)
-                if grad.get_grad_id() == netid:
-                    html += grad_card_admin_me % grad_card_info
-                else:
-                    html += grad_card_admin % grad_card_info
-        else:
-            for grad in graduates:
-                grad_card_info = (
-                    grad.get_photo_link(), grad.get_first_name(),
-                    grad.get_acad_dept(), grad.get_grad_id())
-                if grad.get_grad_id() == netid:
-                    html += grad_card_me % grad_card_info
-                else:
-                    html += grad_card % grad_card_info
-    response = make_response(html)
-    return response
-
-def _filter_suggestion_info():
+def __filter_suggestion_info():
     """
     Creates lists that are needed for the dropdown suggestions feature on the search page
     :return: [graduate_names, departments, ]
@@ -174,20 +82,6 @@ def _filter_suggestion_info():
         un_unis = list(dict.fromkeys(un_unis))
         ma_unis = list(dict.fromkeys(ma_unis))
 
-        # Decided we didn't need information about industries in dropdown
-        # for grad in all_grads:
-        #     industries = grad.get_industries()
-        #     all_industries.extend(industries)
-        #
-        # all_industries = [word.capitalize() for word in all_industries]
-        # all_industries.sort()
-
-        # gets all universities
-        # unis = uni.get_universities("")
-
-        # Something to get industries
-        # Something to get years worked
-        # Something to get undergrad university
     except Exception as ex:
         all_grad_names = []
         all_industries = []
@@ -200,19 +94,69 @@ def _filter_suggestion_info():
 
     return all_grad_names, dept_list, all_industries, un_unis, ma_unis
 
-@app.route('/admin_see_grads')
-def admin_see_grads():
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
 
+#-------------------------------------------------------------------------
+#   Flask Endpoints
+#-------------------------------------------------------------------------
+
+@app.route('/')
+def landing_page():
+    """
+    Routes the landing page of the app: index.html
+    """
+    html = render_template('index.html')
+    return make_response(html)
+
+@app.route('/about')
+def about_page():
+    """
+    Route to the about/help page of the app: about.html
+    """
+    user = request.args.get('user')
+    html = render_template('about.html', user=user)
+    return make_response(html)
+
+@app.route('/form')
+def form():
+    """
+    Loads either the "Create a Profile" or "Update My Profile" page when a graduate wants to input/change their info
+    """
+    netid = get_netid(cas_enabled)
+    current_grad = ep.get_grad_information(netid)
+
+    #uploaded_image = request.args.get('image_link')
+    page = 'update_page.html'
+    # Get suggestions for text fields
+    # industries = ind.get_industries()
+    unis = uni.get_universities("")
+    dept_list = dept.dept_list()
+
+    if not current_grad:
+        # Go to "Create a Profile" page
+        page = 'form_page.html'
+        current_grad = Graduate()
+    try:
+        html = render_template(page,
+                               cloud_name=os.environ['CLOUD_NAME'],
+                               grad=current_grad, dept=dept_list,
+                               unis=unis)
+    except:
+        from controller.keys import CLOUD_NAME
+        html = render_template(page,
+                               cloud_name=CLOUD_NAME, grad=current_grad,
+                               dept=dept_list, unis=unis)
+    return make_response(html)
+
+@app.route('/admin_page')
+def admin_page():
+    """
+    Loads the admin page, which is essentially the normal search page but with the option to delete graduates
+    """
+    netid = get_netid(cas_enabled)
     if pu.is_administrator(netid):
+        # Must verify that the user is in fact an administrator
         user = request.args.get('user')
-        info = _filter_suggestion_info()
+        info = __filter_suggestion_info()
         all_grad_names = info[0]
         depts = info[1]
         # industries = info[2]
@@ -224,19 +168,17 @@ def admin_see_grads():
     response = make_response(html)
     return response
 
-@app.route('/see_grads')
-def see_grads():
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
+@app.route('/search_page')
+def search_page():
+    """
+    Loads the search page for users to search through graduates
+    """
+    netid = get_netid(cas_enabled)
 
     user = request.args.get('user')
 
-    info = _filter_suggestion_info()
+    # Load in search suggestions
+    info = __filter_suggestion_info()
     all_grad_names = info[0]
     depts = info[1]
     # industries = info[2]
@@ -247,196 +189,73 @@ def see_grads():
     response = make_response(html)
     return response
 
-@app.route('/favorites')
-def see_favorites():
+@app.route('/favorites_page')
+def favorites_page():
+    """
+    Loads the favorites page, where undergraduates can see the graduates who they have favorited
+    """
     html = render_template('favorites.html')
+    response = make_response(html)
+    return response
+
+
+@app.route('/explore_page')
+def explore_page():
+    """
+    Loads the explore page
+    """
+    # Everytime the explore page opens, a random graduate should be shown
+    starting_grad_int = random.randint(0, ep.num_graduates())
+    html = render_template('explore_page.html', grad=str(starting_grad_int))
     response = make_response(html)
     return response
 
 @app.route('/searchfavorite', methods=['POST'])
 def search_favorite():
-    # FAVORITING IN THE SEARCH PAGE OR FAVORITES PAGE
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
-
+    """
+    Favorites a graduate when the user clicks "Favorite" on their popup in the search page or favorites page
+    """
+    netid = get_netid(cas_enabled)
     grad_id = request.args.get('grad')
-    print(grad_id, "ie being added as a favorite")
     ep.add_favorite(netid, grad_id)
-    return popup_results(grad_id=grad_id, favorite=True, user='undergrad')
+    return popup_box(grad_id=grad_id, favorite=True, user='undergrad')
 
 @app.route('/searchunfavorite', methods=['POST'])
 def search_unfavorite():
-    # UNFAVORITING IN THE SEARCH PAGE OR FAVORITES PAGE
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
-
+    """
+    Unfavorites a graduate when the user clicks "Unfavorite" on their popup in the search page or favorites page
+    """
+    netid = get_netid(cas_enabled)
     grad_id = request.args.get('grad')
-    print(grad_id, "is being removed as a favorite")
     ep.remove_favorite(netid, grad_id)
-    return popup_results(grad_id=grad_id, favorite=False, user='undergrad')
+    return popup_box(grad_id=grad_id, favorite=False, user='undergrad')
 
-@app.route('/remove_favorite', methods=['POST'])
-def remove_favorite():
-    # REMOVING A FAVORITE USING THE DELETE BUTTON
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
-
+@app.route('/removefavorite', methods=['POST'])
+def favorite_remove():
+    """
+    Unfavorites a graduate when the user clicks "Remove" on top of a graduate's card on the Favorites page,
+    no response returned
+    """
+    netid = get_netid(cas_enabled)
     favorite_id = request.args.get('id')
     ep.remove_favorite(netid, favorite_id)
     return '', 204
 
-@app.route('/load_favorites')
-def load_favorites():
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
-
-    favorites = ep.get_favorites(netid)
-
-    html = ""
-    grad_card = """
-                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
-                        <button id="delete-button" name="%s" class="delete-button">Remove</button>
-                        <h2>%s</h2>
-                        <p><b></b>%s</p>
-                        <br>
-                        <br>
-                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
-                        </div>"""
-
-    if len(favorites) == 0:
-        html = '<p style="text-align: center">No Favorites Added</p>'
-    else:
-        for grad in favorites:
-            grad_id = grad.get_grad_id()
-            grad_card_info = (
-                    grad.get_photo_link(), grad.get_grad_id(), grad.get_first_name(),
-                    grad.get_acad_dept(), grad.get_grad_id())
-            html += grad_card % grad_card_info
-    response = make_response(html)
-    return response
-
-@app.route('/explorefavorite', methods=['POST'])
-def favorite_a_grad():
-    # FAVORITING A GRAD FROM THE EXPLORE PAGE
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-        is_graduate = pu.is_graduate(netid)
-    else:
-        netid = "testingadmin"
-
-    num = int(request.args.get('grad'))
-    favorite = request.args.get('favorite')
-    max_num = ep.num_graduates()
-    grad = ep.get_grad_by_row(num % max_num)
-    if favorite == "Favorite":
-        ep.add_favorite(netid, grad.get_grad_id())
-    else:
-        ep.remove_favorite(netid, grad.get_grad_id())
-    return explore_page_box(grad);
-
-@app.route('/header_tabs')
-def header_tabs_results():
-    current_page = request.args.get('page')
-    user = request.args.get('user')
-
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-    else:
-        netid = "testingadmin"
-
-    has_profile = False
-    if ep.get_grad_information(netid):
-        print("Is in the database!")
-        has_profile = True
-    else:
-        print("Is not in database!")
-
-    is_admin = pu.is_administrator(netid)
-
-    user_param = 'user=' + user
-    html = '<a style="text-decoration: none" href="/">Home</a>'
-    if current_page != 'search_page':
-        html += '<a style="text-decoration: none" href="/see_grads?{}">Search</a>'.format(user_param)
-    else:
-        html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px;" href="/see_grads?{}">Search</a>'.format(user_param)
-    if user == 'graduate':
-        if has_profile:
-            html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
-        else:
-            html += '<a style="text-decoration: none" href="/form">Create A Profile</a>'
-    else:
-        if current_page != 'explore':
-            html += '<a style="text-decoration: none" href="/explore">Explore</a>'
-        else:
-            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/explore">Explore</a>'
-        if current_page != 'favorites':
-            html += '<a style="text-decoration: none" href="/favorites">Favorites</a>'
-        else:
-            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/favorites">Favorites</a>'
-    if is_admin:
-        if current_page != 'admin':
-            html += '<a style="text-decoration: none" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
-        else:
-            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
-    html += '<a href="/about?{}">'.format(user_param)
-    response = make_response(html)
-    return response
-
-@app.route('/explore')
-def explore_page():
-    html = render_template('explore_page.html', grad=str(random.randint(0, ep.num_graduates())))
-    response = make_response(html)
-    return response
-
-@app.route('/explorebox')
-def explore_page_box(grad=None):
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-    else:
-        netid = "testingadmin"
-
-    if grad == None:
-        num = int(request.args.get('grad'))
-        max_num = ep.num_graduates()
-        grad = ep.get_grad_by_row(num % max_num)
-    html = render_template('explore_box.html', grad=grad, favorite=ep.is_favorite(netid, grad.get_grad_id()))
-    response = make_response(html)
-    return response
+@app.route('/admin_delete_grad', methods=['POST'])
+def admin_delete_grad():
+    """
+    Deletes a grad when a user clicks "Delete" on the admin page
+    """
+    grad_id = request.args.get('id')
+    ep.delete_grad(grad_id)
+    return '', 204
 
 @app.route('/popup')
-def popup_results(grad_id=None, favorite=None, user=None):
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-    else:
-        netid = "testingadmin"
+def popup_box(grad_id=None, favorite=None, user=None):
+    """
+    Loads in the popup for a graduates card with their information and the favorite/unfavorite button
+    """
+    netid = get_netid(cas_enabled)
 
     if grad_id == None:
         grad_id = request.args.get('id')
@@ -454,52 +273,247 @@ def popup_results(grad_id=None, favorite=None, user=None):
     response = make_response(html)
     return response
 
+@app.route('/explorebox')
+def explore_page_box(grad=None):
+    """
+    Loads the explore page box including the information about a graduate and the buttons below it
+    """
+    netid = get_netid(cas_enabled)
 
-@app.route('/delete_grad', methods=['POST'])
-def delete_grad():
-    grad_id = request.args.get('id')
-    ep.delete_grad(grad_id)
-    return '', 204
+    if grad == None:
+        num = int(request.args.get('grad'))
+        max_num = ep.num_graduates()
+        grad = ep.get_grad_by_row(num % max_num)
+    html = render_template('explore_box.html', grad=grad, favorite=ep.is_favorite(netid, grad.get_grad_id()))
+    response = make_response(html)
+    return response
 
-@app.route('/form')
-def form():
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
+@app.route('/exploretogglefavorite', methods=['POST'])
+def explore_favorite():
+    """
+    Favorites a graduate when the user clicks "Favorite" on the Explore page, unfavorites a graduate 
+    when the user clicks "Unfavorite" on the Explore page
+    """
+    netid = get_netid(cas_enabled)
+
+    # Explore page relies on a numbering system for each graduate, get the correct graduate
+    # based on the number id
+    num = int(request.args.get('grad'))
+    max_num = ep.num_graduates()
+    grad = ep.get_grad_by_row(num % max_num)
+
+    favorite = request.args.get('favorite')
+    if favorite == "Favorite":
+        # Favoriting the grad
+        ep.add_favorite(netid, grad.get_grad_id())
     else:
-        netid = "testingadmin"
-    current_grad = ep.get_grad_information(netid)
-    #uploaded_image = request.args.get('image_link')
-    page = 'update_page.html'
-    # industries = ind.get_industries()
-    unis = uni.get_universities("")
-    dept_list = dept.dept_list()
-    if not current_grad:
-        page = 'form_page.html'
-        current_grad = Graduate()
-    try:
-        html = render_template(page,
-                               cloud_name=os.environ['CLOUD_NAME'],
-                               grad=current_grad, dept=dept_list,
-                               unis=unis)
-    except:
-        from controller.keys import CLOUD_NAME
-        html = render_template(page,
-                               cloud_name=CLOUD_NAME, grad=current_grad,
-                               dept=dept_list, unis=unis)
-    return make_response(html)
+        # Unfavoriting the grad
+        ep.remove_favorite(netid, grad.get_grad_id())
+    return explore_page_box(grad);
 
+@app.route('/loadfavorites')
+def favorites_load():
+    """
+    Populates the favorites page with the graduates a user has favorited
+    """
+    netid = get_netid(cas_enabled)
+    favorites = ep.get_favorites(netid)
+
+    # HTML template for each grad card
+    html = ""
+    grad_card = """
+                <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                <button id="delete-button" name="%s" class="delete-button">Remove</button>
+                <h2>%s</h2>
+                <p><b></b>%s</p>
+                <br>
+                <br>
+                <button id="learn-more" name="%s" class="learn-more">Learn More</button>
+                </div>"""
+
+    if len(favorites) == 0:
+        # No favorites added, show a message
+        html = '<p style="text-align: center">No Favorites Added</p>'
+    else:
+        for grad in favorites:
+            # Fill in paramaters on graduate template accordingly
+            grad_id = grad.get_grad_id()
+            grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), grad.get_first_name(), grad.get_acad_dept(), grad.get_grad_id())
+            html += grad_card % grad_card_info
+    response = make_response(html)
+    return response
+
+@app.route('/load_header_tabs')
+def load_header_tabs():
+    """
+    Loads in the proper page tabs for each page on the site since certain pages only have access to certain other pages
+    """
+    netid = get_netid(cas_enabled)
+    current_page = request.args.get('page')
+    user = request.args.get('user')
+    user_param = 'user=' + user
+
+    has_profile = False
+    if ep.get_grad_information(netid):
+        has_profile = True
+    is_admin = pu.is_administrator(netid)
+    
+    html = '<a style="text-decoration: none" href="/">Home</a>'
+    if current_page != 'search_page':
+        html += '<a style="text-decoration: none" href="/search_page?{}">Search</a>'.format(user_param)
+    else:
+        html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px;" href="/search_page?{}">Search</a>'.format(user_param)
+    if user == 'graduate':
+        if has_profile:
+            html += '<a style="text-decoration: none" href="/form">Update My Profile</a>'
+        else:
+            html += '<a style="text-decoration: none" href="/form">Create A Profile</a>'
+    else:
+        if current_page != 'explore':
+            html += '<a style="text-decoration: none" href="/explore_page">Explore</a>'
+        else:
+            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/explore">Explore</a>'
+        if current_page != 'favorites':
+            html += '<a style="text-decoration: none" href="/favorites_page">Favorites</a>'
+        else:
+            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/favorites_page">Favorites</a>'
+    if is_admin:
+        if current_page != 'admin':
+            html += '<a style="text-decoration: none" href="/admin_page?{}">Admin Page</a>'.format(user_param)
+        else:
+            html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/admin_page?{}">Admin Page</a>'.format(user_param)
+    html += '<a href="/about?{}">'.format(user_param)
+    response = make_response(html)
+    return response
+
+@app.route('/filter_grads')
+def filter_grads():
+    """
+    Populates the search page grid, admin page grid, and favorites
+    grid with the graduates who match the search parameters
+    """
+    netid = get_netid(cas_enabled)
+
+    # Parameters from the request
+    name = request.args.get('name')
+    dept = request.args.get('dept')
+    industry = request.args.get('industry')
+    years_worked = request.args.get('years_worked')
+    un_uni = request.args.get('un_uni')
+    ma_uni = request.args.get('ma_uni')
+    type_sort = request.args.get('sortby')
+    is_admin_param = request.args.get('is_admin')
+    favorites_only = request.args.get('favorites_on')
+
+    is_admin = False
+    favorites_on = False
+    if is_admin_param == "true":
+        # Need to verify that the user is an administrator
+        if pu.is_administrator(netid):
+            is_admin = True
+    else:
+        # Determines if favorites page should load or not
+        if favorites_only == 'true':
+            favorites_on = True
+
+    # Determines whether search is a success, and loads in respective 
+    # graduates
+    success_msg, graduates = __get_grads_by_filter(name, dept, industry,
+                                                   years_worked, un_uni, 
+                                                   ma_uni, favorites_on, 
+                                                   netid)
+
+    # Sorts the loaded in graduates by the proper sort-by
+    if type_sort == "First Name: Z-A":
+        # Alphabetical by last name
+        graduates = sorted(graduates, key=lambda x: (
+            x._details is None, x._details[1]), reverse=True)
+    else:
+        # Alphabetical by first name
+        graduates = sorted(graduates, key=lambda x: (
+            x._details is None, x._details[1]), reverse=False)
+
+    # HTML templates for each grad card (different template for each kind, described below)
+    html = ""
+
+    # For the admin page, when the graduate card shares same netid as user
+    grad_card_admin_me = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <button class="me-button">Me</button>
+                        <button onclick="delete_grad('%s')" class="delete-button">Delete Graduate</button>
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
+                        </div>"""
+    # For the admin page, when graduate card has different netid as user
+    grad_card_admin = """
+                        <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                        <button onclick="delete_grad('%s')" class="delete-button">Delete Graduate</button>
+                        <h2>%s</h2>
+                        <p><b></b>%s</p>
+                        <br>
+                        <br>
+                        <button id="learn-more" name="%s" class="learn-more">Learn More</button>
+                        </div>"""
+    # For the normal search page or favorites page, when the graduate card has same netid as user
+    grad_card_me = """
+                    <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                    <button class="me-button">Me</button>
+                    <h2>%s</h2>
+                    <p><b></b>%s</p>
+                    <br>
+                    <br>
+                    <button id="learn-more" name="%s" class="learn-more">Learn More</button>
+                    </div>"""
+    # For the normal search page or favorites page, when the graduate card has same netid as user
+    grad_card = """
+                <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
+                <h2>%s</h2>
+                <p><b></b>%s</p>
+                <br>
+                <br>
+                <button id="learn-more" name="%s" class="learn-more">Learn More</button>
+                </div>"""
+
+    if success_msg != "Success":
+        # Error occurred during search
+        html = '<p style="margin: 23px">%s</p>' % success_msg
+    elif len(graduates) == 0:
+        # No graduates match search criteria
+        html = '<p style="text-align: center">No Grad Students Match The Search Criteria</p>'
+    else:
+        # Search was successful, load in the graduates accordingly
+        if is_admin:
+            # Admin page
+            for grad in graduates:
+                # Fill in paramaters on graduate template accordingly
+                grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), grad.get_first_name(), grad.get_acad_dept(), grad.get_grad_id())
+                if grad.get_grad_id() == netid:
+                    html += grad_card_admin_me % grad_card_info
+                else:
+                    html += grad_card_admin % grad_card_info
+        else:
+            # Search page or favorites page
+            for grad in graduates:
+                # Fill in paramaters on graduate template accordingly
+                grad_card_info = (grad.get_photo_link(), grad.get_first_name(), grad.get_acad_dept(), grad.get_grad_id())
+                if grad.get_grad_id() == netid:
+                    html += grad_card_me % grad_card_info
+                else:
+                    html += grad_card % grad_card_info
+    response = make_response(html)
+    return response
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    if cas_enabled:
-        netid = auth.authenticate()
-        # Ensures netid is just the name, with no extra spaces.
-        netid = netid.strip()
-    else:
-        netid = "testingadmin"
+    """
+    Takes graduate user input and inserts it into the database accordingly
+    """
+    netid = get_netid(cas_enabled)
 
+    # Get each input field's value
     first_name = request.form['first-name']
     last_name = request.form['last-name']
     dept = request.form['academic-dept']
@@ -514,6 +528,7 @@ def submit():
     research = request.form['research-focus']
     industry_experience = request.form['industry-experience']
 
+    # Strip any leading or trailing whitespace from input
     if first_name: first_name = first_name.strip()
     if last_name: last_name = last_name.strip()
     if dept: dept = dept.strip()
@@ -532,10 +547,10 @@ def submit():
     except:
         years_worked = None
 
-
     current_grad = ep.get_grad_information(netid)
     #uploaded_image = request.args.get('image_link')
     if not current_grad:
+        # Add a new grad to the database
         try:
             ep.add_a_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept, industry_experience=industry_experience,
                           un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
@@ -548,6 +563,7 @@ def submit():
             html = render_template('error.html', error=str(ex))
             return make_response(html)
     else:
+        # Update a grads information in the database
         try:
             ep.update_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept,
                           un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,

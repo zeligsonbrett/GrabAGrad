@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- usually this can just be the headline -->
-        <title>GrabAGrad</title>
-
-    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="description" content="Displays all of the graduate members of GrabAGrad">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,7 +83,7 @@
             }
 
             function remove_favorite(grad_id) {
-                let url = "/remove_favorite?id=" + grad_id;
+                let url = "/removefavorite?id=" + grad_id;
                 request = $.ajax(
                    {
                       type: 'POST',
@@ -115,7 +111,7 @@
             }
 
             function get_header_tabs() {
-                let url = '/header_tabs?user=undergrad&page=favorites';
+                let url = '/load_header_tabs?user=undergrad&page=favorites';
                 request = $.ajax(
                    {
                       type: 'GET',
@@ -131,7 +127,7 @@
             }
 
             function loadFavorites() {
-                let url = "/load_favorites";
+                let url = "/loadfavorites";
 
                 if (request !== null)
                    request.abort();
