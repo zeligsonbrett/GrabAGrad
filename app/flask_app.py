@@ -67,7 +67,8 @@ def filter_grads():
     is_admin_param = request.args.get('is_admin')
     is_admin = False
     if is_admin_param == "true":
-        is_admin = True
+        if pu.is_administrator(netid):
+            is_admin = True
 
     name = request.args.get('name')
     dept = request.args.get('dept')
@@ -197,15 +198,25 @@ def _filter_suggestion_info():
 
 @app.route('/admin_see_grads')
 def admin_see_grads():
-    user = request.args.get('user')
-    info = _filter_suggestion_info()
-    all_grad_names = info[0]
-    depts = info[1]
-    # industries = info[2]
-    un_unis = info[3]
-    ma_unis = info[4]
+    if cas_enabled:
+        netid = auth.authenticate()
+        # Ensures netid is just the name, with no extra spaces.
+        netid = netid.strip()
+        is_graduate = pu.is_graduate(netid)
+    else:
+        netid = "testingadmin"
 
-    html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, un_unis=un_unis, ma_unis=ma_unis)
+    if pu.is_administrator(netid):
+        user = request.args.get('user')
+        info = _filter_suggestion_info()
+        all_grad_names = info[0]
+        depts = info[1]
+        # industries = info[2]
+        un_unis = info[3]
+        ma_unis = info[4]
+        html = render_template('search_page.html', user=user, is_admin=True, grad_names=all_grad_names, depts=depts, un_unis=un_unis, ma_unis=ma_unis)
+    else:
+        html = "<p>ERROR: Must be an administrator to access this page</p>"
     response = make_response(html)
     return response
 
