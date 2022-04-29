@@ -7,6 +7,8 @@
     <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="description" content="A form to upload graduates.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
         <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
         <script src="{{url_for('static', filename='script.js')}}"></script>
@@ -17,8 +19,9 @@
    
     </head>
 
-<body style="font-family: 'Lato', sans-serif;">
-    
+<body onload="reportWindowSize()" style="font-family: 'Lato', sans-serif;">
+    <a href="/"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
+            
     <div class="header">
         <div style="display: inline" id='header_tabs'></div>
     </div>
@@ -26,31 +29,69 @@
 
     <main class="thanks">
         <p id="thanks-title">Welcome to <span style="color: rgb(248, 159, 57)">GrabAGrad</span>, the quintessential platform for connecting undergraduate and graduate students here at Princeton!</p>
-        <br>
+     
         <h2>How It Works</h2>
         <p>If you're a graduate student...</p>
-        <ul>
-            <li><b>Step 1</b><span>Make a profile</span></li>
-            <br>
-            <li><b>Step 2</b><span>Wait to hear from interested undergraduates.</span></li>
-        </ul>
-        <p style="color: white; line-height: 15px;">.</p>
-        <p style="display:block;">If you're an undergraduate student...</p>
-        <ul>
-            <li><b>Step 1</b>Search for graduate students that interest you</li>
-            <br>
-            <li><b>Step 2</b>Contact graduate students to set up a meeting!</li>
-        </ul>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <table class="thanks-table">
+            <tr>
+                <td class="has-text">
+                    <p><b>Step 1:</b> Make a profile</p>
+                    <p><b>Step 2:</b> Wait to hear from interested undergraduates.</p>
+                </td>
+                <td class="has-img">
+                    <img src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649124766/GrabAGradCreators/virulk9vgx2fodeet4ak.jpg'>
+                </td>
+            </tr>
+        </table>
 
-        <h2 style="display: block; margin-top: 80px;">Meet the Creators</h2>
+        <p>Undergrads</p>
+        
+        <table class="thanks-table">
+            <tr>
+                <td class="has-text">
+                    <h2>Search</h2>
+                    <p><b>Step 1:</b> Search for graduate students that interest you</p>
+                    <p><b>Step 2:</b> Contact graduate students to set up a meeting!</p>
+                </td>
+                <td class="has-img">
+                    <img src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649124766/GrabAGradCreators/virulk9vgx2fodeet4ak.jpg'>
+                </td>
+            </tr>
+            <tr style="visibility: hidden">
+                <td style="height: 40px;">.</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="has-img">
+                    <img src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649124766/GrabAGradCreators/virulk9vgx2fodeet4ak.jpg'>
+                </td>
+                <td class="has-text">
+                    <h2>Explore</h2>
+                    <p><b>Step 1:</b> Search for graduate students that interest you</p>
+                    <p><b>Step 2:</b> Contact graduate students to set up a meeting!</p>
+                </td>
+            </tr>
+            <tr style="visibility: hidden">
+                <td style="height: 40px;">.</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="has-text">
+                    <h2>Favorite</h2>
+                    <p><b>Step 1:</b> Search for graduate students that interest you</p>
+                    <p><b>Step 2:</b> Contact graduate students to set up a meeting!</p>
+                </td>
+                <td class="has-img">
+                    <img src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649124766/GrabAGradCreators/virulk9vgx2fodeet4ak.jpg'>
+                </td>
+            </tr>
+        </table>
+            <li><b>Step 1</b><span>Search for graduate students that interest you</span></li>
+            <br>
+            <li><b>Step 2</b><span>Contact graduate students to set up a meeting!</span></li>
+        </ul>
+<br>
+        <h2 style="display: block;">Meet the Creators</h2>
         <br>
         <br>
         

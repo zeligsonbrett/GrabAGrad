@@ -170,6 +170,10 @@ def _filter_suggestion_info():
         un_unis = [grad.get_undergrad_university() for grad in all_grads]
         ma_unis = [grad.get_masters_university() for grad in all_grads]
 
+        # Ensures all elements are unique
+        un_unis = list(dict.fromkeys(un_unis))
+        ma_unis = list(dict.fromkeys(ma_unis))
+
         # Decided we didn't need information about industries in dropdown
         # for grad in all_grads:
         #     industries = grad.get_industries()
@@ -398,7 +402,7 @@ def header_tabs_results():
             html += '<a style="text-decoration: none" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
         else:
             html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/admin_see_grads?{}">Admin Page</a>'.format(user_param)
-    html += '<a href="/about?{}"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>'.format(user_param)
+    html += '<a href="/about?{}">'.format(user_param)
     response = make_response(html)
     return response
 
