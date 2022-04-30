@@ -592,6 +592,7 @@ img{
 .search-filter{
     background-color: transparent;
     padding-bottom: 10px;
+    height: 33px;
     border-bottom-style: solid;
     border-bottom-width: 4px;
     border-color: black;
