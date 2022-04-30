@@ -37,9 +37,9 @@
 <div class="fav-btn">
     {% if 'undergrad' == user %}
         {% if favorite %}
-            <input id="favorite" style="background-color: #ee9440; box-shadow: 0 0 10px 5px white;" class="submit-button fav-btn" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
+            <input id="favorite" style="text-align: center;width: 150px; background-color: #ee9440; box-shadow: 0 0 10px 5px white;" class="submit-button fav-btn" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">
         {% else %}
-            <input id="favorite" style="background-color: #ee9440; box-shadow: 0 0 10px 5px white;" class="submit-button" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
+            <input id="favorite" style="text-align: center;width: 150px; background-color: #ee9440; box-shadow: 0 0 10px 5px white;" class="submit-button fav-btn" type="submit" value="Favorite" name="{{grad.get_grad_id()}}">
         {% endif %}
     {% endif %}
 </div>
