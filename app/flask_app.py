@@ -250,6 +250,21 @@ def admin_delete_grad():
     ep.delete_grad(grad_id)
     return '', 204
 
+@app.route('/self_delete_grad', methods=['POST'])
+def self_delete_grad():
+    """
+    Deletes a grad when a graduate user clicks "Delete Profile" on their Update My Profile page
+    """
+    try:
+        netid = get_netid(cas_enabled)
+        deleted_grad = ep.get_grad_information(netid)
+        ep.delete_grad(netid)
+        html = render_template('grad_deleted_page.html', grad=deleted_grad)
+    except Exception as ex:
+        html = render_template('error.html', error=str(ex))
+    response = make_response(html)
+    return response
+
 @app.route('/popup')
 def popup_box(grad_id=None, favorite=None, user=None):
     """
@@ -512,8 +527,10 @@ def submit():
     Takes graduate user input and inserts it into the database accordingly
     """
     netid = get_netid(cas_enabled)
+    print(request.form)
 
     # Get each input field's value
+
     first_name = request.form['first-name']
     last_name = request.form['last-name']
     dept = request.form['academic-dept']

@@ -33,62 +33,62 @@
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="first-name">First Name *</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) autofocus="autofocus" id="first-name" name="first-name" type="text" required></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" autofocus="autofocus" id="first-name" name="first-name" type="text" required></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="last-name">Last Name *</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="last-name" name="last-name" type="text" required></div>
+                        <div class="inputStyle"><input id="last-name" name="last-name" type="text" required></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="academic-dept">Academic Department</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="academic-dept" name="academic-dept" type="text"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="academic-dept" name="academic-dept" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="years-worked">Years of Work Experience</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="years-worked" name="years-worked" type="number" min=0 oninput="validity.valid||(value='');"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="years-worked" name="years-worked" type="number" min=0 oninput="validity.valid||(value='');"></div>
                         
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="undergrad-institution">Undergraduate Institution</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="undergrad-institution" name="undergrad-institution" type="text"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="undergrad-institution" name="undergrad-institution" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="undergrad-major">Undergraduate Major</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="undergrad-major" name="undergrad-major" type="text"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="undergrad-major" name="undergrad-major" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="masters-institution">Masters Institution</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="masters-institution" name="masters-institution" type="text"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="masters-institution" name="masters-institution" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="masters-degree">Masters Degree</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="masters-degree" name="masters-degree" type="text"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="masters-degree" name="masters-degree" type="text"></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="email">Preferred Contact Email *</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="email" name="email" type="email" required></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="email" name="email" type="email" required></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="phone-number">Preferred Phone Number</label></div>
-                        <div class="inputStyle"><input onkeyup=changeName(this) id="phone-number" name="phone-number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" oninvalid="this.setCustomValidity('Phone number must be of form ###-###-####')" onchange="this.setCustomValidity('')" type="tel"></div>
+                        <div class="inputStyle"><input onkeyup="changeName(this); activate_unload()" id="phone-number" name="phone-number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" oninvalid="this.setCustomValidity('Phone number must be of form ###-###-####')" onchange="this.setCustomValidity('')" type="tel"></div>
                     </div>
                 </div>
 
@@ -108,13 +108,13 @@
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="research-focus">Current Research Focus&nbsp</label><small>(120 chars)</small></div>
-                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="research-focus" name="research-focus" rows="0" cols="0" maxlength="120"></textarea></div>
+                        <div class="inputStyle"><textarea onkeyup="changeName(this); activate_unload()" id="research-focus" name="research-focus" rows="0" cols="0" maxlength="120"></textarea></div>
                     </div>
                 </div>
                 <div class="input-label">
                     <div style="text-align: right" class="newClass?">
                         <div class="labelStyle"><label for="industries">Industry Experience&nbsp</label><small>(120 chars)</small></div>
-                        <div class="inputStyle"><textarea onkeyup=changeName(this) id="industry-experience" name="industry-experience" rows="0" cols="0" maxlength="120"></textarea></div>
+                        <div class="inputStyle"><textarea onkeyup="changeName(this); activate_unload()" id="industry-experience" name="industry-experience" rows="0" cols="0" maxlength="120"></textarea></div>
                     </div>
                 </div>
                 <div style="text-align: right;" class="labelStyle"><label>* Indicates Required Field</label></div>
@@ -154,6 +154,8 @@
     <script type="text/javascript">
 
     function cloudinary_upload(){
+        var check_unload = false;
+
         var upload_widget = cloudinary.createUploadWidget({
             cloudName: '{{cloud_name}}',
             maxFiles: 1,
@@ -232,13 +234,27 @@
 
     }
 
+    function activate_unload() {
+        check_unload = true;
+    }
+
     function setup(){
+        $(window).on('beforeunload', function() {
+            if (check_unload) {
+                return "Any changes will be lost";
+            }
+        });
+        $(document).on("submit", "form", function() {
+            $(window).off('beforeunload');
+        });
         cloudinary_upload();
         setup_autocomplete();
         suggestions();
     }
 
     $('#document').ready(setup);
+
+
 </script>
 
 
