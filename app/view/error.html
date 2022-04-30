@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- usually this can just be the headline -->
+        <title>GrabAGrad</title>
+
+    <!-- HTML Meta Tags -->
         <title>GrabAGrad</title>
         <meta name="User Selection" content="GrabAGrad error page">
         <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -14,13 +18,13 @@
 
 
     <body onload="reportWindowSize()">
-        <a href="/about"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
+        <a href="/"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
         
         <p style="font-size:30px; line-height: 30px; margin-bottom:-30px; margin-left: 10px; margin-top: 20px; padding: 0px"><b>GrabAGrad</b></p>
         <div class="flex-container">
             <p style="font-size:5vw; margin-top: 20px; text-align: center; padding: 40px">I'm sorry, we have encountered an error.</p>
                 <div style="text-align: center">
-                    <a href="/search_page">Return to Search Page</a>
+                    <a href="/see_grads">Return to Search Page</a>
             </div>
         </div>
     </body>
