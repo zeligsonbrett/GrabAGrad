@@ -112,6 +112,7 @@ def about_page():
     """
     Route to the about/help page of the app: about.html
     """
+    netid = get_netid(cas_enabled)
     user = request.args.get('user')
     html = render_template('about.html', user=user)
     return make_response(html)
