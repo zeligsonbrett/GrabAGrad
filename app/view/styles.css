@@ -314,8 +314,8 @@ textarea:hover {
 
 .fav-btn{
     position: fixed; 
-    right: 70px; 
-    bottom: 60px; 
+    right: 30px; 
+    bottom: 30px; 
     width: 100%; 
     text-align: right;
 }
@@ -1138,6 +1138,11 @@ img{
     .form-title{
         font-size: 8vw;
         margin-bottom: -20px;
+    }
+
+    .fav-btn{
+        bottom: 70px;
+        right: 60px;
     }
 }
 
