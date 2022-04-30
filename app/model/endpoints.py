@@ -28,8 +28,7 @@ def __details_list(output):
     """
     return [[x['netid'], x['first_name'], x['last_name'], x['acad_dept'], x['industry_experience'],
          x['undergrad_university'], x['undergrad_major'], x['masters_university'], x['masters_field'],
-         x['research_focus'], x['expected_grad_date'],
-         x['years_worked'], x['photo_link'], x['website_link']]
+         x['research_focus'], x['years_worked'], x['photo_link']]
         for x in output]
 
 def __details_string():
@@ -38,15 +37,12 @@ def __details_string():
     that compose the details list of the Graduate object
     :return: String of all fields of Graduate details, including netid,
     name, acad_dept, bio, undergrad_university, masters_university,
-    research_focus, expected_grad_date, years_worked, photo_link,
-    website_link
+    research_focus, years_worked, photo_link
     """
     details_string = """graduates.netid, graduates.first_name, graduates.last_name,
     graduates.acad_dept, graduates.industry_experience, graduates.undergrad_university, 
     graduates.undergrad_major, graduates.masters_university, graduates.masters_field,
-    graduates.research_focus, graduates.expected_grad_date, 
-    graduates.years_worked, graduates.photo_link, graduates.website_link
-    """
+    graduates.research_focus, graduates.years_worked, graduates.photo_link"""
     return details_string
 
 
@@ -100,7 +96,7 @@ def add_favorite(user_id, fav_id):
     """
     Adds a favorite to the database when user_id favorites fav_id
     """
-    command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
+    command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND netid=:favoriteid;""")
     params = {'netid': user_id, 'favoriteid': fav_id}
     output = db.execute_command(command, params)
     command = sqla.text("""INSERT INTO public.undergrad_favorites VALUES (:netid, :favoriteid);""")
@@ -110,10 +106,10 @@ def get_favorites(netid):
     """
     Gets a list of the favorited graduates for a certain netid
     """
-    command = sqla.text("""SELECT favorite_netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
+    command = sqla.text("""SELECT netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
     params = {'netid': netid}
     output = db.execute_command(command, params)
-    ids = [x['favorite_netid'] for x in output]
+    ids = [x['netid'] for x in output]
     favorites = __create_graduates_list(ids)
     return favorites
 
@@ -122,10 +118,10 @@ def find_favorites_from_list(netid, listids):
     Finds the graduates in listids that the user netid has favorited
     """
     if netid:
-        command = sqla.text("""SELECT favorite_netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
+        command = sqla.text("""SELECT netid FROM public.undergrad_favorites WHERE user_netid=:netid;""")
         params = {'netid': netid}
         output = db.execute_command(command, params)
-        favorites = [x['favorite_netid'] for x in output]
+        favorites = [x['netid'] for x in output]
         return list(set.intersection(set(favorites), set(listids)))
     else:
         return listids
@@ -134,7 +130,7 @@ def is_favorite(netid, fav_id):
     """
     Returns whether or not fav_id is a favorite of netid
     """
-    command = sqla.text("""SELECT * FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
+    command = sqla.text("""SELECT * FROM public.undergrad_favorites WHERE user_netid=:netid AND netid=:favoriteid;""")
     params = {'netid': netid, 'favoriteid': fav_id}
     output = db.execute_command(command, params)
     exists = [x for x in output]
@@ -144,7 +140,7 @@ def remove_favorite(user_id, fav_id):
     """
     Removes a favorite fav_id from the user user_id
     """
-    command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND favorite_netid=:favoriteid;""")
+    command = sqla.text("""DELETE FROM public.undergrad_favorites WHERE user_netid=:netid AND netid=:favoriteid;""")
     params = {'netid': user_id, 'favoriteid': fav_id}
     output = db.execute_command(command, params)
 
@@ -248,9 +244,8 @@ def get_grad_information(netid):
 
 def update_grad(netid, first_name, last_name, dept=None, un_uni=None, 
                undergrad_major=None, ma_uni=None, masters_field=None,
-               research_focus=None, expected_grad_date=None,
-               years_worked=None, photo_link=None,
-               website_link=None, industry_experience=None, email=None, phone=None):
+               research_focus=None, years_worked=None, photo_link=None,
+               industry_experience=None, email=None, phone=None):
     """
     Initial update function for updating fields for certain graduates
     """
@@ -285,9 +280,8 @@ def update_grad(netid, first_name, last_name, dept=None, un_uni=None,
 
 def add_a_grad(netid, first_name, last_name, dept=None, un_uni=None, 
                undergrad_major=None, ma_uni=None, masters_field=None,
-               research_focus=None, expected_grad_date=None,
-               years_worked=None, photo_link=None,
-               website_link=None, industry_experience=None, email=None, phone=None):
+               research_focus=None, years_worked=None, photo_link=None,
+               industry_experience=None, email=None, phone=None):
     """
     Adds a grad to the database in each respective table based on data
     inputted
@@ -302,17 +296,15 @@ def add_a_grad(netid, first_name, last_name, dept=None, un_uni=None,
                       "masters_university": ma_uni,
                       "masters_field": masters_field,
                       "research_focus": research_focus,
-                      "expected_grad_date": expected_grad_date,
                       "years_worked": years_worked,
-                      "photo_link": photo_link,
-                      "website_link": website_link}
+                      "photo_link": photo_link}
     statement = sqla.text(
         """INSERT INTO graduates(netid, first_name, last_name, acad_dept, industry_experience, 
         undergrad_university, undergrad_major, masters_university, masters_field, research_focus, 
-        expected_grad_date, years_worked, photo_link, website_link) 
+        years_worked, photo_link) 
         VALUES(:netid, :first_name, :last_name, :acad_dept, :industry_experience,
         :undergrad_university, :undergrad_major, :masters_university, :masters_field, :research_focus,
-        :expected_grad_date, :years_worked, :photo_link, :website_link)""")
+        :years_worked, :photo_link)""")
     output = db.execute_command(statement, graduates_info)
 
 
@@ -332,5 +324,4 @@ def delete_grad(net_id):
     # statement = 'DELETE graduates, grad_contact, grad_experiences, grad_industries, grad_interests FROM graduates INNER JOIN grad_contact INNER JOIN grad_experiences INNER JOIN grad_industries INNER JOIN grad_interests ON graduates.id = :id AND grad_contact.id = :id AND grad_experiences = :id AND grad_industries = :id AND grad_interests = :id'
     # output = db.execute_command(statement, param)
     db.del_id_from_tables(
-        ['grad_contact', 'grad_experiences', 'grad_industries',
-         'grad_interests', 'graduates'], net_id)
+        ['grad_contact', 'undergrad_favorites', 'graduates'], net_id)

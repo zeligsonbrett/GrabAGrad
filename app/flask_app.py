@@ -554,9 +554,7 @@ def submit():
         try:
             ep.add_a_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept, industry_experience=industry_experience,
                           un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
-                          research_focus=research, expected_grad_date=None,
-                          years_worked=years_worked, photo_link=photo,
-                          website_link=None, email=email, phone=phone_number)
+                          research_focus=research, years_worked=years_worked, photo_link=photo, email=email, phone=phone_number)
         except Exception as ex:
             print("Error from function ep.add_a_grad()")
             print(ex)
@@ -568,7 +566,7 @@ def submit():
             ep.update_grad(netid=netid, first_name=first_name, last_name=last_name, dept=dept,
                           un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
                           research_focus=research, years_worked=years_worked, photo_link=photo,
-                          website_link=None, industry_experience=industry_experience, email=email, phone=phone_number)
+                          industry_experience=industry_experience, email=email, phone=phone_number)
         except Exception as ex:
             print("Error from function ep.update_grad()")
             print(ex)
@@ -588,10 +586,8 @@ def submit():
     html = render_template('submission_thanks.html',
                            first_name=first_name, last_name=last_name, dept=dept,
                            un_uni=undergrad, undergrad_major=undergrad_major, ma_uni=masters, masters_field=masters_field,
-                           research_focus=research,
-                           expected_grad_date=None,
-                           years_worked=years_worked, photo_link=photo,
-                           website_link=None, industry_experience=industry_experience, email=email,
+                           research_focus=research, years_worked=years_worked, photo_link=photo,
+                           industry_experience=industry_experience, email=email,
                            phone=phone_number)
     response = make_response(html)
     return response

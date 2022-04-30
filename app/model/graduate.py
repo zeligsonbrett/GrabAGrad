@@ -73,25 +73,15 @@ class Graduate:
             return ""
         return self._details[9]
 
-    def get_expected_grad_date(self):
+    def get_years_worked(self):
         if self._details[10] is None:
-            return ""
+            return ''
         return self._details[10]
 
-    def get_years_worked(self):
-        if self._details[11] is None:
-            return ''
-        return self._details[11]
-
     def get_photo_link(self):
-        if self._details[12] is None:
+        if self._details[11] is None:
             return ""
-        return self._details[12]
-
-    def get_website_link(self):
-        if self._details[13] is None:
-            return ""
-        return self._details[13]
+        return self._details[11]
 
     def get_email(self):
         if self._contact is None:
