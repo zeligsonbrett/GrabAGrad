@@ -122,8 +122,10 @@
 
                 {% if 'undergrad' == user %}
                     url += '&user=undergrad';
-                {% else %}
+                {% elif 'graduate' == user %}
                     url += '&user=graduate';
+                {% else %}
+                    url += '&user=unselected';
                 {% endif %}
 
                 request = $.ajax(

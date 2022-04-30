@@ -400,7 +400,9 @@ def load_header_tabs():
             html += '<a style="text-decoration: none" href="/admin_page?{}">Admin Page</a>'.format(user_param)
         else:
             html += '<a style="text-decoration: none; font-weight: bolder; color: white; padding-right: 10px; padding-left: 10px; border-radius: 5px;" href="/admin_page?{}">Admin Page</a>'.format(user_param)
-    html += '<a href="/about?{}">'.format(user_param)
+    if user == 'unselected':
+        html = '<a style="text-decoration: none" href="/">Home</a>'
+    html += '<a href="/about?{}"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>'.format(user_param)
     response = make_response(html)
     return response
 
