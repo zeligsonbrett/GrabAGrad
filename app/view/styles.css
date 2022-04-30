@@ -312,6 +312,14 @@ textarea:hover {
     line-height: 170%;
 }
 
+.fav-btn{
+    position: fixed; 
+    right: 70px; 
+    bottom: 60px; 
+    width: 100%; 
+    text-align: right;
+}
+
 .close:after {
     content: '';
     height: 30px;
@@ -574,6 +582,11 @@ img{
     transition: 0.5s;
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.explore-text{
+    font-size: 30px;
+    color: white;
 }
 
 .search-filter{
@@ -1250,6 +1263,14 @@ img{
 
 }
 @media screen and (max-width: 500px){
+    #card-mockup .mockup-note{
+        display: none;
+    }
+
+    #uploaded_image{
+        display: none;
+    }
+
     .labelStyle{
         text-align: left;
         width: 100%;
@@ -1294,7 +1315,7 @@ img{
     }
 }
 
-@media screen and (max-width: 370px){
+@media screen and (max-width: 400px){
     #header_tabs a{
         margin-right: 4px;
         margin-left: 4px;
@@ -1302,5 +1323,28 @@ img{
 
     #top-right-img{
         display: none;
+    }
+
+    .details ul li,
+    .details ul b{
+        font-size: 5vw;
+    }
+
+    .fav-btn{
+        padding: 5px;
+        bottom: 80px;
+        right: 20px;
+    }
+
+    .search-filter{
+        font-size: 4vw;
+    }
+
+    .custom-control-label{
+        font-size: 4vw;
+    }
+
+    .sorter{
+        padding-top: 20px;
     }
 }

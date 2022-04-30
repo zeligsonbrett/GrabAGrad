@@ -34,7 +34,7 @@
         <li><br></li>
     </div>
 </ul>
-<div style="position: fixed; right: 70px; bottom: 60px; width: 100%; text-align: right;">
+<div class="fav-btn">
     {% if 'undergrad' == user %}
         {% if favorite %}
             <input id="favorite" style="background-color: #ee9440; box-shadow: 0 0 10px 5px white;" class="submit-button fav-btn" type="submit" value="Unfavorite" name="{{grad.get_grad_id()}}">

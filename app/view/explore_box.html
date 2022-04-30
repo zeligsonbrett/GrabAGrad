@@ -4,7 +4,7 @@
             <img id="img-placeholder" src="{{grad.get_photo_link()}}" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate" style="width:25%; height:auto; object-fit:contain; position: absolute;" >
     </div>
     <div class="text">
-        <ul style="font-size: 30px; color: white">
+        <ul class="explore-text">
             {% if grad.get_acad_dept()|length %}
             <li><b>Academic Department: </b>{{grad.get_acad_dept()}}</li><br>
             {% endif %}
