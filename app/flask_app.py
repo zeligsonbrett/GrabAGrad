@@ -194,6 +194,7 @@ def favorites_page():
     """
     Loads the favorites page, where undergraduates can see the graduates who they have favorited
     """
+    netid = get_netid(cas_enabled)
     html = render_template('favorites.html')
     response = make_response(html)
     return response
@@ -205,6 +206,7 @@ def explore_page():
     Loads the explore page
     """
     # Everytime the explore page opens, a random graduate should be shown
+    netid = get_netid(cas_enabled)
     starting_grad_int = random.randint(0, ep.num_graduates())
     html = render_template('explore_page.html', grad=str(starting_grad_int))
     response = make_response(html)
@@ -246,6 +248,7 @@ def admin_delete_grad():
     """
     Deletes a grad when a user clicks "Delete" on the admin page
     """
+    netid = get_netid(cas_enabled)
     grad_id = request.args.get('id')
     ep.delete_grad(grad_id)
     return '', 204
