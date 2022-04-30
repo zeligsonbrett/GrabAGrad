@@ -218,7 +218,7 @@ def search_favorite():
     netid = get_netid(cas_enabled)
     grad_id = request.args.get('grad')
     ep.add_favorite(netid, grad_id)
-    return popup_box(grad_id=grad_id, favorite=True, user='undergrad')
+    return popup_box(grad_id=grad_id, favorite=None, user='undergrad')
 
 @app.route('/searchunfavorite', methods=['POST'])
 def search_unfavorite():
@@ -228,7 +228,7 @@ def search_unfavorite():
     netid = get_netid(cas_enabled)
     grad_id = request.args.get('grad')
     ep.remove_favorite(netid, grad_id)
-    return popup_box(grad_id=grad_id, favorite=False, user='undergrad')
+    return popup_box(grad_id=grad_id, favorite=None, user='undergrad')
 
 @app.route('/removefavorite', methods=['POST'])
 def favorite_remove():
