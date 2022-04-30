@@ -185,8 +185,26 @@ textarea:hover {
     transition: 0.5s ease-out;
 }
 
+.favorites-details{
+    height: calc(100vh - 90px);
+    width: calc(100vw - 90px);
+    position: fixed;
+    text-align: left;
+    z-index: 1;
+    bottom: 20px;
+    right: 20px;
+    top: 70px;
+    border-radius: 8px;
+    background-color: rgb(66, 33, 1, 0.9);
+    overflow-x: hidden;
+    transition: ease;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .details{
     height: calc(100vh - 90px);
+    width: calc(100vw - 425px);
     position: fixed;
     text-align: left;
     z-index: 1;
@@ -619,41 +637,7 @@ img{
     padding-top: 50px;  
 }
 
-.thanks{
-    margin-left: 20px;
-}
-
-#thanks-title{
-    padding: 10px; 
-    margin-left: -20px; 
-    text-align: center; 
-}
-
-.thanks h1{
-   color: black;
-    font-weight: bolder;
-    font-size: 2vw;
-    text-align: center;
-}
- 
-.thanks h2::first-letter,
-.thanks h2 {
-    color: black;
-    font-weight: bolder;
-    font-size: 3vw;
-    color: white;
- }
-
- .thanks h2{
-    padding: 20px;
-    background-color: black;
-    color: white;
-    width: 40%;
-    margin-left: -21px;
-    border-radius: 0 12px 12px 0;
- }
-
- .form-title{    
+.form-title{    
     padding: 20px;
     background-color: white;
     border-style: none;
@@ -666,34 +650,111 @@ img{
     border-radius: 0 12px 12px 0;
 }
 
- .thanks ul{
-    list-style: none;
-    font-size: 2.5vw;
-    color: black;
-    float: left;
-    text-align: left;
-    margin-top: 10px;
-    padding: 0;
-    width: 100%;
- }
+.thanks{
+    margin-left: 10%;
+    margin-right: 10%;
+}
 
- .thanks ul li p{
-     font-size: 1.5vw;
- }
+.thanks ul li{
+    list-style: none;
+}
+
+.thanks ul li p{
+    font-size: 2.5vw;
+}
+
+.thanks ul{
+    margin: 5px;
+}
+
+#thanks-title{
+    font-size: 3vw;
+    font-weight: bolder;
+    text-align: center;
+    background-color: #fcbb6f; 
+    width: 100%;
+    padding: 30px;
+}
+
+.thanks .has-text p{
+    font-size: 2vw;
+}
+
+.thanks h1{
+   color: black;
+    font-weight: bolder;
+    font-size: 2vw;
+    text-align: center;
+}
+ 
+ .thanks .has-text h2{
+    width: 100%;
+    text-align: center;
+    font-size: 3vw;    
+    color: black;
+    font-weight: bolder;
+}
 
  .thanks b{
-    color: black;
-    background-color: rgb(238, 148, 64);
-    padding: 10px;
-    padding-left: 30%;
-    margin-left: -20px;
-    border-radius: 0 12px 12px 0;
-    margin-right: 10px;
-
+    color: rgb(238, 148, 64);
+    padding-right: 10px;
+    font-size: 2.25vw;
 }
+
+.thanks .about-title::first-letter,
+.thanks .about-title{
+    font-size: 3vw;
+    margin-top: 40px;
+    font-weight: bolder;
+    margin-bottom: -30px;
+    margin-left: -5%;
+}
+
+.thanks-table{
+    width: 100%;
+    text-align: left;
+}
+
+.thanks-table td{
+    width: 50%;
+}
+
+.thanks-table h2::first-letter{
+    font-size: 3vw;    
+}
+
+.has-text{
+    padding-left: 5%;
+}
+
+.has-img{
+    text-align: center; 
+}
+
+.has-img img{
+    width: 90%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 15px 5px gray;
+}
+
 .thanks span{
     width: 50%; 
 }
+
+.thanks p{
+    font-size: 2.5vw;
+    font-weight: bolder;
+    padding-top: 20px;
+}
+
+.thanks .stu-title{
+    color:rgb(180, 112, 9);
+    margin-left: -2.5%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
 .textarea-label{
     color: black;
     background-color: rgb(238, 148, 64);
@@ -755,8 +816,8 @@ img{
 }
 
 .about-card{
-    min-width: 310px;
-    max-width: 320px;
+    min-width: 20%;
+    max-width: 25%;
     margin: 20px;
     margin-bottom: 50px;
     text-align: center;  
@@ -764,12 +825,13 @@ img{
 
 .about-card img{
     border-radius: 20px;
-    box-shadow: -20px -20px #b8591b;
+    box-shadow: 0px 0px 15px 5px gray;
+    height: auto;
 }
 
 .about-card h1{
     margin-top: 20px;
-    font-size: 3vw;
+    font-size: 2vw;
     width: 100%;
     color:rgb(238, 148, 64)
 }
@@ -777,12 +839,7 @@ img{
 .about-card h3{
     font-weight: bolder;
     font-style: italic;
-}
-
-.thanks p{
-    font-size: 3vw;
-    font-weight: bolder;
-    padding-top: 20px;
+    font-size: 2vw;
 }
 
 .sortby{
@@ -890,6 +947,7 @@ img{
 .explore-card img #img-placeholder{
     top: 0px;
     border-radius: 0;
+    display: inline-block; 
 }
 
 .explore-card ul li b{
@@ -901,6 +959,11 @@ img{
     padding: 10px;
     text-align: left;
     color: black;
+}
+
+.explore-card .text{
+    overflow-y:auto; 
+    width:70%;
 }
 
 .explore-card span{
@@ -919,6 +982,11 @@ img{
     color: black;
 }
 
+.custom-control-label{
+    font-size: 22px;
+}
+
+
 @media screen and (max-width: 780px) {
     #mySidenav {
         position: static;
@@ -929,8 +997,34 @@ img{
         font-size: 2vw;
     }
 
+    .header a{
+        font-size: 3vw;
+    }
+
+    .search-filter{
+        font-size: 3vw;
+    }
+
+    .custom-control-label{
+        font-size: 3vw;
+    }
+
+    .sidenav p{
+        font-size: 4vw;
+    }
+
+    .sorter{
+        padding-top: 5px;
+    }
+
+    #sortby option{
+        font-size: 2.5vw;
+    }
+
     .title{
         display: none;
+        margin-right: 10px;
+        margin-left: 10px;
     }
 
     #main{
@@ -965,7 +1059,7 @@ img{
     }
 
     #filter{
-        margin-bottom: -2000px;
+        font-size: -2000px;
     }
 
     #sortby{
@@ -999,7 +1093,7 @@ img{
     #card-mockup{
         position: fixed;
         width: 90%;
-        top: 20vh;
+        top: 80px;
         right: 5%;
         visibility: hidden;
     }
@@ -1042,25 +1136,118 @@ img{
     .details-text{
         width: 100%;
     }
+
+    .explore-card{
+        width: calc(100vw - 10%);
+        position: fixed;
+        text-align: left;
+        z-index: 1;
+        left: 5%;
+        right: 5%;
+    }
+
+    .explore-card .text{
+        overflow-y:auto; 
+        width: 100%;
+        padding: 5px;
+        margin: 0;
+        line-height: 4vw;
+    }
+    
+    .explore-card ul li{
+        color: rgb(0, 0, 0);
+        font-size: 3vw;
+        list-style: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: inline;
+    }
+    
+    .explore-card #img-placeholder{
+        display: none;
+    }
+    
+    .explore-card ul li b{
+        color: rgb(248, 159, 57);
+    }
+    
+    .explore-card h1{
+        width: 100%;
+        padding: 10px;
+        text-align: left;
+        color: black;
+    }
+    
+    .explore-card span{
+        color:rgb(238, 148, 64);
+        font-weight: bolder;
+        font-size: 8vw;
+    }    
 }
 
 @media screen and (max-width: 900px){
-    .thanks p{
-        font-size: 3vw;
-    }
-
     #thanks-title{
         font-size: 6vw;
     }
 
-    .thanks h2,
-    .thanks h2::first-letter{
+    .thanks p{
+        font-size: 5vw;
+    }
+
+    .thanks-title{
+        margin-bottom: -20px;
+    }
+
+    .thanks ul li p,
+    .thanks ul li b{
         font-size: 4vw;
     }
 
     .thanks ul{
-        font-size: 2.5vw;
+        padding: -5px;
     }
+
+    .thanks .has-text p,
+    .thanks .has-text b{
+        font-size: 3.5vw;
+    }
+
+    .thanks .has-text h2,
+    .thanks .has-text h2:first-letter{
+        font-size: 5vw;
+    }
+
+    .thanks .about-title,
+    .thanks .about-title:first-letter{
+        font-size: 6vw;
+    }
+
+    .has-img img{
+        display: none;
+    }
+
+    .thanks-table .has-text{
+        width: 100%;
+    }
+
+    .thanks-table .has-img{
+        width: 0;
+    }
+
+    .details-text{
+        font-size: 3vw;
+    }
+
+    .details-text h1{
+        font-size: 8vw;
+    }
+
+    .details-text ul{
+        font-size: 3.25vw;
+    }
+
+
 }
 @media screen and (max-width: 500px){
     .labelStyle{
@@ -1105,6 +1292,15 @@ img{
     #card-mockup .mockup-note{
         font-size: 5vw;
     }
+}
 
+@media screen and (max-width: 370px){
+    #header_tabs a{
+        margin-right: 4px;
+        margin-left: 4px;
+    }
 
+    #top-right-img{
+        display: none;
+    }
 }

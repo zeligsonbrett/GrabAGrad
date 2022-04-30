@@ -38,7 +38,7 @@ function reportWindowSize() {
 
     else{
       if(document.getElementById("mySidenav").style.height != "90px"){
-        document.getElementById("mySidenav").style.height = "510px";
+        document.getElementById("mySidenav").style.height = "520px";
         document.getElementById("mySidenav").style.boxShadow = "none";
         document.getElementById("mySidenav").style.width = "100vw";
         document.getElementById("main").style.marginLeft= "0px";
@@ -75,7 +75,7 @@ function openNav() {
         document.getElementById("mySidenav").style.height = "calc(100vh - 50px)";
       }
       else{
-        document.getElementById("mySidenav").style.height = "510px";
+        document.getElementById("mySidenav").style.height = "520px";
         document.getElementById("mySidenav").style.width = "100vw";
         document.getElementById("details").style.width = "90vw";
         document.getElementById("details").style.height = "calc(100vh - 150px)";
