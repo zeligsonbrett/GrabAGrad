@@ -117,7 +117,18 @@ function details() {
 
   else{
       document.getElementById("details").style.visibility = "hidden";
-      filterResults();
+      try {
+        filterResults();
+      }
+      catch (error1) {
+        try {
+            loadFavorites();
+        }
+        catch (error2) {
+            console.error(error1)
+            console.error(error2);
+        }
+      }
       document.getElementById("details").classList.remove("details-open");
       document.getElementById("details").classList.add("details-closed");
   }   
