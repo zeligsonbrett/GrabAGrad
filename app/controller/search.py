@@ -20,4 +20,4 @@ def filter_search(name, dept, industry, years_worked, un_uni, ma_uni, favorites_
         return "Success", grad_list
     except Exception as ex:
         print(ex)
-        return "Error occurred when searching, make sure filter input is valid", []
+        return "Server side error occurred, if this problem persists, please contact hknoll@princeton.edu.", []

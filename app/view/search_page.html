@@ -100,8 +100,6 @@
                 source: departments
                 });
 
-
-
                 let un_universities = {{un_unis|tojson}};
                 $('#un-uni').autocomplete({
                 select: function (e, ui) {
@@ -205,6 +203,7 @@
 
             function render_header_tabs(response) {
                 $('#header_tabs').html(response);
+                reportWindowSize();
             }
 
             function view_popup(grad_id) {
