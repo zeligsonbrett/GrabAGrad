@@ -1002,6 +1002,11 @@ img{
 
 
 @media screen and (max-width: 780px) {
+    #next, #favorite .submit-button, #previous{
+        width: 30%;
+        margin: -0;
+    }
+
     #mySidenav {
         position: static;
         padding-top: 50px;
@@ -1386,9 +1391,5 @@ img{
 
     .explore-card h1{
         margin-left: 15px;
-    }
-
-    #next{
-        float: right;
     }
 }
