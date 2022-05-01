@@ -13,14 +13,13 @@ let saved_i = ""
 
 function reportWindowSize() {
   if(window.innerWidth >= 780){
-    document.getElementById("top-right-img").src = "/view/expandedLogo.png";
     document.getElementById("top-right-img").style.width = "180px";
+    document.getElementById("top-right-img").src = "/view/expandedLogo.png";
   }
 
   else{
-    console.log("small img");
-    document.getElementById("top-right-img").src = "/view/favicon.ico";
     document.getElementById("top-right-img").style.width = "35px";
+    document.getElementById("top-right-img").src = "/view/favicon.ico";
   }
   
   if(document.getElementById("mySidenav") != null) {
