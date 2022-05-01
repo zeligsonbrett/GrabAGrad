@@ -114,8 +114,6 @@ def about_page():
     """
     netid = get_netid(cas_enabled)
     user = request.args.get('user')
-    print("HERE IT IS:")
-    print(user)
     html = render_template('about.html', user=user)
     return make_response(html)
 
@@ -406,8 +404,6 @@ def load_header_tabs():
     if user == 'unselected':
         html = '<a style="text-decoration: none" href="/">Home</a>'
     html += '<a href="/about?{}"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>'.format(user_param)
-    print("AND PART TWO:")
-    print(user_param)
     response = make_response(html)
     return response
 
