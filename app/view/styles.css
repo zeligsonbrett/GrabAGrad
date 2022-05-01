@@ -945,7 +945,7 @@ img{
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 10px;
-    padding: 0; 
+    padding: 10px; 
     text-align: left;
 }
 
@@ -1206,6 +1206,10 @@ img{
 }
 
 @media screen and (max-width: 900px){
+    .explore-card{
+        height: calc(100vh - 40vh);
+    }
+
     #thanks-title{
         font-size: 6vw;
     }
@@ -1265,7 +1269,6 @@ img{
     .details-text ul{
         font-size: 3.25vw;
     }
-
 
 }
 @media screen and (max-width: 500px){
@@ -1352,5 +1355,40 @@ img{
 
     .sorter{
         padding-top: 20px;
+    }
+
+    .explore-card{
+        width: calc(100vw - 10%);
+        height: calc(100vh - 30vh);
+        position: fixed;
+        text-align: left;
+        z-index: 1;
+        left: 5%;
+        right: 5%;
+        padding-right: 10px;
+    }
+
+    .explore-card .text{
+        margin-left: -20px;
+        font-size: 2vw;
+    }
+
+    .explore-card h1 span{
+        font-size: 10vw;
+        line-height: 8vw;
+        padding-right: 10px;
+    }
+
+    .explore-card .text ul li{
+        font-size: 6vw;
+        line-height: 9vw;
+    }
+
+    .explore-card h1{
+        margin-left: 15px;
+    }
+
+    #next{
+        float: right;
     }
 }
