@@ -316,11 +316,16 @@ textarea:hover {
 
 .details-text{
     width: 60%;
-    text-wrap: wrap;
+}
+
+.details-text h1 span{
+    width: 50px;
+    overflow-wrap: break-word;
 }
 
 .details-text h1{
     font-size: 60px;
+    width: 40vw; 
     padding: 15px;
     padding-right: 5px;
     font-weight: bolder;
