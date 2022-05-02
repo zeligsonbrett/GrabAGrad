@@ -38,7 +38,7 @@ def create_engine():
     :return: sqlalchemy engine linked to postgresql database
     """
     global engine
-    engine = sqla.create_engine(get_uri())
+    engine = sqla.create_engine(get_uri(), pool_pre_ping=True)
 
 
 def query_all_from_table(table):
