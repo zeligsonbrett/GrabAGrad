@@ -319,9 +319,8 @@ textarea:hover {
 }
 
 .details-text h1{
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     font-size: 60px;
-    width: 50%; 
     padding: 15px;
     padding-right: 5px;
     font-weight: bolder;
@@ -1038,10 +1037,6 @@ img{
 
 
 @media screen and (max-width: 796px) {
-    .details-text h1{
-        width: 300px;
-    }
-
     .about-btn a{
         font-size: 4vw;
         padding: 1vw;
