@@ -1406,6 +1406,11 @@ img{
     #mockup-note{
         display: none;
     }
+
+    .explore-card{
+        height: 30vh;
+        margin-top: -10px;
+    }
 }
 
 
