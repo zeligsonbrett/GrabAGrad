@@ -1035,8 +1035,25 @@ img{
     font-size: 22px;
 }
 
+@media screen and (max-width: 900px){
+    #card-mockup .mockup-note{
+        visibility: hidden;
+    }
+}
+
 
 @media screen and (max-width: 796px) {
+<<<<<<< HEAD
+=======
+    #card-mockup .mockup-note{
+        visibility: visible;
+    }
+
+    .details-text h1{
+        width: 300px;
+    }
+
+>>>>>>> 3bbbbd74f7de5f2a6b72503ac8dc8cda94d75060
     .about-btn a{
         font-size: 4vw;
         padding: 1vw;
