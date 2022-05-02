@@ -10,7 +10,7 @@ def filter_search(name, dept, industry, years_worked, un_uni, ma_uni, favorites_
     Search function for if the filter by options are used
     """
     try:
-        grad_list = ep.search_grads(name=name, dept=dept,
+        grad_list = ep.search_grads(name=name, dept=dept.replace('.', ''),
                                     industry=industry,
                                     undergrad_uni=un_uni,
                                     masters_uni=ma_uni,

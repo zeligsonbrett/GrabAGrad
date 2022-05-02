@@ -242,9 +242,21 @@
                 return "Any changes will be lost";
             }
         });
+
         $(document).on("submit", "form", function() {
+            var val = $('#academic-dept').val();
+            if (val != '') {
+                let depts = {{dept|tojson}};
+                var inclusion = depts.includes(val);
+                console.log(inclusion);
+                if (!inclusion) {
+                    alert("Please select a valid Princeton academic department using the drop-down menu that suggests when you type a prefix of a department")
+                    return false;
+                }
+            }
             $(window).off('beforeunload');
         });
+
         cloudinary_upload();
         setup_autocomplete();
         suggestions();

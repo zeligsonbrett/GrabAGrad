@@ -8,6 +8,7 @@ GrabAGrad
 import sqlalchemy as sqla
 import model.database_connection as db
 from model.graduate import Graduate
+import model.departments as depts
 
 def query_all_grads():
     """
@@ -204,7 +205,7 @@ def search_grads(name=None, dept=None, research=None,
     command = sqla.text(
         """SELECT DISTINCT graduates.netid FROM 
         graduates WHERE CONCAT(first_name, ' ', last_name) ILIKE :name AND 
-        acad_dept ILIKE :dept AND research_focus ILIKE :research AND 
+        (acad_dept ILIKE :dept OR acad_dept_abbrev ILIKE :dept) AND research_focus ILIKE :research AND 
         undergrad_university ILIKE :undergrad_uni AND masters_university
         ILIKE :masters_uni {} AND industry_experience ILIKE :industry ORDER BY graduates.netid
         ASC;""".format(years_worked_c))
@@ -249,14 +250,16 @@ def update_grad(netid, first_name, last_name, dept=None, un_uni=None,
     """
     Initial update function for updating fields for certain graduates
     """
+    abbrev = depts.abbreviation(dept)
+    print(abbrev)
     command = sqla.text(
             """UPDATE graduates SET 
             first_name = :firstname, last_name = :lastname, acad_dept = :dept, years_worked = :years_worked,
             undergrad_university = :undergrad_uni, undergrad_major = :undergrad_major, masters_university = :masters_uni, masters_field = :masters_field, 
-            research_focus = :research_focus, industry_experience = :industryexperience WHERE graduates.netid = :netid;""")
+            research_focus = :research_focus, industry_experience = :industryexperience, acad_dept_abbrev = :abbrev WHERE graduates.netid = :netid;""")
     params = {'netid': netid, 'firstname': first_name, 'lastname': last_name, 'dept': dept, 'years_worked': years_worked, 
               'research_focus': research_focus, 'undergrad_uni': un_uni, 'undergrad_major': undergrad_major, 'masters_uni': ma_uni, 
-              'masters_field': masters_field, 'industryexperience': industry_experience}
+              'masters_field': masters_field, 'industryexperience': industry_experience, 'abbrev': abbrev}
     output = db.execute_command(command, params)
 
     params = {'netid': netid}
@@ -286,6 +289,7 @@ def add_a_grad(netid, first_name, last_name, dept=None, un_uni=None,
     Adds a grad to the database in each respective table based on data
     inputted
     """
+    abbrev = depts.abbreviation(dept)
     graduates_info = {"netid": netid,
                       "first_name": first_name,
                       "last_name": last_name,
@@ -297,16 +301,16 @@ def add_a_grad(netid, first_name, last_name, dept=None, un_uni=None,
                       "masters_field": masters_field,
                       "research_focus": research_focus,
                       "years_worked": years_worked,
-                      "photo_link": photo_link}
+                      "photo_link": photo_link,
+                      "abbrev": abbrev}
     statement = sqla.text(
         """INSERT INTO graduates(netid, first_name, last_name, acad_dept, industry_experience, 
         undergrad_university, undergrad_major, masters_university, masters_field, research_focus, 
-        years_worked, photo_link) 
+        years_worked, photo_link, acad_dept_abbrev) 
         VALUES(:netid, :first_name, :last_name, :acad_dept, :industry_experience,
         :undergrad_university, :undergrad_major, :masters_university, :masters_field, :research_focus,
-        :years_worked, :photo_link)""")
+        :years_worked, :photo_link, :abbrev)""")
     output = db.execute_command(statement, graduates_info)
-
 
     if email is not None or phone is not None:
         if email != '' or phone != '':
