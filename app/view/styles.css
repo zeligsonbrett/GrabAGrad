@@ -1043,8 +1043,6 @@ img{
 
 
 @media screen and (max-width: 796px) {
-<<<<<<< HEAD
-=======
     #card-mockup .mockup-note{
         visibility: visible;
     }
@@ -1053,7 +1051,6 @@ img{
         width: 300px;
     }
 
->>>>>>> 3bbbbd74f7de5f2a6b72503ac8dc8cda94d75060
     .about-btn a{
         font-size: 4vw;
         padding: 1vw;
