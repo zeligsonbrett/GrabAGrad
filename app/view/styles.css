@@ -1037,7 +1037,7 @@ img{
 }
 
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 796px) {
     .details-text h1{
         width: 300px;
     }
