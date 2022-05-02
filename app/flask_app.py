@@ -436,9 +436,7 @@ def filter_grads():
         # Need to verify that the user is an administrator
         if pu.is_administrator(netid):
             is_admin = True
-    else:
-        # Determines if favorites page should load or not
-        if favorites_only == 'true':
+    if favorites_only == 'true':
             favorites_on = True
 
     # Determines whether search is a success, and loads in respective 
