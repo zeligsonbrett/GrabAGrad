@@ -259,11 +259,13 @@
             var which_button = document.activeElement.value;
             if (which_button != "Delete Profile") {
                 var val = $('#academic-dept').val();
-                let depts = {{dept|tojson}};
-                var inclusion = depts.includes(val);
-                if (!inclusion) {
-                    alert("Please select a valid Princeton academic department using the drop-down menu that suggests when you type a prefix of a department")
-                    return false;
+                if (val != "") {
+                    let depts = {{dept|tojson}};
+                    var inclusion = depts.includes(val);
+                    if (!inclusion) {
+                        alert("Please select a valid Princeton academic department using the drop-down menu that suggests when you type a prefix of a department")
+                        return false;
+                    }
                 }
             }
             $(window).off('beforeunload');
