@@ -145,6 +145,7 @@ function showCard(){
   document.getElementById("mockup-btn").setAttribute('onclick', 'closeCard()')
   document.getElementById("mockup-btn").style.backgroundColor = "#FFB98B";
   document.getElementById("mockup-btn").style.color = "black"; 
+  document.getElementById("mockup-note").style.visibility = "visible"; 
 }
 
 function closeCard(){
@@ -153,6 +154,7 @@ function closeCard(){
   document.getElementById("mockup-btn").setAttribute('onclick', 'showCard()');
   document.getElementById("mockup-btn").style.backgroundColor = "black";
   document.getElementById("mockup-btn").style.color = "white";
+  document.getElementById("mockup-note").style.visibility = "hidden";
 }
 /*
 function saveData(){

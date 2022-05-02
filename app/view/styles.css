@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body{
     font-family: 'Lato', sans-serif;
     margin: 0;
@@ -945,7 +949,7 @@ img{
     border-radius: 8px;
 }
 
-#card-mockup .mockup-note{
+#card-mockup #mockup-note{
     color: #FFB98B; 
     width: 100%; 
     position: absolute; 
@@ -1036,17 +1040,13 @@ img{
 }
 
 @media screen and (max-width: 900px){
-    #card-mockup .mockup-note{
+    #card-mockup #mockup-note{
         visibility: hidden;
     }
 }
 
 
 @media screen and (max-width: 796px) {
-    #card-mockup .mockup-note{
-        visibility: visible;
-    }
-
     .details-text h1{
         width: 300px;
     }
@@ -1207,13 +1207,11 @@ img{
     }
 }
 
-@media screen and (max-width: 1250px){
+@media screen and (max-width: 1000px){
     #uploaded_image{
         display: none;
     }
-}
 
-@media screen and (max-width: 1000px){
     .details-img{
         display: none;
     }
@@ -1247,10 +1245,6 @@ img{
         margin: 0;
         padding: 0;
         display: inline;
-    }
-    
-    .explore-card #img-placeholder{
-        display: none;
     }
     
     .explore-card ul li b{
@@ -1351,7 +1345,7 @@ img{
 
 }
 @media screen and (max-width: 500px){
-    #card-mockup .mockup-note{
+    #card-mockup #mockup-note{
         display: none;
     }
 
@@ -1398,8 +1392,19 @@ img{
         font-size: 3vw;
     }
 
-    #card-mockup .mockup-note{
+    #card-mockup #mockup-note{
         font-size: 5vw;
+    }
+}
+
+@media screen and (max-height: 400px){
+    #card-mockup{
+        height: 40vh;
+        margin-top: -10px;
+    }
+
+    #mockup-note{
+        display: none;
     }
 }
 
@@ -1453,6 +1458,10 @@ img{
     .explore-card .text{
         margin-left: -20px;
         font-size: 2vw;
+    }
+
+    .explore-card #img-placeholder{
+        display: none;
     }
 
     .explore-card h1 span{
