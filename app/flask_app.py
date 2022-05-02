@@ -516,7 +516,8 @@ def filter_grads():
                 # Fill in paramaters on graduate template accordingly
                 if (len(grad.get_first_name()) > 9):
                     card_name = grad.get_first_name()[0:8] + "..."
-                else: card_name = grad.get_first_name
+                else:
+                    card_name = grad.get_first_name()
 
                 grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), card_name, grad.get_acad_dept(), grad.get_grad_id())
                 if grad.get_grad_id() == netid:
@@ -529,7 +530,8 @@ def filter_grads():
                 # Fill in paramaters on graduate template accordingly
                 if (len(grad.get_first_name()) > 9):
                     card_name = grad.get_first_name()[0:8] + "..."
-                else: card_name = grad.get_first_name()
+                else:
+                    card_name = grad.get_first_name()
 
                 grad_card_info = (grad.get_photo_link(), card_name, grad.get_acad_dept(), grad.get_grad_id())
                 if grad.get_grad_id() == netid:
