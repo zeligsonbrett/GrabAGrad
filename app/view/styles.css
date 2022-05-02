@@ -24,6 +24,35 @@ body{
     line-height: 30px;
 }
 
+.about-btn{   
+    position: relative; 
+    margin: 0;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    width: 100%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    line-height: 30px;
+}
+
+.about-btn a{
+    margin: 5vw;
+    text-decoration: none;
+    padding: 0.8vw;
+    border-radius: 0px;
+    border-style: solid;
+    border-width: 7px;
+    background-color: white;
+    border-color:#f89f39;
+    color: #f89f39;
+    font-size: 2.5vw;
+}
+
+.about-btn a:hover{
+    background-color:rgb(0, 0, 0);
+}
+
 .flex-container a{
     margin: 5vw;
     text-decoration: none;
@@ -289,8 +318,14 @@ textarea:hover {
     width: 60%;
 }
 
+.details-text h1 span{
+    width: 50px;
+    overflow-wrap: break-word;
+}
+
 .details-text h1{
     font-size: 60px;
+    width: 40vw; 
     padding: 15px;
     padding-right: 5px;
     font-weight: bolder;
@@ -796,8 +831,12 @@ img{
 #card-mockup span,
 #card-mockup p{
     display: inline-block;
-    color: white;
+    color: #FFB98B;
     margin-top: 5px;
+}
+
+#card-mockup p{
+    color: white;
 }
 
 #img-placeholder{ 
@@ -1002,6 +1041,17 @@ img{
 
 
 @media screen and (max-width: 780px) {
+    .about-btn a{
+        font-size: 4vw;
+        padding: 1vw;
+        border-width: 4px;
+    }
+
+    .flex-container a{
+        font-size: 5vw;
+        border-width: 4px;
+    }
+
     #mySidenav {
         position: static;
         padding-top: 50px;
@@ -1142,8 +1192,14 @@ img{
     }
 
     .fav-btn{
-        bottom: 60px;
+        bottom: 90px;
         right: 60px;
+    }
+}
+
+@media screen and (max-width: 1250px){
+    #uploaded_image{
+        display: none;
     }
 }
 
@@ -1206,6 +1262,19 @@ img{
 }
 
 @media screen and (max-width: 900px){
+    input#next.submit-button, input#previous.submit-button{
+        width: 25%;
+        margin: 0;
+        margin-left: 2.5%; 
+    }
+
+    input#favorite.favorite-btn.submit-button{
+        width: 30%;
+        margin: 0;
+        margin-right: 5%;
+
+    }
+
     .explore-card{
         height: calc(100vh - 40vh);
     }
@@ -1386,9 +1455,5 @@ img{
 
     .explore-card h1{
         margin-left: 15px;
-    }
-
-    #next{
-        float: right;
     }
 }

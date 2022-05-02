@@ -36,11 +36,11 @@
     </div>
 </div>
 <div style="width: 100%; margin-top: calc(100vh - 150px); position:fixed">
-    <input id="previous" class="submit-button" type="submit" value="Previous">
-    <input id="next" class="submit-button" type="submit" value="Next">
+    <input style="display: inline-block;" id="previous" class="submit-button" type="submit" value="Previous">
+    <input style="display: inline-block;" id="next" class="submit-button" type="submit" value="Next">
     {% if favorite %}
-        <input style="float: right;" id="favorite" class="submit-button" type="submit" value="Unfavorite">
+        <input style="display: inline-block; position: static; float: right;" id="favorite" class="favorite-btn submit-button" type="submit" value="Unfavorite">
     {% else %}
-        <input style="float: right;" id="favorite" class="submit-button" type="submit" value="Favorite">
+        <input style="display: inline-block; position: static; float: right;" id="favorite" class="favorite-btn submit-button" type="submit" value="Favorite">
     {% endif %}
 </div>
