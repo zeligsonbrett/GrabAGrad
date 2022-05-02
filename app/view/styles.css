@@ -1036,8 +1036,18 @@ img{
     font-size: 22px;
 }
 
+@media screen and (max-width: 900px){
+    #card-mockup .mockup-note{
+        visibility: hidden;
+    }
+}
+
 
 @media screen and (max-width: 796px) {
+    #card-mockup .mockup-note{
+        visibility: visible;
+    }
+
     .details-text h1{
         width: 300px;
     }
