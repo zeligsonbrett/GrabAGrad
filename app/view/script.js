@@ -44,7 +44,7 @@ function reportWindowSize() {
         document.getElementById("mySidenav").classList.add("menu-open");
         document.getElementById("filter").style.visibility = "visible";
         document.getElementById("details").style.width = "90vw";
-        document.getElementById("details").style.height = "calc(100vh - 150px)";
+        document.getElementById("details").style.height = "calc(100vh - 170px)";
       }
     }
     document.getElementById("sortby").style.height="40px";
