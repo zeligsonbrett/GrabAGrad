@@ -51,8 +51,14 @@ function reportWindowSize() {
     document.getElementById("form-id").style.height="100%";
   }
   else{
-    document.getElementById("details").style.width = "95vw";
-    document.getElementById("details").style.height = "calc(100vh - 140px)";
+    if(window.innerWidth >= 780){
+      document.getElementById("details").style.width = "95vw";
+      document.getElementById("details").style.height = "calc(100vh - 90px)";
+    }
+    else{
+      document.getElementById("details").style.width = "95vw";
+      document.getElementById("details").style.height = "calc(100vh - 140px)";
+    }
   }
 }
 
