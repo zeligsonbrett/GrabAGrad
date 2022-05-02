@@ -338,7 +338,7 @@ def favorites_load():
     netid = get_netid(cas_enabled)
     favorites = ep.get_favorites(netid)
 
-    # HTML template for each grad card
+    # HTML template for eac] grad card
     html = ""
     grad_card = """
                 <div class="card">  <img src="%s" onerror="this.onerror=null; this.src='https://res.cloudinary.com/hc9ax9esb/image/upload/v1649079305/grad_photos/ybl7syt9b0nthyamzazg.jpg'" alt="Image of graduate">
@@ -356,8 +356,12 @@ def favorites_load():
     else:
         for grad in favorites:
             # Fill in paramaters on graduate template accordingly
+            if (len(grad.get_first_name()) > 9):
+                card_name = grad.get_first_name()[0:8] + "..."
+            else: card_name = grad.get_first_name()
+
             grad_id = grad.get_grad_id()
-            grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), grad.get_first_name(), grad.get_acad_dept(), grad.get_grad_id())
+            grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), card_name, grad.get_acad_dept(), grad.get_grad_id())
             html += grad_card % grad_card_info
     response = make_response(html)
     return response
@@ -510,7 +514,11 @@ def filter_grads():
             # Admin page
             for grad in graduates:
                 # Fill in paramaters on graduate template accordingly
-                grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), grad.get_first_name(), grad.get_acad_dept(), grad.get_grad_id())
+                if (len(grad.get_first_name()) > 9):
+                    card_name = grad.get_first_name()[0:8] + "..."
+                else: card_name = grad.get_first_name
+
+                grad_card_info = (grad.get_photo_link(), grad.get_grad_id(), card_name, grad.get_acad_dept(), grad.get_grad_id())
                 if grad.get_grad_id() == netid:
                     html += grad_card_admin_me % grad_card_info
                 else:
@@ -519,7 +527,11 @@ def filter_grads():
             # Search page or favorites page
             for grad in graduates:
                 # Fill in paramaters on graduate template accordingly
-                grad_card_info = (grad.get_photo_link(), grad.get_first_name(), grad.get_acad_dept(), grad.get_grad_id())
+                if (len(grad.get_first_name()) > 9):
+                    card_name = grad.get_first_name()[0:8] + "..."
+                else: card_name = grad.get_first_name()
+
+                grad_card_info = (grad.get_photo_link(), card_name, grad.get_acad_dept(), grad.get_grad_id())
                 if grad.get_grad_id() == netid:
                     html += grad_card_me % grad_card_info
                 else:
