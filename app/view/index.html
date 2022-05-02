@@ -3,6 +3,7 @@
     <head>
         <title>GrabAGrad</title>
         <meta name="User Selection" content="Page for GrabAGrad where users choose if they are graduate or undergraduate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="favicon icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link href="{{ url_for('static', filename= 'styles.css') }}" rel="stylesheet" type="text/css" />
         <script src="{{url_for('static', filename='script.js')}}"></script>
@@ -12,7 +13,7 @@
     </head>
 
     <body>
-        <a href="/about"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 10px; right: 10px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
+        <a href="/about"><img id="top-right-img" style="z-index: 20000; position: fixed; top: 20px; right: 20px; width: 180px; height: auto;" src="/view/expandedLogo.png"></a>
         <div class="flex-container">
             <p class="welcome-screen">I am a...</p>
                 <div style="text-align: center; transition: ease 2s;">

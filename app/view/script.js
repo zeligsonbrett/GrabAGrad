@@ -52,7 +52,7 @@ function reportWindowSize() {
   }
   else{
     document.getElementById("details").style.width = "95vw";
-    document.getElementById("details").style.height = "calc(100vh - 100px)";
+    document.getElementById("details").style.height = "calc(100vh - 140px)";
   }
 }
 

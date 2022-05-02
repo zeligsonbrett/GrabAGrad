@@ -318,18 +318,15 @@ textarea:hover {
     width: 60%;
 }
 
-.details-text h1 span{
-    width: 50px;
-    overflow-wrap: break-word;
-}
-
 .details-text h1{
+    overflow-wrap: break-word;
     font-size: 60px;
-    width: 40vw; 
+    width: 50%; 
     padding: 15px;
     padding-right: 5px;
     font-weight: bolder;
     padding-left: 0;
+    overflow: hidden;
 }
 
 .details ul{
@@ -1041,6 +1038,10 @@ img{
 
 
 @media screen and (max-width: 780px) {
+    .details-text h1{
+        width: 300px;
+    }
+
     .about-btn a{
         font-size: 4vw;
         padding: 1vw;
@@ -1393,14 +1394,13 @@ img{
     }
 }
 
-@media screen and (max-width: 400px){
+
+@media screen and (max-width: 450px){
     #header_tabs a{
         margin-right: 4px;
         margin-left: 4px;
-    }
-
-    #top-right-img{
-        display: none;
+        font-size: 3.25vw;
+        margin-top: 5px;
     }
 
     .details ul li,
@@ -1428,13 +1428,17 @@ img{
 
     .explore-card{
         width: calc(100vw - 10%);
-        height: calc(100vh - 30vh);
+        height: 400px;
         position: fixed;
         text-align: left;
         z-index: 1;
         left: 5%;
         right: 5%;
         padding-right: 10px;
+    }
+
+    .explore-btns{
+        bottom: 80px;
     }
 
     .explore-card .text{
@@ -1455,5 +1459,9 @@ img{
 
     .explore-card h1{
         margin-left: 15px;
+    }
+
+    .about-btn a{
+        font-size: 5.5vw;
     }
 }
