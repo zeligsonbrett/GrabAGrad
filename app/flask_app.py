@@ -357,7 +357,7 @@ def favorites_load():
         for grad in favorites:
             # Fill in paramaters on graduate template accordingly
             if (len(grad.get_first_name()) > 9):
-                card_name = grad.get_first_name()[0:8] + "..."
+                card_name = grad.get_first_name()[0:7] + "..."
             else: card_name = grad.get_first_name()
 
             grad_id = grad.get_grad_id()
@@ -513,7 +513,7 @@ def filter_grads():
             for grad in graduates:
                 # Fill in paramaters on graduate template accordingly
                 if (len(grad.get_first_name()) > 9):
-                    card_name = grad.get_first_name()[0:8] + "..."
+                    card_name = grad.get_first_name()[0:7] + "..."
                 else:
                     card_name = grad.get_first_name()
 
@@ -527,7 +527,7 @@ def filter_grads():
             for grad in graduates:
                 # Fill in paramaters on graduate template accordingly
                 if (len(grad.get_first_name()) > 9):
-                    card_name = grad.get_first_name()[0:8] + "..."
+                    card_name = grad.get_first_name()[0:7] + "..."
                 else:
                     card_name = grad.get_first_name()
 
