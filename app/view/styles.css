@@ -336,6 +336,7 @@ textarea:hover {
     list-style: none;
     font-size: 20px;
     color: white;
+    overflow-wrap: anywhere;
     float: left;
     text-align: left;
     padding: 0;   
@@ -621,6 +622,7 @@ img{
 
 .explore-text{
     font-size: 30px;
+    overflow-wrap: anywhere;
     color: white;
 }
 
